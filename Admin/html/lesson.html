@@ -265,6 +265,28 @@
                       
                     </tbody>
                   </table>
+
+                  <div style="display: flex;">
+                    <div>
+                      <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-end">
+      
+                        </ul>
+                      </nav>
+                    </div>
+                    <div class="option-line" style="padding-top: 15px; text-align: right; position: relative; left: 70%;" >
+                      <div class="line-current">
+                        Số dòng hiển thị
+                      </div>
+                      <div class="option-select">
+                        <select name="hall" id="hall" class="country" style="width: 50%;">
+                          <option value="2" selected>2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <!--/ Contextual Classes -->
@@ -433,55 +455,208 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-      $.ajax({
-        method: "GET",
-        url : "http://localhost:8080/api/v1/lesson/findAll",
-        success: function(res){
-          let html = "";
-          let i = 0;
-          res.lessonImage.forEach(data => {
-            console.log(data)
-            const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
-            html+=`
-            <tr class="${color[i]}" id="${data.id}">
-              <td><i class="fab fa-sketch fa-lg text-warning me-3"></i> <strong>${data.name}</strong></td>
-              <td>${data.description}</td>
-              <td>
-                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
-                  <li
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="top"
-                    class="avatar avatar-xs pull-up"
-                    title="${data.description}"
-                  >
-                    <img src="${data.link}" alt="image" class="rounded-circle" />
-                  </li>
-                </ul>
-              </td>
-              <td>123</td>
-              <td>
-                <div class="dropdown">
-                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#myModal" style="text-decoration:none"
-                      ><i class="bx bx-edit-alt me-1"></i> Edit</a
+      $(document).ready(function () {
+        let totalPages = 1;
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 200;  //time in ms, 5 seconds for example
+        var $input = $('#myInput');
+        let value = " ";
+        let optionValue = document.getElementById('hall').value = "2";
+        console.log(value);
+        function fetchNotes(startPage, optionValue,value) {
+          let url;
+          if(value){
+            url="http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue+"&input="+value;
+          }else{
+            url="http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue;
+          }
+          $.ajax({
+            method: "GET",
+            url: url,
+            success: function (res) {
+              // console.log(res);
+              let html = "";
+              let i = 0;
+              res.lessonImage.forEach(data => {
+                const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info", "table-light", "table-dark"];
+                html += `
+              <tr class="${color[i]}" id="${data.id}">
+                <td><i class="fab fa-sketch fa-lg text-warning me-3"></i> <strong>${data.name}</strong></td>
+                <td>${data.description}</td>
+                <td>
+                  <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
+                    <li
+                      data-bs-toggle="tooltip"
+                      data-popup="tooltip-custom"
+                      data-bs-placement="top"
+                      class="avatar avatar-xs pull-up"
+                      title="${data.description}"
                     >
-                    <a class="dropdown-item" href="javascript:void(0);" style="text-decoration:none"
-                      ><i class="bx bx-trash me-1"></i> Delete</a
-                    >
+                      <img src="${data.link}" alt="image" class="rounded-circle" />
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <div class="wrapper">
+                    <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.lesson}" >${data.countLesson}</a>
                   </div>
-                </div>
-              </td>
-            </tr>`
-          if (i==color.length-1) {
-            i=0;
-          } else i++
-          });
-          $("#content").html(html)
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" data-toggle="modal" href="#myModal" style="text-decoration:none"
+                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                      >
+                      <a class="dropdown-item" href="javascript:void(0);" style="text-decoration:none"
+                        ><i class="bx bx-trash me-1"></i> Delete</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>`
+                if (i == color.length - 1) {
+                  i = 0;
+                } else i++
+              });
+              $("#content").html(html)
+              // console.log($('ul.pagination li').length - 3);
+              // console.log(res.page.totalPage);
+              if ($('ul.pagination li').length - (optionValue + 1) != res.page.totalPage) {
+                // build pagination list at the first time loading
+                $('ul.pagination').empty();
+                buildPagination(res.page, startPage);
+
+              }
+            }
+          })
         }
+        function buildPagination(response, page) {
+          
+          totalPages = response.totalPage;
+          var pageNumber = page;
+          var numLinks = 5;
+
+          // print 'previous' link only if not on page one
+          var first = '';
+          var prev = '';
+
+          if (pageNumber > 1) {
+            if (pageNumber !== 1) {
+              first = '<li class="page-item"><a class="page-link">« First</a></li>';
+            }
+            prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+          } else {
+            prev = ''; // on the page one, don't show 'previous' link
+            first = ''; // nor 'first page' link
+          }
+
+          // print 'next' link only if not on the last page
+          var next = '';
+          var last = '';
+
+          if (pageNumber <= totalPages) {
+            if (pageNumber !== totalPages) {
+              next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+              last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+            }
+          } else {
+            next = ''; // on the last page, don't show 'next' link
+            last = ''; // nor 'last page' link
+          }
+
+          var start = pageNumber - (pageNumber % numLinks) + 1;
+          var end = start + numLinks - 1;
+          end = Math.min(totalPages, end);
+          var pagingLink = '';
+          for (var i = start; i <= end; i++) {
+            if (i == pageNumber) {
+              pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+            } else {
+              pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+            }
+          }
+          pagingLink = first + prev + pagingLink + next + last;
+
+          $("ul.pagination").append(pagingLink);
+        }
+        $(document).on("click", "ul.pagination li a", function () {
+          var data = $(this).attr('data');
+          let val = $(this).text();
+          if (val.toUpperCase() === "« FIRST") {
+
+            let currentActive = $("li.active");
+            fetchNotes(1, optionValue,value);
+            $("li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          } else if (val.toUpperCase() === "LAST »") {
+            let currentActive = $("li.active");
+            fetchNotes(totalPages, optionValue,value);
+            $("li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          } else if (val.toUpperCase() === "NEXT ›") {
+            let currentActive = $("li.active");
+            let activeValue = parseInt($("ul.pagination li.active").text()) + 1;
+
+            if (activeValue <= totalPages) {
+              let currentActive = $("li.active");
+              startPage = activeValue;
+
+              fetchNotes(startPage, optionValue,value);
+              // remove .active class for the old li tag
+              $("li.active").removeClass("active");
+              // add .active to next-pagination li
+              currentActive.next().addClass("active");
+            }
+          } else if (val.toUpperCase() === "‹ PREV") {
+            let activeValue = parseInt($("ul.pagination li.active").text());
+            if (activeValue > 1) {
+              console.log(activeValue)
+              // get the previous page
+              startPage = activeValue - 1;
+              fetchNotes(startPage, optionValue,value);
+              let currentActive = $("li.active");
+              currentActive.removeClass("active");
+              // add .active to previous-pagination li
+              currentActive.prev().addClass("active");
+            }
+          } else {
+            startPage = parseInt(val);
+            fetchNotes(startPage, optionValue,value);
+            // add focus to the li tag
+            $("li.active").removeClass("active");
+            $(this).parent().addClass("active");
+            //$(this).addClass("active");
+          }
+        });
+
+        //select
+        $('#hall').on('change', function () {
+          optionValue = this.value;
+          fetchNotes(1, optionValue,value);
+        });
+
+        //search
+        $input.on('keyup', function () {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+        //on keydown, clear the countdown 
+        $input.on('keydown', function () {
+          clearTimeout(typingTimer);
+        });
+        function doneTyping() {
+          value = $("#myInput").val();
+          console.log(value);
+          fetchNotes(1, optionValue,value);
+        }
+        (function () {
+          // get first-page at initial time
+          fetchNotes(1, optionValue);
+        })();
       })
     </script>
   </body>
