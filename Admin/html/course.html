@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Admin Dashboard - Course</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/img/avatars/logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="../assets/vendor/css/multi-select.css" />
+  <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="../assets/css/demo.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.css">
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <!-- Modal -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Helpers -->
+  <script src="../assets/vendor/js/helpers.js"></script>
+
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="../assets/js/config.js"></script>
+  <!-- dropdown -->
+  <style type="text/css">
+    select {
+      width: 50px;
+      /* border-radius: 10%; */
+      border: 1px solid #6d58be;
+    }
+
+    .multiselect-dropdown {
+      width: 100% !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a href="index.html" class="app-brand-link">
+            <img src="../assets/img/avatars/logo.png" style="width: 30%;">
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">HiAcademy</span>
+          </a>
+
+          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+          </a>
+        </div>
+
+        <div class="menu-inner-shadow"></div>
+
+        <ul class="menu-inner py-1">
+          <!-- Dashboard -->
+          <li class="menu-item">
+            <a href="index.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div data-i18n="Analytics">Dashboard</div>
+            </a>
+          </li>
+
+          <!-- DATA -->
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>
+          <!-- Tables -->
+          <li class="menu-item ">
+            <a href="course.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Course</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="lesson.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Leson</div>
+            </a>
+          </li>
+          <li class="menu-item ">
+            <a href="audio.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Audio</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="image.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Image</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="tab.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Tab</div>
+            </a>
+          </li>
+
+          <!-- SUPPORT -->
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
+          <li class="menu-item">
+            <a href="https://www.facebook.com/minhhieu159" target="_blank" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-support"></i>
+              <div data-i18n="Support">Support</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-file"></i>
+              <div data-i18n="Documentation">Documentation</div>
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center">
+              <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                  aria-label="Search..." id="myInput" />
+              </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <!-- User -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="avatar avatar-online">
+                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-3">
+                          <div class="avatar avatar-online">
+                            <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                          </div>
+                        </div>
+                        <div class="flex-grow-1">
+                          <span class="fw-semibold d-block">John Doe</span>
+                          <small class="text-muted">Admin</small>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <i class="bx bx-user me-2"></i>
+                      <span class="align-middle">My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="auth-login-basic.html">
+                      <i class="bx bx-power-off me-2"></i>
+                      <span class="align-middle">Log Out</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!--/ User -->
+            </ul>
+          </div>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- Content -->
+
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Contextual Classes -->
+
+            <div class="card">
+              <div style="display: flex; justify-content: space-between;">
+
+                <h3 class="card-header">Course</h3>
+                <a href="add-course.html">
+                  <img src="../assets/img/icons/custom/list-plus.png" alt="add-course"
+                    style="width: 40px; right: 40%; top: 22px; height: 40px; position: relative;">
+                </a>
+              </div>
+              <div class="table-responsive text-nowrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Image</th>
+                      <th>Lesson</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0" id="content">
+
+                  </tbody>
+
+                </table>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination justify-content-end">
+
+                  </ul>
+                </nav>
+                <div class="option-line" style="text-align: center;">
+                  <div class="line-current">
+                    Số dòng hiển thị
+                  </div>
+                  <div class="option-select">
+                    <select name="hall" id="hall" class="country">
+                      <option value="2" selected>2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/ Contextual Classes -->
+
+            <hr class="my-5" />
+
+
+            <!--/ Responsive Table -->
+          </div>
+          <!-- / Content -->
+
+          <!-- Footer -->
+          <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+              <div class="mb-2 mb-md-0">
+                ©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                , made with ❤️ by
+                <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
+                  Hieu</a>
+              </div>
+              <div>
+                <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
+              </div>
+            </div>
+          </footer>
+          <!-- / Footer -->
+
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Update Course</h4>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-fullname">Name</label>
+                  <input type="text" class="form-control" id="nameCourse" placeholder="Khóa học A" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-company">Description</label>
+                  <input type="text" class="form-control" id="descriptionCourse" placeholder="Miêu tả khóa học A" />
+                </div>
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
+                  <br />
+
+
+                  <select multiple  id="selectLesson" style="width: 100%;">
+
+                  </select>
+                </div>
+                <div class="mb-3 ">
+                  <div class="form-label">AVATAR</div>
+                  <div style="display:flex;justify-content: left;align-items: center; margin-left: 10px;">
+                    <a data-toggle="modal" href="#myModal2" class="btn btn-primary">Chosse Image</a>
+                  </div>
+                  <br />
+                  <div style="display: grid; grid-template-columns: 50% 50%">
+                    <div id="imageCourseAvatar">
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn btn-primary">Submit</a>
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="myModal2" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Choose Image</h4>
+          </div>
+          <div class="modal-body">
+            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:0.5%;margin-left: -10px;">
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+              <div>
+                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
+                  style="width: 100%; cursor: pointer;">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="../assets/vendor/js/menu.js"></script>
+    <script src="../assets/vendor/js/jquery.multi-select.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    
+    <script src="../assets/js/main.js"></script>
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        let totalPages = 1;
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 200;  //time in ms, 5 seconds for example
+        var $input = $('#myInput');
+        let value = " ";
+        let optionValue = document.getElementById('hall').value = "2";
+
+        function selectLessonA() {
+          $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/v1/lesson/findAll",
+            success: function (res) {
+              let html = "";
+              res.forEach(function (data) {
+                html += `<option value="${data.name}">${data.name}</option>`;
+              })
+              $("#selectLesson").html(html);
+            }
+          })
+        }
+        selectLessonA();
+        //edit course
+        $(document).on("click", ".editCourse", function () {
+          var $mSelect = $('#selectLesson').selectize({ placeholder: "Select a value" });
+          let id = $(this).attr("id");
+          $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/v1/course/findById?id=" + id,
+            success: function (data) {
+
+              let html = `<img src="${data.link}" alt=""
+                        style="width: 100%;">`
+              $("#nameCourse").val(data.name);
+              $("#descriptionCourse").val(data.description);
+              $("#imageCourseAvatar").html(html);
+              var values = data.lesson.split(',');
+              
+              $mSelect[0].selectize.setValue(values)
+            }
+          })
+        })
+
+
+        function fetchNotes(startPage, optionValue, value) {
+          let url;
+          if (value) {
+            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value;
+          } else {
+            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue;
+          }
+          $.ajax({
+            method: "GET",
+            url: url,
+            success: function (res) {
+              // console.log(res);
+              let html = "";
+              let i = 0;
+              res.courseImage.forEach(data => {
+                const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info", "table-light", "table-dark"];
+                html += `
+              <tr class="${color[i]}" >
+                <td><i class="fab fa-sketch fa-lg text-warning me-3"></i> <strong>${data.name}</strong></td>
+                <td>${data.description}</td>
+                <td>
+                  <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
+                    <li
+                      data-bs-toggle="tooltip"
+                      data-popup="tooltip-custom"
+                      data-bs-placement="top"
+                      class="avatar avatar-xs pull-up"
+                      title="${data.description}"
+                    >
+                      <img src="${data.link}" alt="image" class="rounded-circle" />
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <div class="wrapper">
+                    <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.lesson}" >${data.countLesson}</a>
+                  </div>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item editCourse" data-toggle="modal" href="#myModal" style="text-decoration:none" id="${data.id}"
+                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                      >
+                      <a class="dropdown-item deleteCourse" href="javascript:void(0);" style="text-decoration:none" id="${data.id}"
+                        ><i class="bx bx-trash me-1"></i> Delete</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>`
+                if (i == color.length - 1) {
+                  i = 0;
+                } else i++
+              });
+              $("#content").html(html)
+              // console.log($('ul.pagination li').length - 3);
+              // console.log(res.page.totalPage);
+              if ($('ul.pagination li').length - (optionValue + 1) != res.page.totalPage) {
+                // build pagination list at the first time loading
+                $('ul.pagination').empty();
+                buildPagination(res.page, startPage);
+
+              }
+            }
+          })
+        }
+        function buildPagination(response, page) {
+
+          totalPages = response.totalPage;
+          var pageNumber = page;
+          var numLinks = 5;
+
+          // print 'previous' link only if not on page one
+          var first = '';
+          var prev = '';
+
+          if (pageNumber > 1) {
+            if (pageNumber !== 1) {
+              first = '<li class="page-item"><a class="page-link">« First</a></li>';
+            }
+            prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+          } else {
+            prev = ''; // on the page one, don't show 'previous' link
+            first = ''; // nor 'first page' link
+          }
+
+          // print 'next' link only if not on the last page
+          var next = '';
+          var last = '';
+
+          if (pageNumber <= totalPages) {
+            if (pageNumber !== totalPages) {
+              next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+              last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+            }
+          } else {
+            next = ''; // on the last page, don't show 'next' link
+            last = ''; // nor 'last page' link
+          }
+
+          var start = pageNumber - (pageNumber % numLinks) + 1;
+          var end = start + numLinks - 1;
+          end = Math.min(totalPages, end);
+          var pagingLink = '';
+          for (var i = start; i <= end; i++) {
+            if (i == pageNumber) {
+              pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+            } else {
+              pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+            }
+          }
+          pagingLink = first + prev + pagingLink + next + last;
+
+          $("ul.pagination").append(pagingLink);
+        }
+        $(document).on("click", "ul.pagination li a", function () {
+          var data = $(this).attr('data');
+          let val = $(this).text();
+          if (val.toUpperCase() === "« FIRST") {
+
+            let currentActive = $("li.active");
+            fetchNotes(1, optionValue, value);
+            $("li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          } else if (val.toUpperCase() === "LAST »") {
+            let currentActive = $("li.active");
+            fetchNotes(totalPages, optionValue, value);
+            $("li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          } else if (val.toUpperCase() === "NEXT ›") {
+            let currentActive = $("li.active");
+            let activeValue = parseInt($("ul.pagination li.active").text()) + 1;
+
+            if (activeValue <= totalPages) {
+              let currentActive = $("li.active");
+              startPage = activeValue;
+
+              fetchNotes(startPage, optionValue, value);
+              // remove .active class for the old li tag
+              $("li.active").removeClass("active");
+              // add .active to next-pagination li
+              currentActive.next().addClass("active");
+            }
+          } else if (val.toUpperCase() === "‹ PREV") {
+            let activeValue = parseInt($("ul.pagination li.active").text());
+            if (activeValue > 1) {
+              console.log(activeValue)
+              // get the previous page
+              startPage = activeValue - 1;
+              fetchNotes(startPage, optionValue, value);
+              let currentActive = $("li.active");
+              currentActive.removeClass("active");
+              // add .active to previous-pagination li
+              currentActive.prev().addClass("active");
+            }
+          } else {
+            startPage = parseInt(val);
+            fetchNotes(startPage, optionValue, value);
+            // add focus to the li tag
+            $("li.active").removeClass("active");
+            $(this).parent().addClass("active");
+            //$(this).addClass("active");
+          }
+        });
+
+
+        //select
+        $('#hall').on('change', function () {
+          optionValue = this.value;
+          fetchNotes(1, optionValue, value);
+        });
+
+        //search
+        $input.on('keyup', function () {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+        //on keydown, clear the countdown 
+        $input.on('keydown', function () {
+          clearTimeout(typingTimer);
+        });
+
+        function doneTyping() {
+          value = $("#myInput").val();
+          console.log(value);
+          fetchNotes(1, optionValue, value);
+        }
+
+
+        (function () {
+          // get first-page at initial time
+          fetchNotes(1, optionValue);
+        })();
+      })
+    </script>
+</body>
+
+</html>
