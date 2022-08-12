@@ -34,7 +34,9 @@ public class CourseService {
 			course.setName(courseDto.getName());
 			course.setDescription(courseDto.getDescription());
 			course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
-			course.setLessons(lessons);
+			if(lessons.size()>0) {
+				course.setLessons(lessons);				
+			}
 			courseRepository.save(course);
 			return "Bạn đã thêm khóa học " + courseDto.getName() + " thành công";
 		} catch (Exception e) {
@@ -44,10 +46,13 @@ public class CourseService {
 	}
 
 	public String updateCourse(CourseDto courseDto, String id) {
+		
 		Course course = courseRepository.findById(id).get();
+		List<Lesson> lessons = lessonRepository.findListLesson(courseDto.getIdLesson());
 		course.setName(courseDto.getName());
 		course.setDescription(courseDto.getDescription());
 		course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
+		course.setLessons(lessons);
 		courseRepository.save(course);
 		return "Bạn đã cập nhật khóa học thành công";
 	}

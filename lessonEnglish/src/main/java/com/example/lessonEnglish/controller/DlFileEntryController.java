@@ -48,4 +48,9 @@ public class DlFileEntryController {
 			@RequestParam(name="input",required = false,defaultValue = ".") String input) {
 		return dlFileEntryService.findAllDlFileEntry(page, size, input);
 	}
+	
+	@GetMapping("/findById")
+	public String findByIdDlFileEntry(@RequestParam(name="id") String id) {
+		return dlFileEntryService.findByIdDlFileEntry(id);
+	}
 }

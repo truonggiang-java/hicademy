@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.lessonEnglish.dto.CourseDto;
 import com.example.lessonEnglish.dto.CourseImageDto;
 import com.example.lessonEnglish.dto.PageableCourseDto;
-import com.example.lessonEnglish.entity.Course;
 import com.example.lessonEnglish.service.CourseService;
 
 @RestController

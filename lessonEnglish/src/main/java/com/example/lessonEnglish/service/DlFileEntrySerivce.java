@@ -122,5 +122,12 @@ public class DlFileEntrySerivce {
 				pageDlfileEntry.getNumberOfElements(), pageDlfileEntry.getSize()));
 		return pageableDlFileEntryDto;
 	}
+	
+	public String findByIdDlFileEntry(String id) {
+		DlFileEntry dlFileEntry=dlfileEntryRepository.findById(id).get();
+		String link=ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
+				.path(dlFileEntry.getId()).toUriString();
+		return link;
+	}
 
 }
