@@ -234,6 +234,7 @@
                 <table class="table">
                   <thead>
                     <tr>
+                      <th></th>
                       <th>Name</th>
                       <th>Description</th>
                       <th>Image</th>
@@ -452,7 +453,10 @@
                 const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info", "table-light", "table-dark"];
                 html += `
               <tr class="${color[i]}" id="${data.id}">
-                <td><i class="fab fa-sketch fa-lg text-warning me-3"></i> <strong>${data.name}</strong></td>
+                <td>
+                  <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
+                </td>
+                <td><strong>${data.name}</strong></td>
                 <td>${data.description}</td>
                 <td>
                   <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
