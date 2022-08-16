@@ -1,6 +1,7 @@
 package com.example.lessonEnglish.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class CourseService {
 			course.setName(courseDto.getName());
 			course.setDescription(courseDto.getDescription());
 			course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
-			if(lessons.size()>0) {
-				course.setLessons(lessons);				
+			if (lessons.size() > 0) {
+				course.setLessons(lessons);
 			}
 			courseRepository.save(course);
 			return "Bạn đã thêm khóa học " + courseDto.getName() + " thành công";
@@ -46,7 +47,7 @@ public class CourseService {
 	}
 
 	public String updateCourse(CourseDto courseDto, String id) {
-		
+
 		Course course = courseRepository.findById(id).get();
 		List<Lesson> lessons = lessonRepository.findListLesson(courseDto.getIdLesson());
 		course.setName(courseDto.getName());
@@ -57,7 +58,7 @@ public class CourseService {
 		return "Bạn đã cập nhật khóa học thành công";
 	}
 
-	public PageableCourseDto findAll(Integer page, Integer size, String input) {
+	public PageableCourseDto findAll(Integer page, Integer size, String input, String sort) {
 		PageableCourseDto pageableCourseDto = new PageableCourseDto();
 		Long listCourse = courseRepository.countCourse(input);
 		List<CourseProjection> pageCourse = courseRepository.findAllCourse(input, (page - 1) * size, size);
@@ -88,6 +89,20 @@ public class CourseService {
 			}
 			courseImageDto.setLesson(lesson);
 			listImage.add(courseImageDto);
+		}
+
+		if (sort != null) {
+			switch (sort) {
+			case "name":
+				listImage = listImage.stream().sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()))
+						.toList();
+				break;
+
+			case "description":
+				listImage = listImage.stream()
+						.sorted((o1, o2) -> o1.getDescription().compareToIgnoreCase(o2.getDescription())).toList();
+				break;
+			}
 		}
 		int totalPage = (int) Math.ceil((double) listCourse / size);
 		pageableCourseDto.setPage(new PageDto(totalPage, listCourse, pageCourse.size(), size));

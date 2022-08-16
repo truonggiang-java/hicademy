@@ -10,6 +10,13 @@ public class LessonEnglishApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LessonEnglishApplication.class, args);
+		System.out.println(init(5));
 	}
-
+	public static Integer init(int n) {
+		if(n==1) {
+			return 1;
+		}else {
+			return n * init(n-1);
+		}
+	}
 }

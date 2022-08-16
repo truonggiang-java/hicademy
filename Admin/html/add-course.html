@@ -1,169 +1,159 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="../assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+  data-template="vertical-menu-template-free">
 
-    <title>Add Course</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <meta name="description" content="" />
+  <title>Add Course</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/avatars/logo.png" />
+  <meta name="description" content="" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="icon" type="image/x-icon" href="../assets/img/avatars/logo.png" />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="../assets/vendor/css/multi-select.css" />
+  <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="../assets/css/demo.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.css">
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+  <!-- Modal -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <!-- Helpers -->
+  <script src="../assets/vendor/js/helpers.js"></script>
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="../assets/js/config.js"></script>
 
-    <!-- dropdown -->
-    <script type="text/javascript" src="../assets/js/dropdown.js"></script>
-    <style type="text/css">
-        select{
-            width: 84%;
-        }
-    </style>
-  </head>
+
+  <style type="text/css">
+    .multiselect-dropdown {
+      width: 100% !important;
+    }
+
+    .dropdown.bootstrap-select.show-tick {
+      width: 100% !important;
+    }
+  </style>
+</head>
+
 <body>
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-          <!-- Menu -->
-  
-          <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-            <div class="app-brand demo">
-              <a href="index.html" class="app-brand-link">
-                <img src="../assets/img/avatars/logo.png" style="width: 30%;">
-                <span class="app-brand-text demo menu-text fw-bolder ms-2">HiAcademy</span>
-              </a>
-  
-              <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                <i class="bx bx-chevron-left bx-sm align-middle"></i>
-              </a>
-            </div>
-  
-            <div class="menu-inner-shadow"></div>
-  
-            <ul class="menu-inner py-1">
-              <!-- Dashboard -->
-              <li class="menu-item">
-                <a href="index.html" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                  <div data-i18n="Analytics">Dashboard</div>
-                </a>
-              </li>
-  
-              <!-- DATA -->
-              <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>            
-              <!-- Tables -->
-              <li class="menu-item">
-                <a href="course.html" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-detail"></i>
-                  <div data-i18n="Tables">Course</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="lesson.html" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-detail"></i>
-                  <div data-i18n="Tables">Leson</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="audio.html" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-detail"></i>
-                  <div data-i18n="Tables">Audio</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="image.html" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-detail"></i>
-                  <div data-i18n="Tables">Image</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="tab.html" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-detail"></i>
-                  <div data-i18n="Tables">Tab</div>
-                </a>
-              </li>
-  
-              <!-- SUPPORT -->
-              <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
-              <li class="menu-item">
-                <a
-                  href="https://www.facebook.com/minhhieu159"
-                  target="_blank"
-                  class="menu-link"
-                >
-                  <i class="menu-icon tf-icons bx bx-support"></i>
-                  <div data-i18n="Support">Support</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a
-                  href="pages-misc-under-maintenance.html"
-                  target="_blank"
-                  class="menu-link"
-                >
-                  <i class="menu-icon tf-icons bx bx-file"></i>
-                  <div data-i18n="Documentation">Documentation</div>
-                </a>
-              </li>
-            </ul>
-          </aside>
-        <!-- / Menu -->
-        
-        <!-- Layout container -->
-        <div class="layout-page">
-            <!-- Navbar -->
-  
-            <nav
-              class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-              id="layout-navbar"
-            >
-              <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                  <i class="bx bx-menu bx-sm"></i>
-                </a>
-              </div>
-  
-              <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                <!-- Search -->
-                <!-- <div class="navbar-nav align-items-center">
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a href="index.html" class="app-brand-link">
+            <img src="../assets/img/avatars/logo.png" style="width: 30%;">
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">HiAcademy</span>
+          </a>
+
+          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+          </a>
+        </div>
+
+        <div class="menu-inner-shadow"></div>
+
+        <ul class="menu-inner py-1">
+          <!-- Dashboard -->
+          <li class="menu-item">
+            <a href="index.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div data-i18n="Analytics">Dashboard</div>
+            </a>
+          </li>
+
+          <!-- DATA -->
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>
+          <!-- Tables -->
+          <li class="menu-item">
+            <a href="course.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Course</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="lesson.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Leson</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="audio.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Audio</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="image.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Image</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="tab.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">Tab</div>
+            </a>
+          </li>
+
+          <!-- SUPPORT -->
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
+          <li class="menu-item">
+            <a href="https://www.facebook.com/minhhieu159" target="_blank" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-support"></i>
+              <div data-i18n="Support">Support</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-file"></i>
+              <div data-i18n="Documentation">Documentation</div>
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- Search -->
+            <!-- <div class="navbar-nav align-items-center">
                   <div class="nav-item d-flex align-items-center">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input
@@ -174,207 +164,221 @@
                     />
                   </div>
                 </div> -->
-                <!-- /Search -->
-  
-                <ul class="navbar-nav flex-row align-items-center ms-auto">
-                  <!-- User -->
-                  <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                      <div class="avatar avatar-online">
-                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <!-- User -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="avatar avatar-online">
+                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-3">
+                          <div class="avatar avatar-online">
+                            <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                          </div>
+                        </div>
+                        <div class="flex-grow-1">
+                          <span class="fw-semibold d-block">John Doe</span>
+                          <small class="text-muted">Admin</small>
+                        </div>
                       </div>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0 me-3">
-                              <div class="avatar avatar-online">
-                                <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                              </div>
-                            </div>
-                            <div class="flex-grow-1">
-                              <span class="fw-semibold d-block">John Doe</span>
-                              <small class="text-muted">Admin</small>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          <i class="bx bx-user me-2"></i>
-                          <span class="align-middle">My Profile</span>
-                        </a>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="auth-login-basic.html">
-                          <i class="bx bx-power-off me-2"></i>
-                          <span class="align-middle">Log Out</span>
-                        </a>
-                      </li>
-                    </ul>
                   </li>
-                  <!--/ User -->
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <i class="bx bx-user me-2"></i>
+                      <span class="align-middle">My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="auth-login-basic.html">
+                      <i class="bx bx-power-off me-2"></i>
+                      <span class="align-middle">Log Out</span>
+                    </a>
+                  </li>
                 </ul>
+              </li>
+              <!--/ User -->
+            </ul>
+          </div>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- Content -->
+
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Contextual Classes -->
+
+            <div class="card">
+              <div style="display: flex; justify-content: space-between;">
+                <h5 class="card-header">Add Course</h5>
               </div>
-            </nav>
-  
-            <!-- / Navbar -->
-  
-            <!-- Content wrapper -->
-            <div class="content-wrapper">
-              <!-- Content -->
-  
-              <div class="container-xxl flex-grow-1 container-p-y">
-                <!-- Contextual Classes -->
-  
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h5 class="card-header">Add Course</h5>
+              <form method="POST" onsubmit="return false" style="padding: 1.5rem;">
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="firstName" class="form-label">Name Course</label>
+                    <input class="form-control" type="text" id="firstName" name="firstName" value="The first course"
+                      autofocus />
+                  </div>
+
+                  <div class="mb-3 col-md-6">
+                    <label for="lastName" class="form-label">Description</label>
+                    <input class="form-control" type="text" name="lastName" id="lastName" value="Enter something" />
+                  </div>
+
+                  <div class="mb-3 col-md-6" style="text-align: center;
+                  align-items: center;
+                  display: flex;
+                  justify-content: center;" id="imageAttr">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                      id="chooseImage">Image</button>
+                    <div id="imageCourseAvatar" style="padding: 10px; display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      text-align: center;">
+
                     </div>
-                    <form method="POST" onsubmit="return false" style="padding: 1.5rem;">
-                      <div class="row">
-                        <div class="mb-3 col-md-6">
-                          <label for="firstName" class="form-label">Name Course</label>
-                          <input class="form-control" type="text" id="firstName" name="firstName" value="The first course" autofocus/>
-                      </div>
+                  </div>
 
-                      <div class="mb-3 col-md-6">
-                        <label for="lastName" class="form-label">Description</label>
-                        <input class="form-control" type="text" name="lastName" id="lastName" value="Enter something" />
-                      </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
+                    <br />
+                    <select class="selectpicker" multiple data-live-search="true" id="selectLesson" style="width:100%;">
 
-                      <div class="mb-3 col-md-6">
-                        <label for="lastName" class="form-label">Choose Image</label style="width:15%;">
-                        <br/>
-                        <select 
-                            name="selectImage" 
-                             multiselect-search="true" 
-                        >
-                            <option>Image 1</option>
-                            <option>Image 2</option>
-                            <option>Image 3</option>
-                            <option>Image 4</option>
-                        </select>
-                      </div>
-
-                      <div class="mb-3 col-md-6">
-                        <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
-                        <br/>
-                        <select 
-                            name="selectCourse" 
-                            multiple multiselect-search="true" 
-                            multiselect-select-all="true"
-                            multiselect-max-items="10"
-                        >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                      </div>
-                      <!--/ Contextual Classes -->
-                <hr class="my-5" />
-                <!--/ Responsive Table -->
-              </div>
-              <!-- / Content -->
-        </div>
-    </div>
-    <div class="modal" id="myModal2" data-backdrop="static">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Choose Image</h4>
-          </div>
-          <div class="modal-body">
-            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:0.5%;margin-left: -10px;">
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
+                    </select>
+                  </div>
+                  <!--/ Contextual Classes -->
+                  <hr class="my-5" />
+                  <!--/ Responsive Table -->
+                </div>
+                <!-- / Content -->
             </div>
           </div>
-          <div class="modal-footer">
-            <a href="#" data-dismiss="modal" class="btn">Close</a>
-            <a href="#" class="btn btn-primary">Save changes</a>
-          </div>
+
+          <!--Modal -->
+
         </div>
       </div>
     </div>
-    <!--Modal -->
-    <div class="modal" id="myModal2" data-backdrop="static">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Choose Image</h4>
-          </div>
-          <div class="modal-body">
-            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:0.5%;margin-left: -10px;">
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
-              <div>
-                <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                  style="width: 100%; cursor: pointer;">
-              </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Course</h4>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:1.5%;margin-left: -10px;"
+              id="viewImage">
+
             </div>
           </div>
-          <div class="modal-footer">
-            <a href="#" data-dismiss="modal" class="btn">Close</a>
-            <a href="#" class="btn btn-primary">Save changes</a>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" data-dismiss="modal" class="btn">Close</a>
         </div>
       </div>
     </div>
+  </div>
 </body>
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../assets/vendor/libs/popper/popper.js"></script>
+<script src="../assets/vendor/js/bootstrap.js"></script>
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../assets/vendor/js/menu.js"></script>
+<script src="../assets/vendor/js/jquery.multi-select.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+
+<!-- Main JS -->
+
+<script src="../assets/js/main.js"></script>
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  $(document).ready(function () {
+    let idImage;
+    // $('select').selectpicker();
+    // var $mSelect = $('#selectLesson').selectize({ placeholder: "Select a value" });
+
+    $.ajax({
+      method: "GET",
+      url: "http://localhost:8080/api/v1/lesson/findAll",
+      success: function (res) {
+        let html = "";
+        res.forEach(function (data) {
+          console.log(data);
+          html += `<option value="${data.name}">${data.name}</option>`;
+        })
+        $("#selectLesson").html(html);
+      }
+    })
+
+    $('#selectLesson').multiselect({
+      buttonWidth: '400px'
+    });
+    $(document).on('click', '#chooseImage', function () {
+      $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+        success: function (res) {
+          let html = "";
+          res.dlFile.forEach(data => {
+            html += `
+                  <div>
+                  <img src="${data.link}" alt="" class="viewImage" id="${data.id}"
+                    style="width: 100%; cursor: pointer; height:100%;">
+                  </div>`
+          })
+
+          $("#viewImage").html(html)
+        }
+      })
+    })
+    $(document).on('click', '.viewImage', function (e) {
+      idImage = $(this).attr("id")
+      var nodes = document.getElementsByClassName("viewImage");
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].style.border = "none";
+      }
+      document.getElementById(idImage).style.border = "4px solid red";
+      $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + idImage,
+        success: function (param) {
+          $("#imageAttr").removeAttr("style");
+          let html = `<img src="${param}" alt="" 
+                          style="width: 50%;" id="${idImage}"> `
+          $("#imageCourseAvatar").html(html);
+        }
+      })
+    })
+  })
+</script>
+
 </html>
