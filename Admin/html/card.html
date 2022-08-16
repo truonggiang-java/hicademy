@@ -7,10 +7,11 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Add Course</title>
+  <title>Admin Dashboard-Card</title>
 
   <meta name="description" content="" />
 
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="../assets/img/avatars/logo.png" />
 
   <!-- Fonts -->
@@ -25,20 +26,17 @@
 
   <!-- Core CSS -->
   <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="../assets/vendor/css/multi-select.css" />
   <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="../assets/css/demo.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.css">
+
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
   <!-- Modal -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
   <!-- Helpers -->
   <script src="../assets/vendor/js/helpers.js"></script>
 
@@ -46,19 +44,10 @@
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="../assets/js/config.js"></script>
 
-
-  <style type="text/css">
-    .multiselect-dropdown {
-      width: 100% !important;
-    }
-
-    .dropdown.bootstrap-select.show-tick {
-      width: 100% !important;
-    }
-  </style>
 </head>
 
 <body>
+  <!-- Layout wrapper -->
   <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
       <!-- Menu -->
@@ -89,7 +78,7 @@
           <!-- DATA -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>
           <!-- Tables -->
-          <li class="menu-item">
+          <li class="menu-item ">
             <a href="course.html" class="menu-link">
               <i class="menu-icon tf-icons bx bx-detail"></i>
               <div data-i18n="Tables">Course</div>
@@ -101,7 +90,7 @@
               <div data-i18n="Tables">Leson</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item ">
             <a href="audio.html" class="menu-link">
               <i class="menu-icon tf-icons bx bx-detail"></i>
               <div data-i18n="Tables">Audio</div>
@@ -152,9 +141,19 @@
           </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
+            <!-- Search -->
+            <div class="navbar-nav align-items-center">
+              <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                  aria-label="Search..." />
+              </div>
+            </div>
+            <!-- /Search -->
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <!-- Place this tag where you want the button to render. -->
+
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -210,117 +209,112 @@
           <!-- Content -->
 
           <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Contextual Classes -->
-
-            <div class="card">
-              <div style="display: flex; justify-content: space-between;">
-                <h5 class="card-header">Add Course</h5>
+            <div style="display: flex; justify-content: space-between;">
+              <div>
+                <h3 class="card-header" style="display: inline-block;">Card</h3>
               </div>
-              <form method="POST" onsubmit="return false" style="padding: 1.5rem;">
-                <div class="row">
-                  <div class="mb-3 col-md-6">
-                    <label for="firstName" class="form-label">Name Course</label>
-                    <input class="form-control" type="text" id="nameCourse" name="firstName"
-                      placeholder="The first course" autofocus />
-                  </div>
-
-                  <div class="mb-3 col-md-6">
-                    <label for="lastName" class="form-label">Description</label>
-                    <input class="form-control" type="text" name="descriptionCourse" id="descriptionCourse"
-                      placeholder="Enter something" />
-                  </div>
-
-                  <div class="mb-3 col-md-6" style="text-align: center;
-                  align-items: center;
-                  display: flex;
-                  justify-content: center;" id="imageAttr">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-                      id="chooseImage">Image</button>
-                    <div id="imageCourseAvatar" style="padding: 10px; display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      text-align: center;">
-
-                    </div>
-                  </div>
-
-                  <div class="mb-3 col-md-6">
-                    <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
-                    <br />
-                    <select class="selectpicker" multiple data-live-search="true" id="selectLesson" style="width:100%;">
-
-                    </select>
-                  </div>
-                  <div>
-                    <button 
-                      type="submit" class="btn btn-success" id="submitCourse" 
-                      style="display: block;  margin-left: auto;  margin-right: auto;"
-                    >
-                      Submit
-                    </button>
-                  </div>
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <div id="delete" style="display: none; cursor: pointer;">
+                  <img src="../assets/img/icons/custom/trash.png">
                 </div>
-                <!-- / Content -->
+                <div>
+                  <a data-toggle="modal" href="#modal">
+                    <img id="img" src="../assets/img/icons/custom/image-add.png">
+                  </a>
+                </div>
+              </div>
             </div>
+            <!-- Image -->
+            <div class="row mb-5" id="image">
+
+            </div>
+
+
           </div>
 
-          <!--Modal -->
+          <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+              <div class="mb-2 mb-md-0">
+                ©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                , made with ❤️ by
+                <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
+                  Hieu</a>
+              </div>
+              <div>
+                <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
+              </div>
+            </div>
+          </footer>
+          <!-- / Footer -->
 
+          <div class="content-backdrop fade"></div>
         </div>
+        <!-- Content wrapper -->
       </div>
+      <!-- / Layout page -->
     </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
   </div>
+  <!-- / Layout wrapper -->
   <!-- Modal -->
-  <div class="modal" id="myModal">
+  <div id="modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Update Course</h4>
+          <h4 class="modal-title">Add Card</h4>
         </div>
-        <div class="modal-body">
-          <div class="card-body">
-            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:1.5%;margin-left: -10px;"
-              id="viewImage">
+        <form id="data" method='post' action='' enctype="multipart/form-data">
+          <div class="modal-body">
+            <div class="card-body">
+              <div class="mb-3 col-md-6">
+                <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
+                <br />
+                <select class="selectpicker" multiple data-live-search="true" id="selectCard" style="width:100%;">
 
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#" data-dismiss="modal" class="btn">Close</a>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" id="submit" data-dismiss="modal">Submit</button>
+            <button data-dismiss="modal" class="btn">Close</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-</body>
-<!-- Core JS -->
-<!-- build:js assets/vendor/js/core.js -->
-<script src="../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../assets/vendor/libs/popper/popper.js"></script>
-<script src="../assets/vendor/js/bootstrap.js"></script>
-<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
 
-<script src="../assets/vendor/js/menu.js"></script>
-<script src="../assets/vendor/js/jquery.multi-select.js"></script>
-<!-- endbuild -->
+  <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="../assets/vendor/libs/popper/popper.js"></script>
+  <script src="../assets/vendor/js/bootstrap.js"></script>
+  <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<!-- Vendors JS -->
+  <script src="../assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
 
-<!-- Main JS -->
+  <!-- Vendors JS -->
+  <script src="../assets/vendor/libs/masonry/masonry.js"></script>
 
-<script src="../assets/js/main.js"></script>
-<!-- Page JS -->
+  <!-- Main JS -->
+  <script src="../assets/js/main.js"></script>
 
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-  $(document).ready(function () {
-    let idImage;
-    // $('select').selectpicker();
-    // var $mSelect = $('#selectLesson').selectize({ placeholder: "Select a value" });
+  <!-- Page JS -->
 
-    $.ajax({
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $.ajax({
       method: "GET",
       url: "http://localhost:8080/api/v1/lesson/findAll",
       success: function (res) {
@@ -328,91 +322,99 @@
         res.forEach(function (data) {
           html += `<option value="${data.name}">${data.name}</option>`;
         })
-        $("#selectLesson").html(html);
+        $("#selectCard").html(html);
       }
     })
 
-    $(document).on('click', "#submitCourse", function () {
-      let name = $('#nameCourse').val();
-      let description = $("#descriptionCourse").val();
-      let image = $("#imageCourseAvatar img").attr("id");
-      var selectedValues = $('#selectLesson').val();
+      function findAll() {
+        $.ajax({
+          method: "GET",
+          url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+          success: function (res) {
+            let html = "";
+            res.dlFile.forEach(data => {
+              html += `
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div class="card h-100 hover01">
+                    <figure><img class="card-img-top" src="${data.link}" alt="Card image cap" style="height:300px;"/></figure>
+                    <div class="card-body">
+                      <h5 class="card-title">Name : ${data.name}</h5>
+                      <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
+                    </div>
+                  </div>
+                </div>`
+            })
 
-      let value = {
-        name: name,
-        description: description,
-        idDlfileEntry: image,
-        idLesson: selectedValues
+            $("#image").html(html)
+          }
+        })
       }
-      $.ajax({
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        method: "POST",
-        url: "http://localhost:8080/api/v1/course/insertCourse",
-        data: JSON.stringify(value),
-        success: function (data) {
-
+      $(document).on('click', '.messageCheckbox', function () {
+        var checkedValue = $('.messageCheckbox:checked').val();
+        if (checkedValue) {
+          document.getElementById("delete").style.display = "block";
+        } else {
+          document.getElementById("delete").style.display = "none";
         }
       })
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
+      $('#delete').click(function () {
+        let myPromise = new Promise(resolve => {
+          var checkedValued = [];
+          var inputElements = document.getElementsByClassName('messageCheckbox');
+          for (var i = 0; inputElements[i]; ++i) {
+            if (inputElements[i].checked) {
+              checkedValued.push(inputElements[i].value);
 
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      Toast.fire({
-        icon: 'success',
-        title: 'Created Course successfully'
-      })
-      window.setTimeout(function () {
-        window.location.reload();
-      }, 1000);
-    })
-
-    $(document).on('click', '#chooseImage', function () {
-      $.ajax({
-        method: "GET",
-        url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
-        success: function (res) {
-          let html = "";
-          res.dlFile.forEach(data => {
-            html += `
-                  <div>
-                  <img src="${data.link}" alt="" class="viewImage" id="${data.id}"
-                    style="width: 100%; cursor: pointer; height:100%;">
-                  </div>`
+            }
+          }
+          resolve(checkedValued);
+        })
+        myPromise.then(value => {
+          console.log(value);
+          $.ajax({
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            method: "DELETE",
+            url: "http://localhost:8080/api/v1/dlFileEntry/deleteFile",
+            data: JSON.stringify(value),
+            success: function (data) {
+              document.getElementById("delete").style.display = "none";
+              findAll();
+            }
           })
+        })
+      })
 
-          $("#viewImage").html(html)
+
+      $(document).on('click', '#submit', function (e) {
+        
+        var form_data = new FormData();
+        var totalfiles = document.getElementById('files').files.length;
+        for (var index = 0; index < totalfiles; index++) {
+          form_data.append("file", document.getElementById('files').files[index]);
         }
+        $.ajax({
+          url: "http://localhost:8080/api/v1/dlFileEntry/uploadFile",
+          data: form_data,
+          dataType: 'json',
+          contentType: false,
+          processData: false,
+          method: 'POST',
+          success: function (data) {
+            
+          }
+        })
+        window.setTimeout(function () {
+          window.location.reload();
+        }, 5000);
       })
+
+      findAll();
+
+
     })
-    $(document).on('click', '.viewImage', function (e) {
-      idImage = $(this).attr("id")
-      var nodes = document.getElementsByClassName("viewImage");
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].style.border = "none";
-      }
-      document.getElementById(idImage).style.border = "4px solid red";
-      $.ajax({
-        method: "GET",
-        url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + idImage,
-        success: function (param) {
-          $("#imageAttr").removeAttr("style");
-          let html = `<img src="${param}" alt="" 
-                          style="width: 50%;" id="${idImage}"> `
-          $("#imageCourseAvatar").html(html);
-        }
-      })
-    })
-  })
-</script>
+  </script>
+</body>
 
 </html>
