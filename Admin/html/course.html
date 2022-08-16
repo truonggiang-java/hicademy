@@ -317,7 +317,7 @@
     <!-- Modal -->
     <div class="modal" id="myModal">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" style="overflow: auto; height: 800px;">
           <div class="modal-header">
             <h4 class="modal-title">Update Course</h4>
           </div>
@@ -440,7 +440,7 @@
             success: function (data) {
 
               let html = `<img src="${data.link}" alt="" id="${data.id}"
-                        style="width: 100%;">`
+                        style="width: 90%;">`
               $("#nameCourse").val(data.name);
               $("#descriptionCourse").val(data.description);
               $("#imageCourseAvatar").html(html);

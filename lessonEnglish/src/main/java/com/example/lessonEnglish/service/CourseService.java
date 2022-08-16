@@ -3,6 +3,7 @@ package com.example.lessonEnglish.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,12 +95,12 @@ public class CourseService {
 		if (sort != null) {
 			switch (sort) {
 			case "name":
-				listImage = listImage.stream().sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName())).toList();
+				listImage = listImage.stream().sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName())).collect(Collectors.toList());
 				break;
 
 			case "description":
 				listImage = listImage.stream()
-						.sorted((o1, o2) -> o1.getDescription().compareToIgnoreCase(o2.getDescription())).toList();
+						.sorted((o1, o2) -> o1.getDescription().compareToIgnoreCase(o2.getDescription())).collect(Collectors.toList());
 				break;
 			}
 		}
