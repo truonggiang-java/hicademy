@@ -46,7 +46,6 @@
   <script src="../assets/js/config.js"></script>
   <!-- dropdown -->
   <style type="text/css">
-    
     .multiselect-dropdown {
       width: 100% !important;
     }
@@ -222,7 +221,7 @@
                   <h3 class="card-header" style="display: inline-block;">Course</h3>
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center;">
-                  <div id="delete" style="cursor: pointer;position: relative;
+                  <div id="delete" style="display: none; cursor: pointer;position: relative;
                   right: 20%;
                   top: 20%;">
                     <img src="../assets/img/icons/custom/trash.png">
@@ -257,7 +256,7 @@
                   <div>
                     <nav aria-label="Page navigation">
                       <ul class="pagination justify-content-end">
-    
+
                       </ul>
                     </nav>
                   </div>
@@ -531,7 +530,14 @@
             }
           })
         })
-
+        $(document).on('click', '.messageCheckbox', function () {
+          var checkedValue = $('.messageCheckbox:checked').val();
+          if (checkedValue) {
+            document.getElementById("delete").style.display = "block";
+          } else {
+            document.getElementById("delete").style.display = "none";
+          }
+        })
         $('#delete').click(function () {
           let myPromise = new Promise(resolve => {
             var checkedValued = [];
@@ -557,17 +563,17 @@
             }).then((result) => {
               if (result.isConfirmed) {
                 $.ajax({
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-              },
-              method: "DELETE",
-              url: "http://localhost:8080/api/v1/course/delete",
-              data: JSON.stringify(value),
-              success: function (data) {
-
-                fetchNotes(1, optionValue)
-              }
-            })
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  method: "DELETE",
+                  url: "http://localhost:8080/api/v1/course/delete",
+                  data: JSON.stringify(value),
+                  success: function (data) {
+                    document.getElementById("delete").style.display = "none";
+                    fetchNotes(1, optionValue)
+                  }
+                })
                 Swal.fire(
                   'Deleted!',
                   'Your file has been deleted.',
@@ -575,23 +581,23 @@
                 )
               }
             })
-            
+
           })
         })
 
         //sort 
         $(document).on('click', '.sortCourse', function (e) {
           sort = $(this).attr("name");
-          fetchNotes(1,optionValue," ",sort)
+          fetchNotes(1, optionValue, " ", sort)
         })
 
-        function fetchNotes(startPage, optionValue, value,sort) {
+        function fetchNotes(startPage, optionValue, value, sort) {
           let url;
           if (value && sort) {
-            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value +"&sort=" +sort;
-          } else if(sort && !value){
-            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue +"&sort=" +sort;
-          }else{
+            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value + "&sort=" + sort;
+          } else if (sort && !value) {
+            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&sort=" + sort;
+          } else {
             url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue
           }
 
@@ -716,13 +722,13 @@
           if (val.toUpperCase() === "« FIRST") {
 
             let currentActive = $("li.active");
-            fetchNotes(1, optionValue, value,sort);
+            fetchNotes(1, optionValue, value, sort);
             $("li.active").removeClass("active");
             // add .active to next-pagination li
             currentActive.next().addClass("active");
           } else if (val.toUpperCase() === "LAST »") {
             let currentActive = $("li.active");
-            fetchNotes(totalPages, optionValue, value,sort);
+            fetchNotes(totalPages, optionValue, value, sort);
             $("li.active").removeClass("active");
             // add .active to next-pagination li
             currentActive.next().addClass("active");
@@ -734,7 +740,7 @@
               let currentActive = $("li.active");
               startPage = activeValue;
 
-              fetchNotes(startPage, optionValue, value,sort);
+              fetchNotes(startPage, optionValue, value, sort);
               // remove .active class for the old li tag
               $("li.active").removeClass("active");
               // add .active to next-pagination li
@@ -746,7 +752,7 @@
               // console.log(activeValue)
               // get the previous page
               startPage = activeValue - 1;
-              fetchNotes(startPage, optionValue, value,sort);
+              fetchNotes(startPage, optionValue, value, sort);
               let currentActive = $("li.active");
               currentActive.removeClass("active");
               // add .active to previous-pagination li
@@ -754,7 +760,7 @@
             }
           } else {
             startPage = parseInt(val);
-            fetchNotes(startPage, optionValue, value,sort);
+            fetchNotes(startPage, optionValue, value, sort);
             // add focus to the li tag
             $("li.active").removeClass("active");
             $(this).parent().addClass("active");
