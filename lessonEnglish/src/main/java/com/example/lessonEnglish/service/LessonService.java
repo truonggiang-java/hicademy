@@ -62,11 +62,10 @@ public class LessonService {
 			lessonImageDto.setDescription(lesson.getDescription());
 			lessonImageDto.setId(lesson.getId());
 			lessonImageDto.setName(lesson.getName());
+			lessonImageDto.setCountCourse(lesson.getCountCourse());
 			String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
 					.path(lesson.getIdDlFileEntry()).toUriString();
 			lessonImageDto.setLink(fileName);
-			listImage.add(lessonImageDto);
-
 			//lesson
 			List<CourseLessonProjection> listCourse=lessonRepository.findCourseByIdLesson(lesson.getId());
 			String course="";
@@ -84,6 +83,7 @@ public class LessonService {
 			lessonImageDto.setCourse(course);
 			listImage.add(lessonImageDto);
 		}
+//		listImage.add(lessonImageDto);
 		int totalPage = (int) Math.ceil((double) listLesson / size);
 		pageableCourseDto.setPage(new PageDto(totalPage, listLesson, pageLesson.size(), size));
 		pageableCourseDto.setLessonImage(listImage);
