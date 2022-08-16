@@ -94,8 +94,7 @@ public class CourseService {
 		if (sort != null) {
 			switch (sort) {
 			case "name":
-				listImage = listImage.stream().sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()))
-						.toList();
+				listImage = listImage.stream().sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName())).toList();
 				break;
 
 			case "description":
