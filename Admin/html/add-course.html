@@ -152,19 +152,7 @@
           </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <!-- Search -->
-            <!-- <div class="navbar-nav align-items-center">
-                  <div class="nav-item d-flex align-items-center">
-                    <i class="bx bx-search fs-4 lh-0"></i>
-                    <input
-                      type="text"
-                      class="form-control border-0 shadow-none"
-                      placeholder="Search..."
-                      aria-label="Search..."
-                    />
-                  </div>
-                </div> -->
-            <!-- /Search -->
+
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- User -->
@@ -232,13 +220,14 @@
                 <div class="row">
                   <div class="mb-3 col-md-6">
                     <label for="firstName" class="form-label">Name Course</label>
-                    <input class="form-control" type="text" id="firstName" name="firstName" value="The first course"
-                      autofocus />
+                    <input class="form-control" type="text" id="nameCourse" name="firstName"
+                      placeholder="The first course" autofocus />
                   </div>
 
                   <div class="mb-3 col-md-6">
                     <label for="lastName" class="form-label">Description</label>
-                    <input class="form-control" type="text" name="lastName" id="lastName" value="Enter something" />
+                    <input class="form-control" type="text" name="descriptionCourse" id="descriptionCourse"
+                      placeholder="Enter something" />
                   </div>
 
                   <div class="mb-3 col-md-6" style="text-align: center;
@@ -262,9 +251,9 @@
 
                     </select>
                   </div>
-                  <!--/ Contextual Classes -->
-                  <hr class="my-5" />
-                  <!--/ Responsive Table -->
+                  <div>
+                    <button type="submit" class="btn btn-success" id="submitCourse">Submit</button>
+                  </div>
                 </div>
                 <!-- / Content -->
             </div>
@@ -339,9 +328,15 @@
       }
     })
 
-    $('#selectLesson').multiselect({
-      buttonWidth: '400px'
-    });
+    $(document).on('click', "#submitCourse", function () {
+      let name = $('#nameCourse').val();
+      let description = $("#descriptionCourse").val();
+      let image = $("#imageCourseAvatar img").attr("id");
+      var selectedValues = $('#selectLesson').val();
+      console.log(selectedValues)
+      
+    })
+
     $(document).on('click', '#chooseImage', function () {
       $.ajax({
         method: "GET",
