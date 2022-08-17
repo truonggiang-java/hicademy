@@ -234,7 +234,14 @@
             <div class="row mb-5" id="image">
 
             </div>
+            <!-- pageable -->
+            <div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-end">
 
+                </ul>
+              </nav>
+            </div>
 
           </div>
 
@@ -327,10 +334,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function () {
-      function findAll() {
+      let totalPages = 1;
+      function findAll(startPage) {
         $.ajax({
           method: "GET",
-          url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+          url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
           success: function (res) {
             let html = "";
             res.dlFile.forEach(data => {
@@ -347,9 +355,122 @@
             })
 
             $("#image").html(html)
+            if ($('ul.pagination li').length - 3 != res.page.totalPage) {
+              // build pagination list at the first time loading
+              $('ul.pagination').empty();
+              buildPagination(res.page, startPage);
+            }
           }
         })
       }
+
+      function buildPagination(response, page) {
+
+        totalPages = response.totalPage;
+        var pageNumber = page;
+        var numLinks = 5;
+
+        // print 'previous' link only if not on page one
+        var first = '';
+        var prev = '';
+
+        if (pageNumber > 1) {
+          if (pageNumber !== 1) {
+            first = '<li class="page-item"><a class="page-link">« First</a></li>';
+          }
+          prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+        } else {
+          prev = ''; // on the page one, don't show 'previous' link
+          first = ''; // nor 'first page' link
+        }
+
+        // print 'next' link only if not on the last page
+        var next = '';
+        var last = '';
+
+        if (pageNumber <= totalPages) {
+          if (pageNumber !== totalPages) {
+            next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+            last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+          }
+        } else {
+          next = ''; // on the last page, don't show 'next' link
+          last = ''; // nor 'last page' link
+        }
+
+        var start = pageNumber - (pageNumber % numLinks) + 1;
+        var end = start + numLinks - 1;
+        end = Math.min(totalPages, end);
+        var pagingLink = '';
+        for (var i = start; i <= end; i++) {
+          if (i == pageNumber) {
+            pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+          } else {
+            pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+          }
+        }
+        pagingLink = first + prev + pagingLink + next + last;
+
+        $("ul.pagination").append(pagingLink);
+      }
+
+      $(document).on("click", "ul.pagination li a", function () {
+        var data = $(this).attr('data');
+        let val = $(this).text();
+        console.log(val);
+        if (val.toUpperCase() === "« FIRST") {
+
+          let currentActive = $("li.active");
+          findAll(1);
+          $("li.active").removeClass("active");
+          // add .active to next-pagination li
+          currentActive.next().addClass("active");
+        } else if (val.toUpperCase() === "LAST »") {
+          let currentActive = $("li.active");
+          findAll(totalPages);
+          $("li.active").removeClass("active");
+          // add .active to next-pagination li
+          currentActive.next().addClass("active");
+        } else if (val.toUpperCase() === "NEXT ›") {
+          let currentActive = $("li.active");
+          let activeValue = parseInt($("ul.pagination li.active").text()) + 1;
+
+          if (activeValue <= totalPages) {
+            let currentActive = $("li.active");
+            startPage = activeValue;
+
+            findAll(startPage);
+            // remove .active class for the old li tag
+            $("li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          }
+        } else if (val.toUpperCase() === "‹ PREV") {
+          let activeValue = parseInt($("ul.pagination li.active").text());
+          if (activeValue > 1) {
+            // console.log(activeValue)
+            // get the previous page
+            startPage = activeValue - 1;
+            findAll(startPage);
+            let currentActive = $("li.active");
+            currentActive.removeClass("active");
+            // add .active to previous-pagination li
+            currentActive.prev().addClass("active");
+          }
+        } else {
+          startPage = parseInt(val);
+          findAll(startPage);
+          // add focus to the li tag
+          $("li.active").removeClass("active");
+          $(this).parent().addClass("active");
+          //$(this).addClass("active");
+        }
+      });
+      (function () {
+        // get first-page at initial time
+        findAll(1);
+      })();
+
 
       $(document).on('click', '.messageCheckbox', function () {
         var checkedValue = $('.messageCheckbox:checked').val();
@@ -372,7 +493,7 @@
           resolve(checkedValued);
         })
         myPromise.then(value => {
-          console.log(value);
+      
           Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -400,6 +521,7 @@
                 'Your file has been deleted.',
                 'success'
               )
+
             }
           })      
         })
@@ -407,7 +529,7 @@
 
 
       $(document).on('click', '#submit', function (e) {
-        
+
         var form_data = new FormData();
         var totalfiles = document.getElementById('files').files.length;
         for (var index = 0; index < totalfiles; index++) {
@@ -421,7 +543,7 @@
           processData: false,
           method: 'POST',
           success: function (data) {
-            
+
           }
         })
         window.setTimeout(function () {
@@ -429,7 +551,7 @@
         }, 5000);
       })
 
-      findAll();
+
 
 
     })
