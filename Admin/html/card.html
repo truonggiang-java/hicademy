@@ -227,27 +227,27 @@
           <!-- Content -->
 
           <div class="container-xxl flex-grow-1 container-p-y">
-            <div style="display: flex; justify-content: space-between;">
-              <div>
-                <h3 class="card-header" style="display: inline-block;">Card</h3>
-              </div>
-              <div style="display: flex; justify-content: center; align-items: center;">
-                <div id="delete" style="display: none; cursor: pointer;">
-                  <img src="../assets/img/icons/custom/trash.png">
-                </div>
+            <div class="card">
+              <div style="display: flex; justify-content: space-between;">
                 <div>
-                  <a data-toggle="modal" href="#modal">
-                    <img id="img" src="../assets/img/icons/custom/image-add.png">
-                  </a>
+                  <h3 class="card-header" style="display: inline-block; background-color: white; font-weight: normal;">Card</h3>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <div id="delete" style="display: none; cursor: pointer;">
+                    <img src="../assets/img/icons/custom/trash.png">
+                  </div>
+                  <div>
+                    <a data-toggle="modal" href="#modal">
+                      <img id="img" src="../assets/img/icons/custom/image-add.png">
+                    </a>
+                  </div>
                 </div>
               </div>
+              <!-- Image -->
+              <div class="row mb-5" id="image">
+
+              </div>
             </div>
-            <!-- Image -->
-            <div class="row mb-5" id="image">
-
-            </div>
-
-
           </div>
 
           <footer class="content-footer footer bg-footer-theme">
@@ -291,7 +291,13 @@
           <div class="modal-body">
             <div class="card-body">
               <div class="mb-3 col-md-6">
-                <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
+                <label class="form-label">Name Card</label>
+                <div class="form-group"> 
+                  <input type="text" class="form-control" placeholder="Enter name card"> 
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="lastName" class="form-label">Select Image</label style="width:15%;">
                 <br />
                 <select class="selectpicker" multiple data-live-search="true" id="selectCard" style="width:100%;">
 
