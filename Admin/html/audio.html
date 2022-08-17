@@ -87,6 +87,12 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>            
             <!-- Tables -->
             <li class="menu-item">
+              <a href="user.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <div data-i18n="Tables">User</div>
+              </a>
+            </li>
+            <li class="menu-item">
               <a href="course.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-detail"></i>
                 <div data-i18n="Tables">Course</div>
@@ -111,9 +117,9 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="tab.html" class="menu-link">
+              <a href="card.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Tab</div>
+                <div data-i18n="Tables">Card</div>
               </a>
             </li>
 
@@ -200,7 +206,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="profile-user.html">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -232,15 +238,24 @@
 
               <div class="card">
                 <div style="display: flex; justify-content: space-between;">
-
-                  <h3 class="card-header">Audio</h3>
-                  <a href="add-audio.html">
-                    <img 
-                      src="../assets/img/icons/custom/list-plus.png" alt="add-course" 
-                      style="width: 40px; right: 40%; top: 22px; height: 40px; position: relative;"
-                    >
-                  </a>
+                  <div>
+                    <h3 class="card-header" style="display: inline-block;">Audio</h3>
+                  </div>
+                  <div style="display: flex; justify-content: center; align-items: center;">
+                    <div id="delete" style="display: none; cursor: pointer;position: relative;
+                    right: 20%;
+                    top: 20%;">
+                      <img src="../assets/img/icons/custom/trash.png" style="padding-right: 20px;">
+                    </div>
+                    <div>
+                      <a href="add-audio.html">
+                        <img src="../assets/img/icons/custom/list-plus.png" alt="add-course"
+                          style="width: 40px; right: 40%; top: 22px; height: 40px; position: relative;">
+                      </a>
+                    </div>
+                  </div>
                 </div>
+
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
@@ -404,46 +419,103 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-      $.ajax({
-        method: "GET",
-        url : "http://localhost:8080/api/v1/video/findAllVideo",
-        success: function(res){
-          let html = "";
-          let i = 0;
-          res.forEach(audio => {
-            console.log(audio)
-            const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
-            html+=`
-            <tr class="${color[i]}" id="${audio.id}">
-              <td style="width: 2%; padding-left: 15px">
-                <input value="${audio.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
-              </td>
-              <td><strong>${audio.name}</strong></td>
-              <td>${audio.description}</td>
-              <td>${audio.param}</td>
-              <td>${audio.link}</td>
-              <td>
-                <div class="dropdown">
-                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" data-toggle="modal" href="#myModal" style="text-decoration:none"
-                      ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                    >
-                    <a class="dropdown-item" href="javascript:void(0);" style="text-decoration:none"
-                      ><i class="bx bx-trash me-1"></i> Delete</a
-                    >
+      $(document).ready(function () {
+        $.ajax({
+          method: "GET",
+          url : "http://localhost:8080/api/v1/video/findAllVideo",
+          success: function(res){
+            let html = "";
+            let i = 0;
+            res.forEach(audio => {
+              console.log(audio)
+              const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
+              html+=`
+              <tr class="${color[i]}" id="${audio.id}">
+                <td style="width: 2%; padding-left: 15px">
+                  <input value="${audio.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
+                </td>
+                <td><strong>${audio.name}</strong></td>
+                <td>${audio.description}</td>
+                <td>${audio.param}</td>
+                <td>${audio.link}</td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" data-toggle="modal" href="#myModal" style="text-decoration:none"
+                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                      >
+                      <a class="dropdown-item" href="javascript:void(0);" style="text-decoration:none"
+                        ><i class="bx bx-trash me-1"></i> Delete</a
+                      >
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>`
-          if (i==color.length-1) {
-            i=0;
-          } else i++
-          });
-          $("#content").html(html)
-        }
+                </td>
+              </tr>`
+            if (i==color.length-1) {
+              i=0;
+            } else i++
+            });
+            $("#content").html(html)
+          }
+        })
+
+        //Toggle button delete
+        $(document).on('click', '.messageCheckbox', function () {
+          var checkedValue = $('.messageCheckbox:checked').val();
+          if (checkedValue) {
+            document.getElementById("delete").style.display = "block";
+          } else {
+            document.getElementById("delete").style.display = "none";
+          }
+        })
+        $('#delete').click(function () {
+          let myPromise = new Promise(resolve => {
+            var checkedValued = [];
+            var inputElements = document.getElementsByClassName('messageCheckbox');
+            for (var i = 0; inputElements[i]; ++i) {
+              if (inputElements[i].checked) {
+                checkedValued.push(inputElements[i].value);
+
+              }
+            }
+            resolve(checkedValued);
+          })
+          myPromise.then(value => {
+            console.log(value);
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                $.ajax({
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  method: "DELETE",
+                  url: "http://localhost:8080/api/v1/audio/delete",
+                  data: JSON.stringify(value),
+                  success: function (data) {
+                    document.getElementById("delete").style.display = "none";
+                    fetchNotes(1, optionValue)
+                  }
+                })
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+              }
+            })
+          })
+        })
       })
     </script>
   </body>

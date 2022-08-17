@@ -84,6 +84,12 @@
           <!-- DATA -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>
           <!-- Tables -->
+          <li class="menu-item">
+            <a href="user.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">User</div>
+            </a>
+          </li>
           <li class="menu-item ">
             <a href="course.html" class="menu-link">
               <i class="menu-icon tf-icons bx bx-detail"></i>
@@ -109,9 +115,9 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="tab.html" class="menu-link">
+            <a href="card.html" class="menu-link">
               <i class="menu-icon tf-icons bx bx-detail"></i>
-              <div data-i18n="Tables">Tab</div>
+              <div data-i18n="Tables">Card</div>
             </a>
           </li>
 
@@ -185,7 +191,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="profile-user.html">
                       <i class="bx bx-user me-2"></i>
                       <span class="align-middle">My Profile</span>
                     </a>
@@ -224,7 +230,7 @@
                   <div id="delete" style="display: none; cursor: pointer;position: relative;
                   right: 20%;
                   top: 20%;">
-                    <img src="../assets/img/icons/custom/trash.png">
+                    <img src="../assets/img/icons/custom/trash.png" style="padding-right: 20px; padding-top: 7px;">
                   </div>
                   <div>
                     <a href="add-course.html">
@@ -266,9 +272,10 @@
                     </div>
                     <div class="option-select">
                       <select name="hall" id="hall" class="country" style="width: 50%; ">
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
+                        <option value="4" selected>4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="6">7</option>
                       </select>
                     </div>
                   </div>
@@ -420,7 +427,7 @@
         var $input = $('#myInput');
         let value = " ";
         let id
-        let optionValue = document.getElementById('hall').value = "2";
+        let optionValue = document.getElementById('hall').value = "4";
         let idImage;
         let sort;
         function selectLessonA() {
@@ -650,6 +657,7 @@
             }
           })
         })
+        //Toggle button delete
         $(document).on('click', '.messageCheckbox', function () {
           var checkedValue = $('.messageCheckbox:checked').val();
           if (checkedValue) {
@@ -665,7 +673,6 @@
             for (var i = 0; inputElements[i]; ++i) {
               if (inputElements[i].checked) {
                 checkedValued.push(inputElements[i].value);
-
               }
             }
             resolve(checkedValued);
@@ -701,7 +708,6 @@
                 )
               }
             })
-
           })
         })
 
@@ -758,19 +764,9 @@
                     <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.lesson}" >${data.countLesson}</a>
                   </div>
                 <td>
-                  <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item editCourse" data-toggle="modal" href="#myModal" style="text-decoration:none" id="${data.id}"
-                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                      >
-                      <a class="dropdown-item deleteCourse" href="javascript:void(0);" style="text-decoration:none" id="${data.id}"
-                        ><i class="bx bx-trash me-1"></i> Delete</a
-                      >
-                    </div>
-                  </div>
+                  <a class="dropdown-item editCourse" data-toggle="modal" href="#myModal" style="text-decoration:none; width:30%; border-radius: 10px" id="${data.id}"
+                    ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                  >
                 </td>
               </tr>`
                 if (i == color.length - 1) {
