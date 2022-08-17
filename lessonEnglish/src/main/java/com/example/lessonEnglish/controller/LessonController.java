@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +38,10 @@ public class LessonController {
 			@RequestParam(name="size",required = false, defaultValue = "8") Integer size,
 			@RequestParam(name="input",required = false,defaultValue = "") String input){
 		return lessonService.findAll(page,size,input);
+	}
+
+	@DeleteMapping("/delete")
+	public String deleteLessonById(@RequestBody List<String> id) {
+		return lessonService.deleteLessonByListId(id);
 	}
 }

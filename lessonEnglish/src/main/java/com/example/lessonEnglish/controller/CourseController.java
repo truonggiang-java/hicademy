@@ -62,6 +62,4 @@ public class CourseController {
 		return courseService.deleteCourseByListId(id);
 	}
 	
-
-	
 }

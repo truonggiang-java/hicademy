@@ -93,4 +93,10 @@ public class LessonService {
 	public List<Lesson> findAllLesson() {
 		return lessonRepository.findAll();
 	}
+
+	public String deleteLessonByListId(List<String> id) {
+		List<Lesson> lesson = lessonRepository.findListLesson(id);
+		lessonRepository.deleteAll(lesson);
+		return "Bạn đã xóa bài học thành công";
+	}
 }
