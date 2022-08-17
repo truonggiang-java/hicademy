@@ -196,7 +196,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="profile-user.html">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -256,11 +256,6 @@
                               accept="image/png, image/jpeg"
                             />
                           </label>
-                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                            <i class="bx bx-reset d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Reset</span>
-                          </button>
-
                           <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
                         </div>
                       </div>
@@ -305,6 +300,10 @@
                             <label for="address" class="form-label">Address</label>
                             <input type="text" class="form-control" id="address" name="address" placeholder="Address" />
                           </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="birthday" class="form-label">Birthday</label>
+                            <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Birthday" />
+                          </div>
                         </div>
                         <div class="mt-2" style="text-align: center;">
                           <button type="submit" class="btn btn-success">Save changes</button>
@@ -321,18 +320,14 @@
                         <div class="mb-3 col-12 mb-0">
                           <div class="row">
                             <div class="col-sm-4">
-                              <label class="form-label">Current Password</label>
-                              <div class="form-group pass_show"> 
-                                <input type="password" value="faisalkhan@123" class="form-control" placeholder="Current Password"> 
-                              </div> 
                               <label class="form-label">New Password</label>
                               <div class="form-group pass_show"> 
                                 <input type="password" value="faisal.khan@123" class="form-control" placeholder="New Password"> 
-                              </div> 
-                              <label class="form-label">Confirm Password</label>
-                              <div class="form-group pass_show"> 
-                                <input type="password" value="faisal.khan@123" class="form-control" placeholder="Confirm Password"> 
-                              </div> 
+                              </div>
+                              <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Reset Password</span>
+                              </button>  
                             </div>  
                           </div>
                         </div>
