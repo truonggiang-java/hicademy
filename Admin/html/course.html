@@ -476,7 +476,6 @@
             idDlfileEntry: image,
             idLesson: select
           }
-          // console.log(JSON.stringify(value));
           Swal.fire({
             title: 'Do you want to save the changes?',
             showDenyButton: true,
@@ -585,7 +584,7 @@
         $(document).on("click", "ul.paginationImage li a", function () {
           var data = $(this).attr('data');
           let val = $(this).text();
-          console.log(val);
+          
           if (val.toUpperCase() === "« FIRST") {
 
             let currentActive = $("ul.paginationImage li.active");
@@ -616,7 +615,7 @@
           } else if (val.toUpperCase() === "‹ PREV") {
             let activeValue = parseInt($("ul.paginationImage li.active").text());
             if (activeValue > 1) {
-              // console.log(activeValue)
+           
               // get the previous page
               startPage = activeValue - 1;
               findAll(startPage);
@@ -678,7 +677,7 @@
             resolve(checkedValued);
           })
           myPromise.then(value => {
-            console.log(value);
+            
             Swal.fire({
               title: 'Are you sure?',
               text: "You won't be able to revert this!",
