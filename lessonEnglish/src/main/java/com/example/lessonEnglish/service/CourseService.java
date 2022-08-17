@@ -151,4 +151,7 @@ public class CourseService {
 		return "Bạn đã xóa khóa học thành công";
 	}
 
+	public List<Course> findAllCourse() {
+		return courseRepository.findAll();
+	}
 }

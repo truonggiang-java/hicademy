@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.lessonEnglish.dto.CourseDto;
 import com.example.lessonEnglish.dto.CourseImageDto;
 import com.example.lessonEnglish.dto.PageableCourseDto;
+import com.example.lessonEnglish.entity.Course;
 import com.example.lessonEnglish.service.CourseService;
 
 @RestController
@@ -44,6 +45,11 @@ public class CourseController {
 			@RequestParam(name="input",required = false,defaultValue = " ") String input,
 			@RequestParam(name="sort",required = false) String sort){
 		return courseService.findAll(page,size,input,sort);
+	}
+
+	@GetMapping("/findAllCourse")
+	private List<Course> findAllCourse(){
+		return courseService.findAllCourse();
 	}
 	
 	@GetMapping("/findById")
