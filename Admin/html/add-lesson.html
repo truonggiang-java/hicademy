@@ -220,19 +220,19 @@
 
             <div class="card">
               <div style="display: flex; justify-content: space-between;">
-                <h5 class="card-header">Add Course</h5>
+                <h5 class="card-header">Add Lesson</h5>
               </div>
               <form method="POST" onsubmit="return false" style="padding: 1.5rem;">
                 <div class="row">
                   <div class="mb-3 col-md-6">
                     <label for="firstName" class="form-label">Name Lesson</label>
-                    <input class="form-control" type="text" id="nameCourse" name="firstName"
+                    <input class="form-control" type="text" id="nameLesson" name="firstName"
                       placeholder="Enter data" autofocus />
                   </div>
 
                   <div class="mb-3 col-md-6">
                     <label for="lastName" class="form-label">Description</label>
-                    <input class="form-control" type="text" name="descriptionCourse" id="descriptionCourse"
+                    <input class="form-control" type="text" name="descriptionLesson" id="descriptionLesson"
                       placeholder="Enter something" />
                   </div>
 
@@ -242,7 +242,7 @@
                   justify-content: center;" id="imageAttr">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
                       id="chooseImage">Image</button>
-                    <div id="imageCourseAvatar" style="padding: 10px; display: flex;
+                    <div id="imageLessonAvatar" style="padding: 10px; display: flex;
                       align-items: center;
                       justify-content: center;
                       text-align: center;">
@@ -253,7 +253,7 @@
                   <div class="mb-3 col-md-6">
                     <label for="lastName" class="form-label">Select Course</label style="width:15%;">
                     <br />
-                    <select class="selectpicker" multiple data-live-search="true" id="selectLesson" style="width:100%;">
+                    <select class="selectpicker" multiple data-live-search="true" id="selectCourse" style="width:100%;">
 
                     </select>
                   </div>
@@ -281,7 +281,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Update Course</h4>
+          <h4 class="modal-title">Select Image</h4>
         </div>
         <div class="modal-body">
           <div class="card-body">
@@ -347,16 +347,16 @@
     })
 
     $(document).on('click', "#submitCourse", function () {
-      let name = $('#nameCourse').val();
-      let description = $("#descriptionCourse").val();
-      let image = $("#imageCourseAvatar img").attr("id");
-      var selectedValues = $('#selectLesson').val();
+      let name = $('#nameLesson').val();
+      let description = $("#descriptionLesson").val();
+      let image = $("#imageLessonAvatar img").attr("id");
+      var selectedValues = $('#selectCourse').val();
 
       let value = {
         name: name,
         description: description,
         idDlfileEntry: image,
-        idLesson: selectedValues
+        idCourse: selectedValues
       }
       $.ajax({
         headers: {
@@ -383,11 +383,11 @@
       })
       Toast.fire({
         icon: 'success',
-        title: 'Created Course successfully'
+        title: 'Created Lesson successfully'
       })
-      window.setTimeout(function () {
-        window.location.reload();
-      }, 1000);
+      // window.setTimeout(function () {
+      //   window.location.reload();
+      // }, 1000);
     })
     //image
     function findAll(startPage) {
@@ -533,7 +533,7 @@
           $("#imageAttr").removeAttr("style");
           let html = `<img src="${param}" alt="" 
                           style="width: 50%;" id="${idImage}"> `
-          $("#imageCourseAvatar").html(html);
+          $("#imageLessonAvatar").html(html);
         }
       })
     })
