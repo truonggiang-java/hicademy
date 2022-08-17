@@ -329,9 +329,9 @@
     <!-- Modal -->
     <div class="modal" id="myModal">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" style="overflow: auto; height: 700px;">
           <div class="modal-header">
-            <h4 class="modal-title">Update Course</h4>
+            <h4 class="modal-title">Update Lesson</h4>
           </div>
           <div class="modal-body">
             <div class="card-body">
@@ -494,19 +494,10 @@
                         <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.course}" >${data.countCourse}</a>
                       </div>
                     <td>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" data-toggle="modal" href="#myModal" style="text-decoration:none"
-                            ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                          >
-                          <a class="dropdown-item" href="javascript:void(0);" style="text-decoration:none"
-                            ><i class="bx bx-trash me-1"></i> Delete</a
-                          >
-                        </div>
-                      </div>
+                      <a class="dropdown-item" data-toggle="modal" href="#myModal" 
+                      style="text-decoration:none; width:30%; border-radius: 10px""
+                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                      >
                     </td>
                   </tr>`
                 if (i == color.length - 1) {
