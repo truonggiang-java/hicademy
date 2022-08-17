@@ -328,6 +328,7 @@
   <!-- Place this tag in your head or just before your close body tag. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     $(document).ready(function () {
       let totalPages = 1;
@@ -413,7 +414,7 @@
       $(document).on("click", "ul.pagination li a", function () {
         var data = $(this).attr('data');
         let val = $(this).text();
-        console.log(val);
+      
         if (val.toUpperCase() === "« FIRST") {
 
           let currentActive = $("li.active");
@@ -444,7 +445,6 @@
         } else if (val.toUpperCase() === "‹ PREV") {
           let activeValue = parseInt($("ul.pagination li.active").text());
           if (activeValue > 1) {
-            // console.log(activeValue)
             // get the previous page
             startPage = activeValue - 1;
             findAll(startPage);

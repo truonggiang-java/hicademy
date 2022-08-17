@@ -226,8 +226,8 @@
                 <div class="row">
                   <div class="mb-3 col-md-6">
                     <label for="firstName" class="form-label">Name Lesson</label>
-                    <input class="form-control" type="text" id="nameLesson" name="firstName"
-                      placeholder="Enter data" autofocus />
+                    <input class="form-control" type="text" id="nameCourse" name="firstName" placeholder="Enter data"
+                      autofocus />
                   </div>
 
                   <div class="mb-3 col-md-6">
@@ -258,10 +258,8 @@
                     </select>
                   </div>
                   <div>
-                    <button 
-                      type="submit" class="btn btn-success" id="submitCourse" 
-                      style="display: block;  margin-left: auto;  margin-right: auto;"
-                    >
+                    <button type="submit" class="btn btn-success" id="submitCourse"
+                      style="display: block;  margin-left: auto;  margin-right: auto;">
                       Submit
                     </button>
                   </div>
@@ -332,20 +330,23 @@
   $(document).ready(function () {
     let idImage;
     let totalPageImage = 1;
+    function findAllCourse() {
 
-    $.ajax({
-      method: "GET",
-      url: "http://localhost:8080/api/v1/course/findAllCourse",
-      success: function (res) {
-        let html = "";
-        res.forEach(function (data) {
-          console.log(data)
-          html += `<option value="${data.name}">${data.name}</option>`;
-        })
-        $("#selectLesson").html(html);
-      }
-    })
-
+      $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/api/v1/course/findAllCourse",
+        success: function (res) {
+          let html = "";
+          res.forEach(function (data) {
+            
+            html += `<option value="${data.name}">${data.name}</option>`;
+          })
+          console.log(html)
+          $("#selectLesson").html(html);
+        }
+      })
+    }
+    findAllCourse();
     $(document).on('click', "#submitCourse", function () {
       let name = $('#nameLesson').val();
       let description = $("#descriptionLesson").val();
