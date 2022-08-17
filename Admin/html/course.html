@@ -84,6 +84,12 @@
           <!-- DATA -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">DATA</span></li>
           <!-- Tables -->
+          <li class="menu-item">
+            <a href="user.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <div data-i18n="Tables">User</div>
+            </a>
+          </li>
           <li class="menu-item ">
             <a href="course.html" class="menu-link">
               <i class="menu-icon tf-icons bx bx-detail"></i>
@@ -224,7 +230,7 @@
                   <div id="delete" style="display: none; cursor: pointer;position: relative;
                   right: 20%;
                   top: 20%;">
-                    <img src="../assets/img/icons/custom/trash.png" style="padding-right: 20px;">
+                    <img src="../assets/img/icons/custom/trash.png" style="padding-right: 20px; padding-top: 7px;">
                   </div>
                   <div>
                     <a href="add-course.html">
@@ -266,9 +272,10 @@
                     </div>
                     <div class="option-select">
                       <select name="hall" id="hall" class="country" style="width: 50%; ">
-                        <option value="3" selected>3</option>
-                        <option value="4">4</option>
+                        <option value="4" selected>4</option>
                         <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="6">7</option>
                       </select>
                     </div>
                   </div>
@@ -412,7 +419,7 @@
         var $input = $('#myInput');
         let value = " ";
         let id
-        let optionValue = document.getElementById('hall').value = "3";
+        let optionValue = document.getElementById('hall').value = "4";
         let idImage;
         let sort;
         function selectLessonA() {
@@ -546,7 +553,6 @@
             for (var i = 0; inputElements[i]; ++i) {
               if (inputElements[i].checked) {
                 checkedValued.push(inputElements[i].value);
-
               }
             }
             resolve(checkedValued);
