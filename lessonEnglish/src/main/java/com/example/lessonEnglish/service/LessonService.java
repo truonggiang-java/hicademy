@@ -22,14 +22,14 @@ import com.example.lessonEnglish.repository.LessonRepository;
 public class LessonService {
 	@Autowired
 	private LessonRepository lessonRepository;
-	
+
 	@Autowired
 	private CourseRepository courseRepository;
-	
+
 	public String insertLesson(LessonDto lessonDto) {
 		try {
-			Lesson lesson=new Lesson();
-			List<Course> courses=courseRepository.findListCourse(lessonDto.getIdCourse());
+			Lesson lesson = new Lesson();
+			List<Course> courses = courseRepository.findListCourse(lessonDto.getIdCourse());
 			lesson.setDescription(lessonDto.getDescription());
 			lesson.setIdDlfileEntry(lessonDto.getIdDlfileEntry());
 			lesson.setName(lessonDto.getName());
@@ -50,12 +50,12 @@ public class LessonService {
 		lesson.setIdDlfileEntry(lessonDto.getIdDlfileEntry());
 		lessonRepository.save(lesson);
 		return "Bạn đã cập nhật bài học thành công";
-	}	
+	}
 
-	public PageableLessonDto findAll(Integer page,Integer size,String input) {
-		PageableLessonDto pageableCourseDto=new PageableLessonDto();
-		Long listLesson=lessonRepository.countLesson(input);
-		List<LessonProjection> pageLesson=lessonRepository.findAllLesson(input,(page-1)*size,size);
+	public PageableLessonDto findAll(Integer page, Integer size, String input) {
+		PageableLessonDto pageableCourseDto = new PageableLessonDto();
+		Long listLesson = lessonRepository.countLesson(input);
+		List<LessonProjection> pageLesson = lessonRepository.findAllLesson(input, (page - 1) * size, size);
 		List<LessonImageDto> listImage = new ArrayList<>();
 		for (LessonProjection lesson : pageLesson) {
 			LessonImageDto lessonImageDto = new LessonImageDto();
@@ -63,22 +63,22 @@ public class LessonService {
 			lessonImageDto.setId(lesson.getId());
 			lessonImageDto.setName(lesson.getName());
 			lessonImageDto.setCountCourse(lesson.getCountCourse());
-			String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
-					.path(lesson.getIdDlFileEntry()).toUriString();
+			String fileName = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.path("/api/v1/dlFileEntry/viewImage/").path(lesson.getIdDlFileEntry()).toUriString();
 			lessonImageDto.setLink(fileName);
-			//lesson
-			List<CourseLessonProjection> listCourse=lessonRepository.findCourseByIdLesson(lesson.getId());
-			String course="";
-			if(listCourse.size()>0) {
-				for(int i=0;i<listCourse.size();i++) {
-					if(i<listCourse.size()-1) {
-						course+=listCourse.get(i).getName() + ", ";
-					}else {
-						course+=listCourse.get(i).getName();
+			// lesson
+			List<CourseLessonProjection> listCourse = lessonRepository.findCourseByIdLesson(lesson.getId());
+			String course = "";
+			if (listCourse.size() > 0) {
+				for (int i = 0; i < listCourse.size(); i++) {
+					if (i < listCourse.size() - 1) {
+						course += listCourse.get(i).getName() + ", ";
+					} else {
+						course += listCourse.get(i).getName();
 					}
 				}
-			}else {
-				course="Không có bài học nào trong khóa học này";
+			} else {
+				course = "Không có bài học nào trong khóa học này";
 			}
 			lessonImageDto.setCourse(course);
 			listImage.add(lessonImageDto);
@@ -89,7 +89,7 @@ public class LessonService {
 		pageableCourseDto.setLessonImage(listImage);
 		return pageableCourseDto;
 	}
-	
+
 	public List<Lesson> findAllLesson() {
 		return lessonRepository.findAll();
 	}

@@ -35,7 +35,7 @@ public class LessonController {
 	@GetMapping("/findAllPageable")
 	public PageableLessonDto findAll(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
 			@RequestParam(name="size",required = false, defaultValue = "8") Integer size,
-			@RequestParam(name="input",required = false,defaultValue = " ") String input){
+			@RequestParam(name="input",required = false,defaultValue = "") String input){
 		return lessonService.findAll(page,size,input);
 	}
 }

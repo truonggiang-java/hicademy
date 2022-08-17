@@ -42,7 +42,7 @@ public class CourseController {
 	@GetMapping("/findAll")
 	public PageableCourseDto findAll(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
 			@RequestParam(name="size",required = false, defaultValue = "2") Integer size,
-			@RequestParam(name="input",required = false,defaultValue = " ") String input,
+			@RequestParam(name="input",required = false,defaultValue = "") String input,
 			@RequestParam(name="sort",required = false) String sort){
 		return courseService.findAll(page,size,input,sort);
 	}
