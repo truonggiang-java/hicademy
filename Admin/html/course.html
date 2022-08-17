@@ -255,7 +255,7 @@
                 <div style="display: flex; justify-content: space-between;">
                   <div>
                     <nav aria-label="Page navigation">
-                      <ul class="pagination justify-content-end">
+                      <ul class="pagination paginationCourse justify-content-end">
 
                       </ul>
                     </nav>
@@ -373,6 +373,13 @@
               id="viewImage">
 
             </div>
+            <div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination paginationImage justify-content-end">
+
+                </ul>
+              </nav>
+            </div>
           </div>
           <div class="modal-footer">
             <a href="#" data-dismiss="modal" class="btn">Close</a>
@@ -407,6 +414,7 @@
     <script>
       $(document).ready(function () {
         let totalPages = 1;
+        let totalPageImage = 1;
         var typingTimer;                //timer identifier
         var doneTypingInterval = 200;  //time in ms, 5 seconds for example
         var $input = $('#myInput');
@@ -494,10 +502,10 @@
 
         })
         //image
-        $(document).on('click', '#chooseImage', function () {
+        function findAll(startPage) {
           $.ajax({
             method: "GET",
-            url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+            url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
             success: function (res) {
               let html = "";
               res.dlFile.forEach(data => {
@@ -509,8 +517,120 @@
               })
 
               $("#viewImage").html(html)
+              if ($('ul.paginationImage li').length - 3 != res.page.totalPage) {
+                // build pagination list at the first time loading
+                $('ul.paginationImage').empty();
+                buildPaginationImage(res.page, startPage);
+              }
             }
           })
+        }
+        function buildPaginationImage(response, page) {
+
+          totalPagesImage = response.totalPage;
+          var pageNumber = page;
+          var numLinks = 5;
+
+          // print 'previous' link only if not on page one
+          var first = '';
+          var prev = '';
+
+          if (pageNumber > 1) {
+            if (pageNumber !== 1) {
+              first = '<li class="page-item"><a class="page-link">« First</a></li>';
+            }
+            prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+          } else {
+            prev = ''; // on the page one, don't show 'previous' link
+            first = ''; // nor 'first page' link
+          }
+
+          // print 'next' link only if not on the last page
+          var next = '';
+          var last = '';
+
+          if (pageNumber <= totalPagesImage) {
+            if (pageNumber !== totalPagesImage) {
+              next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+              last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+            }
+          } else {
+            next = ''; // on the last page, don't show 'next' link
+            last = ''; // nor 'last page' link
+          }
+
+          var start = pageNumber - (pageNumber % numLinks) + 1;
+          var end = start + numLinks - 1;
+          end = Math.min(totalPagesImage, end);
+          var pagingLink = '';
+          for (var i = start; i <= end; i++) {
+            if (i == pageNumber) {
+              pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+            } else {
+              pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+            }
+          }
+          pagingLink = first + prev + pagingLink + next + last;
+          console.log(pagingLink)
+          $("ul.paginationImage").append(pagingLink);
+        }
+
+        $(document).on("click", "ul.paginationImage li a", function () {
+          var data = $(this).attr('data');
+          let val = $(this).text();
+          console.log(val);
+          if (val.toUpperCase() === "« FIRST") {
+
+            let currentActive = $("ul.paginationImage li.active");
+            findAll(1);
+            $("ul.paginationImage li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          } else if (val.toUpperCase() === "LAST »") {
+            let currentActive = $("ul.paginationImage li.active");
+            findAll(totalPagesImage);
+            $("ul.paginationImage li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          } else if (val.toUpperCase() === "NEXT ›") {
+            let currentActive = $("ul.paginationImage li.active");
+            let activeValue = parseInt($("ul.paginationImage li.active").text()) + 1;
+
+            if (activeValue <= totalPagesImage) {
+              let currentActive = $("ul.paginationImage li.active");
+              startPage = activeValue;
+
+              findAll(startPage);
+              // remove .active class for the old li tag
+              $("ul.paginationImage li.active").removeClass("active");
+              // add .active to next-pagination li
+              currentActive.next().addClass("active");
+            }
+          } else if (val.toUpperCase() === "‹ PREV") {
+            let activeValue = parseInt($("ul.paginationImage li.active").text());
+            if (activeValue > 1) {
+              // console.log(activeValue)
+              // get the previous page
+              startPage = activeValue - 1;
+              findAll(startPage);
+              let currentActive = $("ul.paginationImage li.active");
+              currentActive.removeClass("active");
+              // add .active to previous-pagination li
+              currentActive.prev().addClass("active");
+            }
+          } else {
+            startPage = parseInt(val);
+            findAll(startPage);
+            // add focus to the li tag
+            $("ul.paginationImage li.active").removeClass("active");
+            $(this).parent().addClass("active");
+            //$(this).addClass("active");
+          }
+        });
+       
+
+        $(document).on('click', '#chooseImage', function () {
+          findAll(1);
         })
 
         $(document).on('click', '.viewImage', function (e) {
@@ -597,6 +717,8 @@
             url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value + "&sort=" + sort;
           } else if (sort && !value) {
             url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&sort=" + sort;
+          } else if (value && !sort) {
+            url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value;
           } else {
             url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue
           }
@@ -658,9 +780,9 @@
               $("#content").html(html)
               // console.log($('ul.pagination li').length - 3);
               // console.log(res.page.totalPage);
-              if ($('ul.pagination li').length - (optionValue + 1) != res.page.totalPage) {
+              if ($('ul.paginationCourse li').length - (optionValue + 1) != res.page.totalPage) {
                 // build pagination list at the first time loading
-                $('ul.pagination').empty();
+                $('ul.paginationCourse').empty();
                 buildPagination(res.page, startPage);
 
               }
@@ -714,46 +836,46 @@
           }
           pagingLink = first + prev + pagingLink + next + last;
 
-          $("ul.pagination").append(pagingLink);
+          $("ul.paginationCourse").append(pagingLink);
         }
-        $(document).on("click", "ul.pagination li a", function () {
+        $(document).on("click", "ul.paginationCourse li a", function () {
           var data = $(this).attr('data');
           let val = $(this).text();
           if (val.toUpperCase() === "« FIRST") {
 
-            let currentActive = $("li.active");
+            let currentActive = $("ul.paginationCourse  li.active");
             fetchNotes(1, optionValue, value, sort);
-            $("li.active").removeClass("active");
+            $("ul.paginationCourse li.active").removeClass("active");
             // add .active to next-pagination li
             currentActive.next().addClass("active");
           } else if (val.toUpperCase() === "LAST »") {
-            let currentActive = $("li.active");
+            let currentActive = $("ul.paginationCourse  li.active");
             fetchNotes(totalPages, optionValue, value, sort);
-            $("li.active").removeClass("active");
+            $("ul.paginationCourse  li.active").removeClass("active");
             // add .active to next-pagination li
             currentActive.next().addClass("active");
           } else if (val.toUpperCase() === "NEXT ›") {
-            let currentActive = $("li.active");
-            let activeValue = parseInt($("ul.pagination li.active").text()) + 1;
+            let currentActive = $("ul.paginationCourse  li.active");
+            let activeValue = parseInt($("ul.paginationCourse li.active").text()) + 1;
 
             if (activeValue <= totalPages) {
-              let currentActive = $("li.active");
+              let currentActive = $("ul.paginationCourse  li.active");
               startPage = activeValue;
 
               fetchNotes(startPage, optionValue, value, sort);
               // remove .active class for the old li tag
-              $("li.active").removeClass("active");
+              $("ul.paginationCourse  li.active").removeClass("active");
               // add .active to next-pagination li
               currentActive.next().addClass("active");
             }
           } else if (val.toUpperCase() === "‹ PREV") {
-            let activeValue = parseInt($("ul.pagination li.active").text());
+            let activeValue = parseInt($("ul.paginationCourse li.active").text());
             if (activeValue > 1) {
               // console.log(activeValue)
               // get the previous page
               startPage = activeValue - 1;
               fetchNotes(startPage, optionValue, value, sort);
-              let currentActive = $("li.active");
+              let currentActive = $("ul.paginationCourse  li.active");
               currentActive.removeClass("active");
               // add .active to previous-pagination li
               currentActive.prev().addClass("active");
@@ -762,7 +884,7 @@
             startPage = parseInt(val);
             fetchNotes(startPage, optionValue, value, sort);
             // add focus to the li tag
-            $("li.active").removeClass("active");
+            $("ul.paginationCourse  li.active").removeClass("active");
             $(this).parent().addClass("active");
             //$(this).addClass("active");
           }

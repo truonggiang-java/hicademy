@@ -99,7 +99,7 @@ public class DlFileEntrySerivce {
 
 	public PageableDlFileEntryDto findAllDlFileEntry(Integer page, Integer size, String input) {
 		PageableDlFileEntryDto pageableDlFileEntryDto = new PageableDlFileEntryDto();
-		Page<DlFileEntry> pageDlfileEntry = dlfileEntryRepository.findAllDlFileEntry(input, pageBasic.page(page, size));
+		Page<DlFileEntry> pageDlfileEntry = dlfileEntryRepository.findAllDlFileEntry(input, pageBasic.page(page-1, size));
 		List<DlFileEntryDto> listDlFile = new ArrayList<>();
 		for (DlFileEntry dlFileEntry : pageDlfileEntry.getContent()) {
 			DlFileEntryDto dlFileEntryDto = new DlFileEntryDto();
