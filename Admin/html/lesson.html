@@ -443,6 +443,7 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
       $(document).ready(function () {
@@ -452,6 +453,7 @@
         var $input = $('#myInput');
         let value = " ";
         let optionValue = document.getElementById('hall').value = "4";
+        
         function fetchNotes(startPage, optionValue, value) {
           console.log(value);
           let url;
