@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.lessonEnglish.dto.PageableLessonDto;
 import com.example.lessonEnglish.dto.LessonDto;
+import com.example.lessonEnglish.dto.LessonImageDto;
 import com.example.lessonEnglish.entity.Lesson;
 import com.example.lessonEnglish.service.LessonService;
 
@@ -50,5 +51,10 @@ public class LessonController {
 	@PutMapping("/updateLesson/{id}")
 	public String updateLesson(@RequestBody LessonDto lessonDto, @PathVariable("id") String id) {
 		return lessonService.updateLesson(lessonDto, id);
+	}
+
+	@GetMapping("/findById")
+	public LessonImageDto findById(@RequestParam("id") String id) {
+		return lessonService.findByIdLesson(id);
 	}
 }
