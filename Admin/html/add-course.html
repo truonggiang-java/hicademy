@@ -11,6 +11,7 @@
 
   <meta name="description" content="" />
 
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="../assets/img/avatars/logo.png" />
 
   <!-- Fonts -->
@@ -30,15 +31,20 @@
   <link rel="stylesheet" href="../assets/css/demo.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.css">
   <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/css/multi-select.css'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-
-
+  <!-- Modal -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Helpers -->
+  <script src="../assets/vendor/js/helpers.js"></script>
 
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="../assets/js/config.js"></script>
+  <!-- dropdown -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/css/multi-select.css'>
 
 
   <style type="text/css">
@@ -48,6 +54,10 @@
 
     .dropdown.bootstrap-select.show-tick {
       width: 100% !important;
+    }
+
+    div#ms-selectCourse {
+      width: 100%;
     }
   </style>
 </head>
@@ -251,14 +261,12 @@
 
                     </select> -->
                     <select class="form-control" multiple="multiple" id="selectLesson">
-                      
+
                     </select>
                   </div>
                   <div>
-                    <button 
-                      type="submit" class="btn btn-success" id="submitCourse" 
-                      style="display: block;  margin-left: auto;  margin-right: auto;"
-                    >
+                    <button type="submit" class="btn btn-success" id="submitCourse"
+                      style="display: block;  margin-left: auto;  margin-right: auto;">
                       Submit
                     </button>
                   </div>
@@ -331,7 +339,7 @@
   $(document).ready(function () {
     let idImage;
     let totalPageImage = 1;
-    
+
     $.ajax({
       method: "GET",
       url: "http://localhost:8080/api/v1/lesson/findAll",
