@@ -35,8 +35,8 @@
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   
     <!-- Modal -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Helpers -->
     <script src="../assets/vendor/js/helpers.js"></script>
@@ -446,8 +446,8 @@
         var $input = $('#myInput');
         let value = " ";
         let optionValue = document.getElementById('hall').value = "4";
+        
         function fetchNotes(startPage, optionValue, value) {
-          console.log(value);
           let url;
           if (value) {
             url = "http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue + "&input=" + value;
@@ -458,7 +458,6 @@
             method: "GET",
             url: url,
             success: function (res) {
-              // console.log(res);
               let html = "";
               let i = 0;
               res.lessonImage.forEach(data => {
@@ -499,8 +498,7 @@
                 } else i++
               });
               $("#content").html(html)
-              // console.log($('ul.pagination li').length - 3);
-              // console.log(res.page.totalPage);
+          
               if ($('ul.pagination li').length - (optionValue + 1) != res.page.totalPage) {
                 // build pagination list at the first time loading
                 $('ul.pagination').empty();
@@ -529,23 +527,17 @@
         $(document).on("click", ".editLesson", function () {
           var $mSelect = $('#selectCourse').selectize({ placeholder: "Select a value" });
           id = $(this).attr("id");
+          
           $.ajax({
             method: "GET",
             url: "http://localhost:8080/api/v1/lesson/findById?id=" + id,
             success: function (data) {
-              console.log(data)
-
               let html = `<img src="${data.link}" alt="" id="${data.id}"
                         style="width: 90%;">`
               $("#nameLesson").val(data.name);
               $("#descriptionLesson").val(data.description);
               $("#imageLessonAvatar").html(html);
               let values=data.course.split(',');;
-              // if (values.includes(",")){
-
-              //   values = values.split(',');
-              // }
-
               $mSelect[0].selectize.setValue(values)
             }
           })
@@ -676,7 +668,6 @@
           } else if (val.toUpperCase() === "‹ PREV") {
             let activeValue = parseInt($("ul.pagination li.active").text());
             if (activeValue > 1) {
-              console.log(activeValue)
               // get the previous page
               startPage = activeValue - 1;
               fetchNotes(startPage, optionValue, value);
@@ -716,7 +707,6 @@
             resolve(checkedValued);
           })
           myPromise.then(value => {
-            console.log(value);
             Swal.fire({
               title: 'Are you sure?',
               text: "You won't be able to revert this!",
@@ -765,7 +755,6 @@
         });
         function doneTyping() {
           value = $("#myInput").val();
-          console.log(value);
           fetchNotes(1, optionValue, value);
         }
         (function () {
