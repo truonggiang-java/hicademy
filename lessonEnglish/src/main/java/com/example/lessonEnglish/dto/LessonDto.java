@@ -14,6 +14,6 @@ public class LessonDto {
 	private String name;
 	private String idDlfileEntry;
 	private String description;
-	private List<String> idCourse=new ArrayList<>();
+	private List<String> nameCourse=new ArrayList<>();
 	
 }

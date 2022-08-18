@@ -29,7 +29,7 @@ public class LessonService {
 	public String insertLesson(LessonDto lessonDto) {
 		try {
 			Lesson lesson = new Lesson();
-			List<Course> courses = courseRepository.findListCourse(lessonDto.getIdCourse());
+			List<Course> courses = courseRepository.findListCourse(lessonDto.getNameCourse());
 			lesson.setDescription(lessonDto.getDescription());
 			lesson.setIdDlfileEntry(lessonDto.getIdDlfileEntry());
 			lesson.setName(lessonDto.getName());
@@ -45,9 +45,11 @@ public class LessonService {
 
 	public String updateLesson(LessonDto lessonDto, String id) {
 		Lesson lesson = lessonRepository.findById(id).get();
+		List<Course> courses = courseRepository.findListCourse(lessonDto.getNameCourse());
 		lesson.setName(lessonDto.getName());
 		lesson.setDescription(lessonDto.getDescription());
 		lesson.setIdDlfileEntry(lessonDto.getIdDlfileEntry());
+		lesson.setCourses(courses);
 		lessonRepository.save(lesson);
 		return "Bạn đã cập nhật bài học thành công";
 	}
@@ -95,7 +97,7 @@ public class LessonService {
 	}
 
 	public String deleteLessonByListId(List<String> id) {
-		List<Lesson> lesson = lessonRepository.findListLesson(id);
+		List<Lesson> lesson = lessonRepository.findListIdLesson(id);
 		lessonRepository.deleteAll(lesson);
 		return "Bạn đã xóa bài học thành công";
 	}

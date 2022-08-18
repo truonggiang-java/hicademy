@@ -15,6 +15,9 @@ import com.example.lessonEnglish.projections.LessonCourseProjection;
 public interface CourseRepository extends JpaRepository<Course, String> {
 	@Query("select c from Course c where c.name in :name")
 	List<Course> findListCourse(@Param("name") List<String> name);
+	
+	@Query("select c from Course c where c.id in :id")
+	List<Course> findListIdCourse(@Param("id") List<String> id);
 
 	@Query(value = "select c.id as id, c.name as name,c.description as description ,c.id_dlfileentry as idDlFileEntry,count(cl.lesson_id) as countLesson from course c LEFT JOIN   course_lesson cl ON c.id=cl.course_id where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%') group by c.name order by c.update_date desc limit :page, :size",nativeQuery = true)
 	List<CourseProjection> findAllCourse(@Param("input") String input,@Param("page") Integer page,@Param("size") Integer size);

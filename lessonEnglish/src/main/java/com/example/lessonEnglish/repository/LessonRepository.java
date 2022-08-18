@@ -16,6 +16,9 @@ public interface LessonRepository extends JpaRepository<Lesson, String>{
 	@Query("select l from Lesson l where l.name in :name")
 	List<Lesson> findListLesson(@Param("name") List<String> name);
 
+	@Query("select l from Lesson l where l.id in :id")
+	List<Lesson> findListIdLesson(@Param("id") List<String> id);
+	
 	@Query(value = "select c.id as id, c.name as name,c.description as description ,c.id_dlfileentry as idDlFileEntry,count(cl.course_id) as countCourse from lesson c LEFT JOIN   course_lesson cl ON c.id=cl.lesson_id where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%') group by c.name order by c.update_date desc limit :page, :size",nativeQuery = true)
 	List<LessonProjection> findAllLesson(@Param("input") String input,@Param("page") Integer page,@Param("size") Integer size);
 

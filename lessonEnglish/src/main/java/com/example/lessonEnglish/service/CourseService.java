@@ -31,7 +31,7 @@ public class CourseService {
 	public String insertCourse(CourseDto courseDto) {
 		try {
 			Course course = new Course();
-			List<Lesson> lessons = lessonRepository.findListLesson(courseDto.getIdLesson());
+			List<Lesson> lessons = lessonRepository.findListLesson(courseDto.getNameLesson());
 			course.setName(courseDto.getName());
 			course.setDescription(courseDto.getDescription());
 			course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
@@ -49,7 +49,7 @@ public class CourseService {
 	public String updateCourse(CourseDto courseDto, String id) {
 
 		Course course = courseRepository.findById(id).get();
-		List<Lesson> lessons = lessonRepository.findListLesson(courseDto.getIdLesson());
+		List<Lesson> lessons = lessonRepository.findListLesson(courseDto.getNameLesson());
 		course.setName(courseDto.getName());
 		course.setDescription(courseDto.getDescription());
 		course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
@@ -146,7 +146,7 @@ public class CourseService {
 	}
 
 	public String deleteCourseByListId(List<String> id) {
-		List<Course> course = courseRepository.findListCourse(id);
+		List<Course> course = courseRepository.findListIdCourse(id);
 		courseRepository.deleteAll(course);
 		return "Bạn đã xóa khóa học thành công";
 	}
