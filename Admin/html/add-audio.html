@@ -233,38 +233,38 @@
                 <!-- Contextual Classes -->
   
                 <div class="card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h5 class="card-header">Add Audio</h5>
-                    </div>
-                    <form method="POST" onsubmit="return false" style="padding: 1.5rem;">
-                      <div class="row">
-                        <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label">Name</label>
-                            <input class="form-control" type="text" id="nameVideo" name="Name" autofocus/>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Description</label>
-                            <input class="form-control" type="text" name="Description" id="descriptionVideo"/>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                          <label class="form-label" for="basic-default-company">Param</label>
-                          <br/>
-                          <select id="paramVideo" class="country" style="height: 35px; width: 100%; border-radius: 4px;">
-                            <option value="Music" selected>Music</option>
-                            <option value="Story">Story</option>
-                          </select>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Link</label>
-                            <input class="form-control" type="text" name="Link" id="linkVideo"/>
-                        </div>
+                  <div style="display: flex; justify-content: space-between;">
+                      <h5 class="card-header">Add Audio</h5>
+                  </div>
+                  <form method="POST" onsubmit="return false" style="padding: 1.5rem;">
+                    <div class="row">
+                      <div class="mb-3 col-md-6">
+                          <label for="firstName" class="form-label">Name</label>
+                          <input class="form-control" type="text" id="nameVideo" name="NameVideo" required autofocus/>
                       </div>
-                      <button type="submit" class="btn btn-success" id="submitVideo"
-                        style="display: block;  margin-left: auto;  margin-right: auto;"
-                      >
-                          Submit
-                      </button>
-                    </form>
+                      <div class="mb-3 col-md-6">
+                          <label for="lastName" class="form-label">Description</label>
+                          <input class="form-control" type="text" name="descriptionVideo" id="descriptionVideo" required/>
+                      </div>
+                      <div class="mb-3 col-md-6">
+                        <label class="form-label" for="basic-default-company">Param</label>
+                        <br/>
+                        <select id="paramVideo" class="country" style="height: 35px; width: 100%; border-radius: 4px;">
+                          <option value="Music" selected>Music</option>
+                          <option value="Story">Story</option>
+                        </select>
+                      </div>
+                      <div class="mb-3 col-md-6">
+                          <label for="lastName" class="form-label">Link</label>
+                          <input class="form-control" type="text" name="linkVideo" id="linkVideo" required/>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" id="submitVideo"
+                      style="display: block;  margin-left: auto;  margin-right: auto;"
+                    >
+                        Submit
+                    </button>
+                  </form>
                 </div>
                 <!--/ Contextual Classes -->
                 <hr class="my-5" />
@@ -297,7 +297,7 @@
         url: "http://localhost:8080/api/v1/video/insertVideo",
         data: JSON.stringify(value),
         success: function (data) {
-
+          
         }
       })
       const Toast = Swal.mixin({
@@ -307,7 +307,6 @@
         timer: 1000,
         timerProgressBar: true,
         didOpen: (toast) => {
-
           toast.addEventListener('mouseenter', Swal.stopTimer)
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
