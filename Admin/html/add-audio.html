@@ -240,33 +240,86 @@
                       <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="firstName" class="form-label">Name</label>
-                            <input class="form-control" type="text" id="Name" name="Name" autofocus/>
+                            <input class="form-control" type="text" id="nameVideo" name="Name" autofocus/>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="lastName" class="form-label">Description</label>
-                            <input class="form-control" type="text" name="Description" id="Description"/>
+                            <input class="form-control" type="text" name="Description" id="descriptionVideo"/>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Param</label>
-                            <input class="form-control" type="text" name="Param" id="Param"/>
+                          <label class="form-label" for="basic-default-company">Param</label>
+                          <br/>
+                          <select id="paramVideo" class="country" style="height: 35px; width: 100%; border-radius: 4px;">
+                            <option value="Music" selected>Music</option>
+                            <option value="Story">Story</option>
+                          </select>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="lastName" class="form-label">Link</label>
-                            <input class="form-control" type="text" name="Link" id="Link"/>
+                            <input class="form-control" type="text" name="Link" id="linkVideo"/>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-primary me-2" >Submit</button>
+                      <button type="submit" class="btn btn-success" id="submitVideo"
+                        style="display: block;  margin-left: auto;  margin-right: auto;"
+                      >
+                          Submit
+                      </button>
                     </form>
                 </div>
                 <!--/ Contextual Classes -->
-  
                 <hr class="my-5" />
-  
-                
                 <!--/ Responsive Table -->
               </div>
               <!-- / Content -->
         </div>
     </div>
 </body>
+
+<script>
+  $(document).ready(function (){
+    $(document).on('click', "#submitVideo", function () {
+      let name = $('#nameVideo').val();
+      let description = $("#descriptionVideo").val();
+      let link = $("#linkVideo").val();
+      var selectedValues = $('#paramVideo').val();
+      console.log(selectedValues)
+      let value = {
+        name: name,
+        description: description,
+        link: link,
+        param: selectedValues
+      }
+      $.ajax({
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        method: "POST",
+        url: "http://localhost:8080/api/v1/video/insertVideo",
+        data: JSON.stringify(value),
+        success: function (data) {
+
+        }
+      })
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'success',
+        title: 'Created Lesson successfully'
+      })
+      window.setTimeout(function () {
+        window.location.reload();
+      }, 1000);
+    })
+  })
+</script>
 </html>

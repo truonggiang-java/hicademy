@@ -336,7 +336,11 @@
                   </div>
                   <div class="mb-3">
                     <label class="form-label" for="basic-default-company">Param</label>
-                    <input type="text" class="form-control" id="paramVideo" placeholder="JQK" />
+                    <br/>
+                    <select id="paramVideo" class="country" style="height: 35px; width: 100%; border-radius: 4px;">
+                      <option value="Music" selected>Music</option>
+                      <option value="Story">Story</option>
+                    </select>
                   </div>
                   <div class="mb-3">
                     <label class="form-label" for="basic-default-company">Link</label>
@@ -441,7 +445,7 @@
                 <td>${audio.param}</td>
                 <td>${audio.link}</td>
                 <td>
-                  <a class="dropdown-item" data-toggle="modal" href="#myModal" 
+                  <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
                     style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
                   ><i class="bx bx-edit-alt me-1"></i> 
                     Edit
@@ -508,6 +512,24 @@
                 )
               }
             })
+          })
+        })
+
+        //edit video
+        $(document).on("click", ".editVideo", function () {
+          id = $(this).attr("id");
+          $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
+            success: function (data) {
+
+              let html = `<img src="${data.link}" alt="" id="${data.id}"
+                        style="width: 90%;">`
+              $("#nameVideo").val(data.name);
+              $("#descriptionVideo").val(data.description);
+              $("#linkVideo").val(data.link);
+              $("#paramVideo").val(data.param)
+            }
           })
         })
 
