@@ -53,6 +53,31 @@ public class LessonService {
 		lessonRepository.save(lesson);
 		return "Bạn đã cập nhật bài học thành công";
 	}
+	public LessonImageDto findByIdLesson(String id) {
+		LessonImageDto lessonImageDto = new LessonImageDto();
+		Lesson lesson = lessonRepository.findById(id).get();
+		lessonImageDto.setDescription(lesson.getDescription());
+		lessonImageDto.setId(lesson.getIdDlfileEntry());
+		lessonImageDto.setName(lesson.getName());
+		String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
+				.path(lesson.getIdDlfileEntry()).toUriString();
+		lessonImageDto.setLink(fileName);
+		List<CourseLessonProjection> listCourse = lessonRepository.findCourseByIdLesson(lesson.getId());
+		String course = "";
+		if (listCourse.size() > 0) {
+			for (int i = 0; i < listCourse.size(); i++) {
+				if (i < listCourse.size() - 1) {
+					course += listCourse.get(i).getName() + ",";
+				} else {
+					course += listCourse.get(i).getName();
+				}
+			}
+		} else {
+			course = "Không có bài học nào trong khóa học này";
+		}
+		lessonImageDto.setCourse(course);
+		return lessonImageDto;
+	}
 
 	public PageableLessonDto findAll(Integer page, Integer size, String input) {
 		PageableLessonDto pageableCourseDto = new PageableLessonDto();
@@ -101,4 +126,5 @@ public class LessonService {
 		lessonRepository.deleteAll(lesson);
 		return "Bạn đã xóa bài học thành công";
 	}
+
 }
