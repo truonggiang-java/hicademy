@@ -347,11 +347,8 @@
                 <div class="mb-3">
                   <label for="lastName" class="form-label">Select Course</label style="width:15%;">
                   <br />
-                  <select name="selectLesson" multiple multiselect-search="true" multiselect-select-all="true"
-                    multiselect-max-items="10">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                  <select multiple id="selectCourse" style="width: 100%;">
+
                   </select>
                 </div>
                 <div class="mb-3 ">
@@ -516,6 +513,85 @@
             }
           })
         }
+
+        function selectCourseA() {
+          $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/v1/lesson/findAll",
+            success: function (res) {
+              let html = "";
+              res.forEach(function (data) {
+                html += `<option value="${data.name}">${data.name}</option>`;
+              })
+              $("#selectCourse").html(html);
+            }
+          })
+        }
+        selectCourseA();
+        //edit course
+        $(document).on("click", ".editLesson", function () {
+          var $mSelect = $('#selectCourse').selectize({ placeholder: "Select a value" });
+          id = $(this).attr("id");
+          $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/v1/course/findById?id=" + id,
+            success: function (data) {
+
+              let html = `<img src="${data.link}" alt="" id="${data.id}"
+                        style="width: 90%;">`
+              $("#nameLesson").val(data.name);
+              $("#descriptionLesson").val(data.description);
+              $("#imageLessonAvatar").html(html);
+              var values = data.lesson.split(',');
+
+              $mSelect[0].selectize.setValue(values)
+            }
+          })
+        })
+        //update
+        $(document).on("click", "#submitUpdateLesson", function () {
+          let select = $('#selectCourse').val();
+          let name = $('#nameLesson').val();
+          let description = $("#descriptionLesson").val();
+          let image = $("#imageLessonAvatar img").attr("id");
+          let value = {
+            name: name,
+            description: description,
+            idDlfileEntry: image,
+            idLesson: select
+          }
+          Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              Swal.fire('Saved!', '', 'success')
+              $.ajax({
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                method: "PUT",
+                url: "http://localhost:8080/api/v1/lesson/updateLesson/" + id,
+                data: JSON.stringify(value),
+                success: function (data) {
+                }
+              })
+              window.setTimeout(function () {
+                window.location.reload();
+              }, 300);
+
+
+            } else if (result.isDenied) {
+              Swal.fire('Changes are not saved', '', 'info')
+            }
+          })
+
+        })
+        
         function buildPagination(response, page) {
 
           totalPages = response.totalPage;
@@ -616,9 +692,6 @@
             //$(this).addClass("active");
           }
         });
-
-
-
 
         //Toggle button delete
         $(document).on('click', '.messageCheckbox', function () {
