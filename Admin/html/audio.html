@@ -173,6 +173,7 @@
                     class="form-control border-0 shadow-none"
                     placeholder="Search..."
                     aria-label="Search..."
+                    id="myInput"
                   />
                 </div>
               </div>
@@ -381,13 +382,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      
-      $(document).ready(function () {
-        function fetchNotes(){
 
+      $(document).ready(function () {
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 200;  //time in ms, 5 seconds for example
+        var $input = $('#myInput');
+        let value = "";
+        function fetchNotes(input){
+          let url;
+          if(input && input !==""){
+            url="http://localhost:8080/api/v1/video/findAllVideo?input="+input;
+          }else{
+            url="http://localhost:8080/api/v1/video/findAllVideo";
+          }
           $.ajax({
             method: "GET",
-            url : "http://localhost:8080/api/v1/video/findAllVideo",
+            url : url,
             success: function(res){
               let html = "";
               let i = 0;
@@ -418,7 +428,7 @@
             }
           })
         }
-        fetchNotes();
+      
         //Toggle button delete
         $(document).on('click', '.messageCheckbox', function () {
           var checkedValue = $('.messageCheckbox:checked').val();
@@ -461,7 +471,7 @@
                   data: JSON.stringify(value),
                   success: function (data) {
                     document.getElementById("delete").style.display = "none";
-                    fetchNotes()
+                    fetchNotes("")
                   }
                 })
                 Swal.fire(
@@ -536,6 +546,25 @@
           })
 
         })
+        //search
+        $input.on('keyup', function () {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+        //on keydown, clear the countdown 
+        $input.on('keydown', function () {
+          clearTimeout(typingTimer);
+        });
+
+        function doneTyping() {
+          value = $("#myInput").val();
+          // console.log(value);
+          fetchNotes(value);
+        }
+        (function () {
+          // get first-page at initial time
+          fetchNotes(value);
+        })();
       })
     </script>
   </body>

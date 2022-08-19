@@ -1,4 +1,5 @@
 package com.example.lessonEnglish.service;
+import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.lessonEnglish.dto.VideoDto;
@@ -9,12 +10,12 @@ import com.example.lessonEnglish.repository.VideoRepository;
 public class VideoService {
     @Autowired
     private VideoRepository videoRepository;
-
+   
     public String insertVideo(VideoDto videoDto) {
         try {
             Video video = new Video();
-            video.setName(videoDto.getName());
-            video.setDescription(videoDto.getDescription());
+            video.setName(WordUtils.capitalizeFully(videoDto.getName()));
+            video.setDescription(videoDto.getDescription().substring(0, 1).toUpperCase() + videoDto.getDescription().substring(1, videoDto.getDescription().length()));
             video.setLink(videoDto.getLink());
             video.setParam(videoDto.getParam());
             videoRepository.save(video);
@@ -26,8 +27,8 @@ public class VideoService {
         }
     }
 
-    public java.util.List<Video> findAll() {
-        return videoRepository.findAll();
+    public java.util.List<Video> findAll(String input) {
+        return videoRepository.findAllVideo(input);
     }
 
     public Video findById(String id) {
