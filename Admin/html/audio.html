@@ -381,40 +381,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+      
       $(document).ready(function () {
-        $.ajax({
-          method: "GET",
-          url : "http://localhost:8080/api/v1/video/findAllVideo",
-          success: function(res){
-            let html = "";
-            let i = 0;
-            res.forEach(audio => {
-              const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
-              html+=`
-              <tr class="${color[i]}" id="${audio.id}">
-                <td style="width: 2%; padding-left: 15px">
-                  <input value="${audio.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
-                </td>
-                <td><strong>${audio.name}</strong></td>
-                <td>${audio.description}</td>
-                <td>${audio.param}</td>
-                <td>${audio.link}</td>
-                <td>
-                  <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
-                    style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
-                  ><i class="bx bx-edit-alt me-1"></i> 
-                    Edit
-                  </a>
-                </td>
-              </tr>`
-            if (i==color.length-1) {
-              i=0;
-            } else i++
-            });
-            $("#content").html(html)
-          }
-        })
+        function fetchNotes(){
 
+          $.ajax({
+            method: "GET",
+            url : "http://localhost:8080/api/v1/video/findAllVideo",
+            success: function(res){
+              let html = "";
+              let i = 0;
+              res.forEach(audio => {
+                const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
+                html+=`
+                <tr class="${color[i]}" id="${audio.id}">
+                  <td style="width: 2%; padding-left: 15px">
+                    <input value="${audio.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
+                  </td>
+                  <td><strong>${audio.name}</strong></td>
+                  <td>${audio.description}</td>
+                  <td>${audio.param}</td>
+                  <td>${audio.link}</td>
+                  <td>
+                    <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
+                      style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
+                    ><i class="bx bx-edit-alt me-1"></i> 
+                      Edit
+                    </a>
+                  </td>
+                </tr>`
+              if (i==color.length-1) {
+                i=0;
+              } else i++
+              });
+              $("#content").html(html)
+            }
+          })
+        }
+        fetchNotes();
         //Toggle button delete
         $(document).on('click', '.messageCheckbox', function () {
           var checkedValue = $('.messageCheckbox:checked').val();
@@ -453,11 +457,11 @@
                     'Content-Type': 'application/json;charset=utf-8'
                   },
                   method: "DELETE",
-                  url: "http://localhost:8080/api/v1/audio/delete",
+                  url: "http://localhost:8080/api/v1/video/deleteVideo",
                   data: JSON.stringify(value),
                   success: function (data) {
                     document.getElementById("delete").style.display = "none";
-                    fetchNotes(1, optionValue)
+                    fetchNotes()
                   }
                 })
                 Swal.fire(
