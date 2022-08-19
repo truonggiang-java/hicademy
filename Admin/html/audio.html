@@ -338,7 +338,7 @@
                     <label class="form-label" for="basic-default-company">Param</label>
                     <br/>
                     <select id="paramVideo" class="country" style="height: 35px; width: 100%; border-radius: 4px;">
-                      <option value="Music" selected>Music</option>
+                      <option value="Music">Music</option>
                       <option value="Story">Story</option>
                     </select>
                   </div>
@@ -350,57 +350,13 @@
               </div>
             </div>
             <div class="modal-footer">
-              <a href="#" data-dismiss="modal" class="btn btn-primary">Submit</a>
+              <a href="#" data-dismiss="modal" class="btn btn-primary" id="submitUpdateVideo">Submit</a>
               <a href="#" data-dismiss="modal" class="btn">Close</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal" id="myModal2" data-backdrop="static">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Choose Image</h4>
-            </div>
-            <div class="modal-body">
-              <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:0.5%;margin-left: -10px;">
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-                <div>
-                  <img src="https://img.meta.com.vn/Data/image/2021/12/14/hinh-anh-con-ho-0.jpg" alt=""
-                    style="width: 100%; cursor: pointer;">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <a href="#" data-dismiss="modal" class="btn">Close</a>
-              <a href="#" class="btn btn-primary">Save changes</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
@@ -433,7 +389,6 @@
             let html = "";
             let i = 0;
             res.forEach(audio => {
-              console.log(audio)
               const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
               html+=`
               <tr class="${color[i]}" id="${audio.id}">
@@ -522,13 +477,13 @@
             method: "GET",
             url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
             success: function (data) {
-
+              console.log(data);
               let html = `<img src="${data.link}" alt="" id="${data.id}"
                         style="width: 90%;">`
               $("#nameVideo").val(data.name);
               $("#descriptionVideo").val(data.description);
               $("#linkVideo").val(data.link);
-              $("#paramVideo").val(data.param)
+              $("#paramVideo").val(data.param).change();
             }
           })
         })
@@ -563,6 +518,7 @@
                 url: "http://localhost:8080/api/v1/video/updateVideo/" + id,
                 data: JSON.stringify(value),
                 success: function (data) {
+
                 }
               })
               window.setTimeout(function () {
