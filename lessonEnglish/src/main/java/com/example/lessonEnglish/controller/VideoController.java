@@ -29,8 +29,8 @@ public class VideoController {
     }
 
     @GetMapping("/findAllVideo")
-    public List<Video> findAllVideo() {
-        return videoService.findAll();
+    public List<Video> findAllVideo(@RequestParam(name="input",required = false,defaultValue = "") String input) {
+        return videoService.findAll(input);
     }
 
     @GetMapping("/findByIdVideo")
