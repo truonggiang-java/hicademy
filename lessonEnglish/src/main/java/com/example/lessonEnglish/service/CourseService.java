@@ -12,9 +12,11 @@ import com.example.lessonEnglish.dto.CourseDto;
 import com.example.lessonEnglish.dto.CourseImageDto;
 import com.example.lessonEnglish.dto.PageDto;
 import com.example.lessonEnglish.dto.PageableCourseDto;
+import com.example.lessonEnglish.dto.response.LessonImageResponse;
 import com.example.lessonEnglish.entity.Course;
 import com.example.lessonEnglish.entity.Lesson;
 import com.example.lessonEnglish.projections.CourseProjection;
+import com.example.lessonEnglish.projections.LessonByIdCourseProjection;
 import com.example.lessonEnglish.projections.LessonCourseProjection;
 import com.example.lessonEnglish.repository.CourseRepository;
 import com.example.lessonEnglish.repository.LessonRepository;
@@ -153,5 +155,21 @@ public class CourseService {
 
 	public List<Course> findAllCourse() {
 		return courseRepository.findAll();
+	}
+	
+	public List<LessonImageResponse> findAllLessonByIdCourse(String id) {
+		List<LessonImageResponse> listLessonImageResponses=new ArrayList<>();
+		List<LessonByIdCourseProjection> findAllLessonByIdCourse=courseRepository.findAllLessonByIdCourse(id);
+		for (LessonByIdCourseProjection lessonByIdCourseProjection : findAllLessonByIdCourse) {
+			LessonImageResponse lessonImageResponse=new LessonImageResponse();
+			lessonImageResponse.setId(lessonByIdCourseProjection.getId());
+			lessonImageResponse.setDescription(lessonByIdCourseProjection.getDescription());
+			lessonImageResponse.setName(lessonByIdCourseProjection.getName());
+			String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
+					.path(lessonByIdCourseProjection.getIdDlFileEntry()).toUriString();
+			lessonImageResponse.setLink(fileName);
+			listLessonImageResponses.add(lessonImageResponse);
+		}
+		return listLessonImageResponses;
 	}
 }
