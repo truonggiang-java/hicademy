@@ -1,5 +1,4 @@
-package com.example.lessonEnglish.Admin.controller;
-
+package com.example.lessonEnglish.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +66,6 @@ public class CourseController {
 	public List<LessonImageResponse> findAllLessonByIdCourse(@RequestParam("id") String id){
 		return courseService.findAllLessonByIdCourse(id);
 	}
+	
 	
 }
