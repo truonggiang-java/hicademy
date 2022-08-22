@@ -1,4 +1,6 @@
 package com.example.lessonEnglish.service;
+import java.util.List;
+
 import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,4 +53,8 @@ public class VideoService {
         videoRepository.save(video);
         return "Bạn đã cập nhật vieo thành công ";
     }
+
+    public List<Video> findVideoByParam ( String param){
+        return videoRepository.findVideoByParam(param);
+    }    
 }

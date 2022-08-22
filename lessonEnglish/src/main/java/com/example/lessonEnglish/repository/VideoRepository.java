@@ -15,4 +15,7 @@ public interface VideoRepository extends JpaRepository<Video, String> {
 
 	@Query(value = "select * from Video c where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%') or upper(c.param) like concat(concat('%',upper(:input)),'%') order by c.update_date desc", nativeQuery = true)
 	List<Video> findAllVideo(@Param("input") String video);
+
+	@Query(value = "select * from Video c where c.param = :input", nativeQuery = true)
+	List<Video> findVideoByParam(@Param("input") String inout);
 }
