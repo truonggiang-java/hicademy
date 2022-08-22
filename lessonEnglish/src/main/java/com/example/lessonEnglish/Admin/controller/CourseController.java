@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.lessonEnglish.dto.CourseDto;
 import com.example.lessonEnglish.dto.CourseImageDto;
 import com.example.lessonEnglish.dto.PageableCourseDto;
+import com.example.lessonEnglish.dto.response.LessonImageResponse;
 import com.example.lessonEnglish.entity.Course;
 import com.example.lessonEnglish.service.CourseService;
 
@@ -60,6 +61,11 @@ public class CourseController {
 	@DeleteMapping("/delete")
 	public String deleteCourseById(@RequestBody List<String> id) {
 		return courseService.deleteCourseByListId(id);
+	}
+	
+	@GetMapping("/findLessonByIdCourse")
+	public List<LessonImageResponse> findAllLessonByIdCourse(@RequestParam("id") String id){
+		return courseService.findAllLessonByIdCourse(id);
 	}
 	
 }

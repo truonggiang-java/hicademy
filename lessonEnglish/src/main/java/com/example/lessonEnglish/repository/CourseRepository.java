@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.lessonEnglish.entity.Course;
 import com.example.lessonEnglish.projections.CourseProjection;
+import com.example.lessonEnglish.projections.LessonByIdCourseProjection;
 import com.example.lessonEnglish.projections.LessonCourseProjection;
 
 @Repository
@@ -27,4 +28,7 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 	
 	@Query(value="select count(*) from Course c where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%')",nativeQuery = true)
 	Long countCourse(@Param("input") String input);
+	
+	@Query(value="select l.id as id, l.name as name ,l.description as description, l.id_dlfileentry as idDlFileEntry from course c inner join course_lesson cl on c.id=cl.course_id inner join lesson l on cl.lesson_id=l.id where c.id=:id order by l.update_date desc",nativeQuery = true)
+	List<LessonByIdCourseProjection> findAllLessonByIdCourse(@Param("id") String id);
 }

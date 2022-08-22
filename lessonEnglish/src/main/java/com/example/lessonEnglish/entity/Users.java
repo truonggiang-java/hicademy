@@ -31,6 +31,10 @@ public class Users extends BaseEntity{
 	@Column(name="address")
 	private String address;
 	
+	@Column(name="telephone")
+	private String telephone;
+	
+	
 	@Column(name="email")
 	private String email;
 	
