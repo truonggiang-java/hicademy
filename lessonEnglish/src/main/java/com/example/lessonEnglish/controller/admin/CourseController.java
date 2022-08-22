@@ -1,4 +1,4 @@
-package com.example.lessonEnglish.controller;
+package com.example.lessonEnglish.controller.admin;
 
 import java.util.List;
 
@@ -67,5 +67,6 @@ public class CourseController {
 	public List<LessonImageResponse> findAllLessonByIdCourse(@RequestParam("id") String id){
 		return courseService.findAllLessonByIdCourse(id);
 	}
+	
 	
 }

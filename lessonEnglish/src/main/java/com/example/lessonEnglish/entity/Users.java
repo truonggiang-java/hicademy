@@ -1,7 +1,8 @@
 package com.example.lessonEnglish.entity;
 
-import java.sql.Date;
+
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Users extends BaseEntity{
 	private String name;
 	
 	@Column(name="gender")
-	private Gender gender;
+	private String gender;
 	
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;

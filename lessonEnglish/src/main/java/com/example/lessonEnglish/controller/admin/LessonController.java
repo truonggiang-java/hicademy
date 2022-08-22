@@ -1,4 +1,4 @@
-package com.example.lessonEnglish.controller;
+package com.example.lessonEnglish.controller.admin;
 
 import java.util.List;
 
