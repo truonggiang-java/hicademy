@@ -1,4 +1,4 @@
-package com.example.lessonEnglish.controller;
+package com.example.lessonEnglish.User.controller;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.lessonEnglish.service.LogoService;
 
 @RestController
-@RequestMapping("/api/v1/logo")
+@RequestMapping("/api/v2/logo")
 @CrossOrigin(origins = "*")
 public class LogoController {
 	@Autowired

@@ -1,4 +1,4 @@
-package com.example.lessonEnglish.controller;
+package com.example.lessonEnglish.Admin.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -1,4 +1,4 @@
-package com.example.lessonEnglish.controller;
+package com.example.lessonEnglish.User.controller;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import com.example.lessonEnglish.entity.Course;
 import com.example.lessonEnglish.service.CourseService;
 
 @RestController
-@RequestMapping("/api/v1/course")
+@RequestMapping("/api/v2/course")
 @CrossOrigin(origins =  "*")
 public class CourseController {
 	@Autowired

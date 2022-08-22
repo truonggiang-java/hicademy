@@ -1,4 +1,4 @@
-package com.example.lessonEnglish.controller;
+package com.example.lessonEnglish.Admin.controller;
 
 import java.io.IOException;
 import java.util.List;
