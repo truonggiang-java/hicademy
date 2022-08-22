@@ -266,6 +266,7 @@
                         <th>Description</th>
                         <th>Param</th>
                         <th>Link</th>
+                        <th></th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -357,8 +358,26 @@
           </div>
         </div>
       </div>
-      
     <!-- / Layout wrapper --> 
+      <div class="modal" id="myModal2" >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Choose Image</h4>
+            </div>
+            <div class="modal-body">
+              <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/7Lfa3LTfqDQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" data-dismiss="modal" class="btn">Close</a>
+              <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- / Layout wrapper -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
@@ -412,6 +431,7 @@
                   <td>${audio.description}</td>
                   <td>${audio.param}</td>
                   <td>${audio.link}</td>
+                  <td><button type="button" class="btn btn-success"  data-toggle="modal" href="#myModal2">Preview</button></td>
                   <td>
                     <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
                       style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
