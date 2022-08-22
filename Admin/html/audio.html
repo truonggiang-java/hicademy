@@ -358,8 +358,7 @@
         </div>
       </div>
       
-    <!-- / Layout wrapper -->
-
+    <!-- / Layout wrapper --> 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
@@ -388,6 +387,7 @@
         var doneTypingInterval = 200;  //time in ms, 5 seconds for example
         var $input = $('#myInput');
         let value = "";
+        var $videoSrc;  
         function fetchNotes(input){
           let url;
           if(input && input !==""){
