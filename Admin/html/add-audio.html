@@ -275,9 +275,11 @@
     </div>
 </body>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
   $(document).ready(function (){
+    let cookie = $.cookie("Cookie-admin");
     $(document).on('click', "#submitVideo", function () {
       let name = $('#nameVideo').val();
       let description = $("#descriptionVideo").val();
@@ -293,7 +295,8 @@
       if (name && description && link){
         $.ajax({
           headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization': 'Bearer ' + cookie
           },
           method: "POST",
           url: "http://localhost:8080/api/v1/video/insertVideo",

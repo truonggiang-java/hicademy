@@ -279,10 +279,16 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
       $(document).ready(function () {
+        let cookie = $.cookie("Cookie-admin");
         function findAll() {
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             method: "GET",
             url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
             success: function (res) {
@@ -348,7 +354,8 @@
               if (result.isConfirmed) {
                 $.ajax({
                   headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + cookie
                   },
                   method: "DELETE",
                   url: "http://localhost:8080/api/v1/dlFileEntry/deleteFile",
@@ -377,6 +384,9 @@
             form_data.append("file", document.getElementById('files').files[index]);
           }
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             url: "http://localhost:8080/api/v1/dlFileEntry/uploadFile",
             data: form_data,
             dataType: 'json',

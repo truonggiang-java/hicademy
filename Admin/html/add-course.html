@@ -332,12 +332,17 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
   $(document).ready(function () {
     let idImage;
     let totalPageImage = 1;
-
+    let cookie = $.cookie("Cookie-admin");
     $.ajax({
+      headers: {
+        'Authorization': 'Bearer ' + cookie
+      },
       method: "GET",
       url: "http://localhost:8080/api/v1/lesson/findAll",
       success: function (res) {
@@ -364,7 +369,8 @@
       }
       $.ajax({
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': 'Bearer ' + cookie
         },
         method: "POST",
         url: "http://localhost:8080/api/v1/course/insertCourse",
@@ -396,6 +402,9 @@
     //image
     function findAll(startPage) {
       $.ajax({
+        headers: {
+          'Authorization': 'Bearer ' + cookie
+        },
         method: "GET",
         url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
         success: function (res) {
@@ -531,6 +540,9 @@
       }
       document.getElementById(idImage).style.border = "4px solid red";
       $.ajax({
+        headers: {
+          'Authorization': 'Bearer ' + cookie
+        },
         method: "GET",
         url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + idImage,
         success: function (param) {

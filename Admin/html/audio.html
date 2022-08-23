@@ -390,14 +390,17 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
+    </script>
     <script>
-
       $(document).ready(function () {
         var typingTimer;                //timer identifier
         var doneTypingInterval = 200;  //time in ms, 5 seconds for example
         var $input = $('#myInput');
         let value = "";
         var $videoSrc;  
+        let cookie = $.cookie("Cookie-admin");
         function fetchNotes(input){
           let url;
           if(input && input !==""){
@@ -406,6 +409,9 @@
             url="http://localhost:8080/api/v1/video/findAllVideo";
           }
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             method: "GET",
             url : url,
             success: function(res){
@@ -474,7 +480,8 @@
               if (result.isConfirmed) {
                 $.ajax({
                   headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + cookie
                   },
                   method: "DELETE",
                   url: "http://localhost:8080/api/v1/video/deleteVideo",
@@ -498,6 +505,9 @@
         $(document).on("click", ".editVideo", function () {
           id = $(this).attr("id");
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             method: "GET",
             url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
             success: function (data) {
@@ -522,6 +532,9 @@
           id = $(this).attr("id");
     
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             method: "GET",
             url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
             success: function (data) {

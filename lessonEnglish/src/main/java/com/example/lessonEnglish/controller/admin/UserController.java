@@ -3,6 +3,7 @@ package com.example.lessonEnglish.controller.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.example.lessonEnglish.service.UserService;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@CrossOrigin(value = "*")
 public class UserController {
 	
 	@Autowired
@@ -44,8 +46,8 @@ public class UserController {
 		}
 		UserServiceImpl userServiceImpl=(UserServiceImpl) userDetailService.loadUserByUsername(request.getEmail());
 		String token=jwtUtils.generateToken(userServiceImpl);
-		String email=request.getEmail();
-		return new ResponseDto(email,token);
+		
+		return new ResponseDto(token);
 		
 	}
 	
