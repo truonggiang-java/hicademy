@@ -420,7 +420,7 @@
               let html = "";
               let i = 0;
               res.forEach(audio => {
-                const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-dark"];
+                const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info"];
                 html+=`
                 <tr class="${color[i]}" >
                   <td style="width: 2%; padding-left: 15px">
@@ -535,7 +535,7 @@
             url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
             success: function (data) {
               console.log(data);
-              let html = `<iframe width="750" height="450" src="${data.link}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+              let html = `<iframe width="640" height="360" src="${data.link}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
               $("#previewVideo").html(html)
             }
           })
