@@ -323,7 +323,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Update Course</h4>
+              <h4 class="modal-title">Update Audio</h4>
             </div>
             <div class="modal-body">
               <div class="card-body">
@@ -359,16 +359,15 @@
         </div>
       </div>
     <!-- / Layout wrapper --> 
+    <!-- Modal Youtube-->
       <div class="modal" id="myModal2" >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Choose Image</h4>
+              <h4 class="modal-title">Play Video</h4>
             </div>
-            <div class="modal-body">
-              <div>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/7Lfa3LTfqDQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
+            <div class="modal-body" id="previewVideo" style="text-align: center;">
+              
             </div>
             <div class="modal-footer">
               <a href="#" data-dismiss="modal" class="btn">Close</a>
@@ -423,7 +422,7 @@
               res.forEach(audio => {
                 const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-dark"];
                 html+=`
-                <tr class="${color[i]}" id="${audio.id}">
+                <tr class="${color[i]}" >
                   <td style="width: 2%; padding-left: 15px">
                     <input value="${audio.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
                   </td>
@@ -431,7 +430,7 @@
                   <td>${audio.description}</td>
                   <td>${audio.param}</td>
                   <td>${audio.link}</td>
-                  <td><button type="button" class="btn btn-success"  data-toggle="modal" href="#myModal2">Preview</button></td>
+                  <td><button type="button" class="btn btn-success previewVideo" id="${audio.id}" data-toggle="modal" href="#myModal2">Preview</button></td>
                   <td>
                     <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
                       style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
@@ -518,6 +517,21 @@
               $("#descriptionVideo").val(data.description);
               $("#linkVideo").val(data.link);
               $("#paramVideo").val(data.param).change();
+            }
+          })
+        })
+
+        //preview Video
+        $(document).on("click", ".previewVideo", function () {
+          id = $(this).attr("id");
+    
+          $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
+            success: function (data) {
+              console.log(data);
+              let html = `<iframe width="750" height="450" src="${data.link}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+              $("#previewVideo").html(html)
             }
           })
         })
