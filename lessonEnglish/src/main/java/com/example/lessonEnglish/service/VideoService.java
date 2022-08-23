@@ -16,7 +16,11 @@ public class VideoService {
             Video video = new Video();
             video.setName(WordUtils.capitalizeFully(videoDto.getName()));
             video.setDescription(videoDto.getDescription().substring(0, 1).toUpperCase() + videoDto.getDescription().substring(1, videoDto.getDescription().length()));
-            video.setLink(videoDto.getLink());
+            String link=videoDto.getLink();
+            if(link.contains("?v=")) {
+            	link=link.replace("watch?v=","embed/");
+            }
+            video.setLink(link);
             video.setParam(videoDto.getParam());
             videoRepository.save(video);
             return "Bạn đã thêm video " + video.getName() + " thành công";
