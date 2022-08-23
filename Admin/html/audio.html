@@ -127,16 +127,6 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
             <li class="menu-item">
               <a
-                href="https://www.facebook.com/minhhieu159"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Support</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a
                 href="pages-misc-under-maintenance.html"
                 target="_blank"
                 class="menu-link"
@@ -351,8 +341,10 @@
                 </form>
               </div>
             </div>
-            <div class="modal-footer">
-              <a href="#" data-dismiss="modal" class="btn btn-primary" id="submitUpdateVideo">Submit</a>
+            <div class="modal-footer" style="justify-content: center;">
+              <a href="#" data-dismiss="modal" class="btn btn-success" id="submitUpdateVideo">
+                Submit
+              </a>
               <a href="#" data-dismiss="modal" class="btn">Close</a>
             </div>
           </div>
@@ -535,7 +527,11 @@
             url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
             success: function (data) {
               console.log(data);
-              let html = `<iframe width="640" height="360" src="${data.link}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+              let html = `
+                <iframe width="640" height="360" src="${data.link}" title="YouTube video player" frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen style="border-radius: 10px">
+                </iframe>` 
               $("#previewVideo").html(html)
             }
           })
