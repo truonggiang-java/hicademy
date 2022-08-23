@@ -78,7 +78,7 @@
             <!-- Dashboard -->
             <li class="menu-item">
               <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon fa-solid fa-house"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
@@ -88,37 +88,37 @@
             <!-- Tables -->
             <li class="menu-item">
               <a href="user.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-user"></i>
                 <div data-i18n="Tables">User</div>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item ">
               <a href="course.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-graduation-cap"></i>
                 <div data-i18n="Tables">Course</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="lesson.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Leson</div>
+                <i class="menu-icon fa-solid fa-book-open"></i>
+                <div data-i18n="Tables">Lesson</div>
+              </a>
+            </li>
+            <li class="menu-item ">
+              <a href="audio.html" class="menu-link">
+                <i class="menu-icon fa-solid fa-play"></i>
+                <div data-i18n="Tables">Audio</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="audio.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Audio</div>
-              </a>
-            </li> 
-            <li class="menu-item">
               <a href="image.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-image"></i>
                 <div data-i18n="Tables">Image</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="card.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-clone"></i>
                 <div data-i18n="Tables">Card</div>
               </a>
             </li>
@@ -131,7 +131,7 @@
                 target="_blank"
                 class="menu-link"
               >
-                <i class="menu-icon tf-icons bx bx-file"></i>
+                <i class="menu-icon fa-solid fa-circle-info"></i>
                 <div data-i18n="Documentation">Documentation</div>
               </a>
             </li>
@@ -284,15 +284,12 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh Hieu</a>
+                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
+                    Hieu</a>
                 </div>
                 <div>
-                  <a
-                    href="https://www.facebook.com/minhhieu159"
-                    target="_blank"
-                    class="footer-link me-4"
-                    >Support</a
-                  >
+                  <i class="fa-solid fa-headset"></i>
+                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
                 </div>
               </div>
             </footer>
@@ -375,7 +372,8 @@
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/af1dffc13d.js" crossorigin="anonymous"></script>
     <script src="../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
@@ -408,7 +406,7 @@
           }else{
             url="http://localhost:8080/api/v1/video/findAllVideo";
           }
-          $({
+          $.ajax({
             headers: {
               'Authorization': 'Bearer ' + cookie
             },
@@ -431,7 +429,7 @@
                   <td><button type="button" class="btn btn-success previewVideo" id="${audio.id}" data-toggle="modal" href="#myModal2">Preview</button></td>
                   <td>
                     <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
-                      style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
+                      style="text-decoration:none; width:100%; border-radius: 10px" id="${audio.id}"
                     ><i class="bx bx-edit-alt me-1"></i> 
                       Edit
                     </a>
