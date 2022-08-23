@@ -7,6 +7,8 @@ import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
+import com.example.lessonEnglish.security.service.UserServiceImpl;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,15 +18,16 @@ public class JwtUtlis {
 	
 	private  String secretKey="truonggiang";
 	private  Integer expireToken=8640000;
-	public String generateToken(String username) {
+	
+	public String generateToken(UserServiceImpl userServiceImpl) {
 		Map<String,Object> claims=new HashMap<>();
-		return doGenerateToken(username,claims);
+		return doGenerateToken(userServiceImpl,claims);
 	}
 	
 	
-	private String doGenerateToken(String username, Map<String, Object> claims) {
+	private String doGenerateToken(UserServiceImpl userServiceImpl, Map<String, Object> claims) {
 		// TODO Auto-generated method stub
-		return Jwts.builder().setClaims(claims).setSubject(username)
+		return Jwts.builder().setClaims(claims).setSubject(userServiceImpl.getUsername())
 				.setExpiration(new Date(System.currentTimeMillis()+ expireToken))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.signWith(SignatureAlgorithm.HS512, secretKey).compact();
@@ -43,5 +46,22 @@ public class JwtUtlis {
 	
 	private Claims getToken(String token) {
 		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+	}
+	
+	public Boolean validateToken(String token,UserServiceImpl userServiceImpl) {
+		final String email=getUsernameByToken(token);
+		return (email.equals(userServiceImpl.getUsername()) && !isTokenExpried(token));
+	}
+
+
+	private boolean isTokenExpried(String token) {
+		final Date expriation=getExpriationDateFromToken(token);
+		return expriation.before(new Date());
+	}
+
+
+	private Date getExpriationDateFromToken(String token) {
+		// TODO Auto-generated method stub
+		return getAllClaimsToken(token, Claims::getExpiration);
 	}
 }
