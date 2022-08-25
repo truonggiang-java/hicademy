@@ -15,4 +15,6 @@ public class UserImageDto {
 	private String role;
 	private String date;
 	private String link;
+	private String phone;
+	private String address;
 }

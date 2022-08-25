@@ -68,4 +68,9 @@ public class UserController {
 	public List<UserImageDto> findAllUser() {
 		return userService.findAllUser();
 	}
+	
+	@GetMapping("/findById")
+	public UserImageDto findByIdUser(@RequestParam("id") String id) {
+		return userService.findByIdUser(id);
+	}
 }

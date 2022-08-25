@@ -298,10 +298,10 @@
               'Authorization': 'Bearer ' + cookie
             },
             method: "GET",
-            url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+            url: "http://localhost:8080/api/v1/user/findAll",
             success: function (res) {
               let html = "";
-              res.dlFile.forEach(data => {
+              res.forEach(data => {
                 html += `
                   <div class="col-md-6 col-lg-4 mb-3">
                     <div class="card h-100 hover01">
@@ -312,14 +312,14 @@
                             display: grid;
                             grid-template-columns: 50% 50%;
                         ">
-                          <h5> Giới tính </h5>
-                          <h5> Sinh nhật </h5>
-                          <h5> Chức vụ </h5>
-                          <h5> Gmail </h5>
+                          <h5> Giới tính: ${data.gender} </h5>
+                          <h5> Sinh nhật: ${data.date} </h5>
+                          <h5> Chức vụ: ${data.role} </h5>
+                          <h5> Gmail: ${data.email} </h5>
                         </div>
                         <div style= "display:flex">
                           <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
-                          <a class="dropdown-item editLesson"  href="profile-user.html" 
+                          <a class="dropdown-item editUser"  
                           style="text-decoration:none; width:30%; border-radius: 10px; margin-left: 20px;" id="${data.id}"
                             ><i class="bx bx-edit-alt me-1"></i> Edit
                           </a>
@@ -333,7 +333,15 @@
             }
           })
         }
-  
+        $(document).on('click','.editUser',function(e){
+          let id=$(this).attr("id");
+          let cookieUser = $.cookie("Cookie-user");
+          if(cookieUser){
+            $.removeCookie("Cookie-user");
+          }
+          $.cookie("Cookie-user", id);
+          location.href="profile-user.html";
+        })
         $(document).on('click', '.messageCheckbox', function () {
           var checkedValue = $('.messageCheckbox:checked').val();
           if (checkedValue) {
@@ -390,31 +398,6 @@
         })
   
   
-        $(document).on('click', '#submit', function (e) {
-          
-          var form_data = new FormData();
-          var totalfiles = document.getElementById('files').files.length;
-          for (var index = 0; index < totalfiles; index++) {
-            form_data.append("file", document.getElementById('files').files[index]);
-          }
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            url: "http://localhost:8080/api/v1/dlFileEntry/uploadFile",
-            data: form_data,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            method: 'POST',
-            success: function (data) {
-              
-            }
-          })
-          window.setTimeout(function () {
-            window.location.reload();
-          }, 5000);
-        })
   
         findAll();
   
