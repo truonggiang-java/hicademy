@@ -222,7 +222,7 @@
             <div class="card">
               <div style="display: flex; justify-content: space-between;">
                 <div>
-                  <h3 class="card-header" style="display: inline-block;">Lesson</h3>
+                  <h3 class="card-header" style="display: inline-block;">Card</h3>
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center;">
                   <div id="delete" style="display: none; cursor: pointer;position: relative;
@@ -231,30 +231,19 @@
                     <img src="../assets/img/icons/custom/trash.png" style="padding-right: 20px; padding-top: 7px;">
                   </div>
                   <div>
-                    <a href="add-lesson.html">
-                      <img src="../assets/img/icons/custom/list-plus.png" alt="add-course"
+                    <a data-toggle="modal" href="#myModal">
+                      <img src="../assets/img/icons/custom/image-add.png" alt="add-card"
                         style="width: 40px; right: 40%; top: 22px; height: 40px; position: relative;">
                     </a>
                   </div>
+                <!-- Image -->
+                    <div class="row mb-5" id="image">
+
+                    </div>
                 </div>
               </div>
 
               <div class="table-responsive text-nowrap">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Image</th>
-                      <th>Course</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-border-bottom-0" id="content">
-
-                  </tbody>
-                </table>
 
                 <div style="display: flex; justify-content: space-between;">
                   <div>
@@ -327,34 +316,23 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content" style="overflow: auto; height: 700px;">
           <div class="modal-header">
-            <h4 class="modal-title">Update Lesson</h4>
+            <h4 class="modal-title">Add card</h4>
           </div>
           <div class="modal-body">
             <div class="card-body">
               <form>
                 <div class="mb-3">
                   <label class="form-label" for="basic-default-fullname">Name</label>
-                  <input type="text" class="form-control" id="nameLesson" placeholder="Khóa học A" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-default-company">Description</label>
-                  <input type="text" class="form-control" id="descriptionLesson" placeholder="Miêu tả khóa học A" />
-                </div>
-                <div class="mb-3">
-                  <label for="lastName" class="form-label">Select Course</label style="width:15%;">
-                  <br />
-                  <select multiple id="selectCourse" style="width: 100%;">
-
-                  </select>
+                  <input type="text" class="form-control" id="nameCard" placeholder="Name card" />
                 </div>
                 <div class="mb-3 ">
-                  <div class="form-label">AVATAR</div>
+                  <div class="form-label">Image</div>
                   <div style="display:flex;justify-content: left;align-items: center; margin-left: 10px;">
                     <a data-toggle="modal" href="#myModal2" class="btn btn-primary" id="chooseImage">Chosse Image</a>
                   </div>
                   <br />
                   <div style="display: grid; grid-template-columns: 50% 50%">
-                    <div id="imageLessonAvatar">
+                    <div id="imageCard">
 
                     </div>
                   </div>
@@ -433,117 +411,38 @@
         let value = " ";
         let optionValue = document.getElementById('hall').value = "4";
         let cookie = $.cookie("Cookie-admin");
-        function fetchNotes(startPage, optionValue, value) {
-          let url;
-          if (value) {
-            url = "http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue + "&input=" + value;
-          } else {
-            url = "http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue;
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+          success: function (res) {
+            let html = "";
+            res.dlFile.forEach(data => {
+              html += `
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div class="card h-100 hover01">
+                    <figure><img class="card-img-top" src="${data.link}" alt="Card image cap" style="height:300px;"/></figure>
+                    <div class="card-body">
+                      <h5 class="card-title">Name : ${data.name}</h5>
+                      <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
+                    </div>
+                  </div>
+                </div>`
+            })
+
+            $("#image").html(html)
           }
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: url,
-            success: function (res) {
-              let html = "";
-              let i = 0;
-              res.lessonImage.forEach(data => {
-                const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info"];
-                html += `
-                  <tr class="${color[i]}" id="${data.id}">
-                    <td style="width: 2%; padding-left: 15px">
-                      <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
-                    </td>
-                    <td><strong>${data.name}</strong></td>
-                    <td>${data.description}</td>
-                    <td>
-                      <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
-                        <li
-                          data-bs-toggle="tooltip"
-                          data-popup="tooltip-custom"
-                          data-bs-placement="top"
-                          class="avatar avatar-xs pull-up"
-                          title="${data.description}"
-                        >
-                          <img src="${data.link}" alt="image" class="rounded-circle" />
-                        </li>
-                      </ul>
-                    </td>
-                    <td>
-                      <div class="wrapper">
-                        <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.course}" >${data.countCourse}</a>
-                      </div>
-                    <td>
-                      <a class="dropdown-item editLesson" class="dropdown-item" data-toggle="modal" href="#myModal" 
-                      style="text-decoration:none; width:30%; border-radius: 10px" id="${data.id}"
-                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                      >
-                    </td>
-                  </tr>`
-                if (i == color.length - 1) {
-                  i = 0;
-                } else i++
-              });
-              $("#content").html(html)
-
-              if ($('ul.paginationCourse li').length - (optionValue + 1) != res.page.totalPage) {
-                // build pagination list at the first time loading
-                $('ul.paginationCourse').empty();
-                buildPagination(res.page, startPage);
-
-              }
-            }
-          })
-        }
-
-        function selectCourseA() {
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: "http://localhost:8080/api/v1/course/findAllCourse",
-            success: function (res) {
-              let html = "";
-              res.forEach(function (data) {
-                html += `<option value="${data.name}">${data.name}</option>`;
-              })
-              $("#selectCourse").html(html);
-            }
-          })
-        }
-        selectCourseA();
-        //edit course
-        $(document).on("click", ".editLesson", function () {
-          var $mSelect = $('#selectCourse').selectize({ placeholder: "Select a value" });
-          id = $(this).attr("id");
-
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: "http://localhost:8080/api/v1/lesson/findById?id=" + id,
-            success: function (data) {
-              let html = `<img src="${data.link}" alt="" id="${data.id}"
-                        style="width: 90%;">`
-              $("#nameLesson").val(data.name);
-              $("#descriptionLesson").val(data.description);
-              $("#imageLessonAvatar").html(html);
-              let values = data.course.split(',');;
-              $mSelect[0].selectize.setValue(values)
-            }
-          })
         })
+        
         //update
         $(document).on("click", "#submitUpdateCourse", function () {
           let select = $('#selectCourse').val();
           console.log(select)
           let name = $('#nameLesson').val();
           let description = $("#descriptionLesson").val();
-          let image = $("#imageLessonAvatar img").attr("id");
+          let image = $("#imageCard img").attr("id");
           let value = {
             name: name,
             description: description,
@@ -838,7 +737,7 @@
             success: function (param) {
               let html = `<img src="${param}" alt=""
                         style="width: 100%;" id="${idImage}"> `
-              $("#imageLessonAvatar").html(html);
+              $("#imageCard").html(html);
             }
           })
         })
