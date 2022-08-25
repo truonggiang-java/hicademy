@@ -10,7 +10,13 @@ public class LessonEnglishApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LessonEnglishApplication.class, args);
-
+		String[] abc= new String[5];
+		String bce=abc.toString();
+		if(bce !=null) {
+			System.out.println("bcde");
+		}else {
+			System.out.println("ac");
+		}
 	}
 	
 }
