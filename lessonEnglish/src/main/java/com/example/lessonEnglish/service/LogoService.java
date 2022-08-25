@@ -60,7 +60,7 @@ public class LogoService {
 			ClassPathResource classpath = new ClassPathResource("static/logo/" + logo.get().getFileName());
 
 			byte[] imageBytes = StreamUtils.copyToByteArray(classpath.getInputStream());
-			return ResponseEntity.ok().contentType(MediaType.ALL).body(imageBytes);
+			return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
 		}
 	}
 }
