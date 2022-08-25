@@ -268,27 +268,49 @@
                   </div>
                   <!-- /Account -->
                 </div>
-                <div class="card">
+
+                <!-- / ChanghePass User -->
+                <div class="card" style="display:none" id="user">
                   <form method="POST" onsubmit="return false">
                     <h5 class="card-header">Change Password</h5>
                     <div class="card-body">
                       <div class="mb-3 col-12 mb-0">
                         <div class="row">
                           <div class="col-sm-4">
+                            <label class="form-label">Current Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="Current Password">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
                             <label class="form-label">New Password</label>
                             <div class="form-group pass_show">
-                              <input type="password" value="Hieu@123" class="form-control" placeholder="New Password">
+                              <input type="password" class="form-control" placeholder="New Password" id="newpass">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">Comfirm Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="Comfirm Password" id="comfirm">
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="mt-2" style="text-align: center; padding-bottom: 25px;">
-                      <button type="submit" class="btn btn-success"> Comfirm
+                      <button type="submit" class="btn btn-success" id="changePass"> Comfirm
                       </button>
                       <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
                   </form>
+                </div>
+                <!-- / ChanghePass Admin -->
+                <div style="display: none;" id="admin">
+                  <button class="btn btn-primary">Reset Password</button>
                 </div>
               </div>
             </div>
@@ -383,6 +405,14 @@
 
       });
       fetchData();
+      
+      $(document).on('click','#changePass',function() {
+        let valueinput2 = $('#newpass').val();
+        let valueinput3 = $('#comfirm').val();
+        if (valueinput2 != valueinput3){
+          alert("Mật khẩu mới chưa khớp, vui lòng nhập lại!")
+        }
+      })
     });
 
 
