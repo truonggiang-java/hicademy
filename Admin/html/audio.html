@@ -78,7 +78,7 @@
             <!-- Dashboard -->
             <li class="menu-item">
               <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon fa-solid fa-house"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
@@ -88,37 +88,37 @@
             <!-- Tables -->
             <li class="menu-item">
               <a href="user.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-user"></i>
                 <div data-i18n="Tables">User</div>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item ">
               <a href="course.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-graduation-cap"></i>
                 <div data-i18n="Tables">Course</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="lesson.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Leson</div>
+                <i class="menu-icon fa-solid fa-book-open"></i>
+                <div data-i18n="Tables">Lesson</div>
+              </a>
+            </li>
+            <li class="menu-item ">
+              <a href="audio.html" class="menu-link">
+                <i class="menu-icon fa-solid fa-play"></i>
+                <div data-i18n="Tables">Audio</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="audio.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Audio</div>
-              </a>
-            </li> 
-            <li class="menu-item">
               <a href="image.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-image"></i>
                 <div data-i18n="Tables">Image</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="card.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <i class="menu-icon fa-solid fa-clone"></i>
                 <div data-i18n="Tables">Card</div>
               </a>
             </li>
@@ -127,21 +127,11 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
             <li class="menu-item">
               <a
-                href="https://www.facebook.com/minhhieu159"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Support</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a
                 href="pages-misc-under-maintenance.html"
                 target="_blank"
                 class="menu-link"
               >
-                <i class="menu-icon tf-icons bx bx-file"></i>
+                <i class="menu-icon fa-solid fa-circle-info"></i>
                 <div data-i18n="Documentation">Documentation</div>
               </a>
             </li>
@@ -294,15 +284,12 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh Hieu</a>
+                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
+                    Hieu</a>
                 </div>
                 <div>
-                  <a
-                    href="https://www.facebook.com/minhhieu159"
-                    target="_blank"
-                    class="footer-link me-4"
-                    >Support</a
-                  >
+                  <i class="fa-solid fa-headset"></i>
+                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
                 </div>
               </div>
             </footer>
@@ -323,7 +310,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Update Course</h4>
+              <h4 class="modal-title">Update Audio</h4>
             </div>
             <div class="modal-body">
               <div class="card-body">
@@ -351,40 +338,42 @@
                 </form>
               </div>
             </div>
-            <div class="modal-footer">
-              <a href="#" data-dismiss="modal" class="btn btn-primary" id="submitUpdateVideo">Submit</a>
+            <div class="modal-footer" style="justify-content: center;">
+              <a href="#" data-dismiss="modal" class="btn btn-success" id="submitUpdateVideo">
+                Submit
+              </a>
               <a href="#" data-dismiss="modal" class="btn">Close</a>
             </div>
           </div>
         </div>
       </div>
+    <!-- / Layout wrapper --> 
+    <!-- Modal Youtube-->
       <div class="modal" id="myModal2" >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Choose Image</h4>
+              <h4 class="modal-title">Play Video</h4>
             </div>
-            <div class="modal-body">
-              <div>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/ilOOYeb8qe0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
+
+            <div class="modal-body" id="previewVideo" style="text-align: center;">
+
             </div>
             <div class="modal-footer">
-              <a href="#" data-dismiss="modal" class="btn">Close</a>
-              <a href="#" class="btn btn-primary">Save changes</a>
+              <a href="#" data-dismiss="modal" class="btn" id="closeVideo">Close</a>
             </div>
           </div>
         </div>
       </div>
     <!-- / Layout wrapper -->
-
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/af1dffc13d.js" crossorigin="anonymous"></script>
     <script src="../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
@@ -399,13 +388,17 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
+    </script>
     <script>
-
       $(document).ready(function () {
         var typingTimer;                //timer identifier
         var doneTypingInterval = 200;  //time in ms, 5 seconds for example
         var $input = $('#myInput');
         let value = "";
+        var $videoSrc;  
+        let cookie = $.cookie("Cookie-admin");
         function fetchNotes(input){
           let url;
           if(input && input !==""){
@@ -414,15 +407,18 @@
             url="http://localhost:8080/api/v1/video/findAllVideo";
           }
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             method: "GET",
             url : url,
             success: function(res){
               let html = "";
               let i = 0;
               res.forEach(audio => {
-                const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info", "table-light", "table-dark"];
+                const color = ["table-default", "table-active","table-secondary", "table-primary" ,"table-success" ,"table-danger" ,"table-warning", "table-info"];
                 html+=`
-                <tr class="${color[i]}" id="${audio.id}">
+                <tr class="${color[i]}" >
                   <td style="width: 2%; padding-left: 15px">
                     <input value="${audio.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
                   </td>
@@ -430,10 +426,10 @@
                   <td>${audio.description}</td>
                   <td>${audio.param}</td>
                   <td>${audio.link}</td>
-                  <td><button type="button" class="btn btn-success"  data-toggle="modal" href="#myModal2">Preview</button></td>
+                  <td><button type="button" class="btn btn-success previewVideo" id="${audio.id}" data-toggle="modal" href="#myModal2">Preview</button></td>
                   <td>
                     <a class="dropdown-item editVideo" data-toggle="modal" href="#myModal" 
-                      style="text-decoration:none; width:60%; border-radius: 10px" id="${audio.id}"
+                      style="text-decoration:none; width:100%; border-radius: 10px" id="${audio.id}"
                     ><i class="bx bx-edit-alt me-1"></i> 
                       Edit
                     </a>
@@ -464,7 +460,6 @@
             for (var i = 0; inputElements[i]; ++i) {
               if (inputElements[i].checked) {
                 checkedValued.push(inputElements[i].value);
-
               }
             }
             resolve(checkedValued);
@@ -483,7 +478,8 @@
               if (result.isConfirmed) {
                 $.ajax({
                   headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + cookie
                   },
                   method: "DELETE",
                   url: "http://localhost:8080/api/v1/video/deleteVideo",
@@ -507,6 +503,9 @@
         $(document).on("click", ".editVideo", function () {
           id = $(this).attr("id");
           $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
             method: "GET",
             url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
             success: function (data) {
@@ -517,6 +516,33 @@
               $("#descriptionVideo").val(data.description);
               $("#linkVideo").val(data.link);
               $("#paramVideo").val(data.param).change();
+            }
+          })
+        })
+
+        //close Video
+        $(document).on("click", "#closeVideo", function () {
+          $("#previewVideo").html("")
+        })
+
+        //preview Video
+        $(document).on("click", ".previewVideo", function () {
+          id = $(this).attr("id");
+    
+          $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
+            method: "GET",
+            url: "http://localhost:8080/api/v1/video/findByIdVideo?id=" + id,
+            success: function (data) {
+              console.log(data);
+              let html = `
+                <iframe width="640" height="360" src="${data.link}" title="YouTube video player" frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen style="border-radius: 10px">
+                </iframe>` 
+              $("#previewVideo").html(html)
             }
           })
         })

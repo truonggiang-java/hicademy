@@ -47,4 +47,9 @@ public class VideoController {
     public String updateVideo(@RequestBody VideoDto videoDto, @PathVariable("id") String id) {
         return videoService.updateVideo(videoDto, id);
     }
+
+    @GetMapping("/findVideoByParam")
+    public List<Video> findVideoByParam(@RequestParam("param") String param) {
+        return videoService.findVideoByParam(param);
+    }
 }

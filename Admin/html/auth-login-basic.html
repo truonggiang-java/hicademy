@@ -39,7 +39,8 @@
   <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
   <!-- Helpers -->
   <script src="../assets/vendor/js/helpers.js"></script>
-
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/af1dffc13d.js" crossorigin="anonymous"></script>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="../assets/js/config.js"></script>
@@ -75,6 +76,7 @@
                   <small>Forgot Password?</small>
                 </a>
               </div>
+
               <div class="input-group input-group-merge">
                 <input type="password" id="password" class="form-control" name="password"
                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -111,7 +113,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
+  </script>
   <script>
     $(document).ready(function (e) {
       let cookie = $.cookie("Cookie-admin");
@@ -123,9 +126,9 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/user/getUserByToken?token=" + cookie,
           success: function (data) {
-            if (data) {
-              window.location.href = "index.html"
-            }
+            // if (data) {
+            //   window.location.href = "index.html"
+            // }
           }
         })
       }

@@ -39,6 +39,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <!-- Helpers -->
   <script src="../assets/vendor/js/helpers.js"></script>
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/af1dffc13d.js" crossorigin="anonymous"></script>
 
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
@@ -85,7 +87,7 @@
           <!-- Dashboard -->
           <li class="menu-item">
             <a href="index.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <i class="menu-icon fa-solid fa-house"></i>
               <div data-i18n="Analytics">Dashboard</div>
             </a>
           </li>
@@ -95,55 +97,53 @@
           <!-- Tables -->
           <li class="menu-item">
             <a href="user.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <i class="menu-icon fa-solid fa-user"></i>
               <div data-i18n="Tables">User</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item ">
             <a href="course.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <i class="menu-icon fa-solid fa-graduation-cap"></i>
               <div data-i18n="Tables">Course</div>
             </a>
           </li>
           <li class="menu-item">
             <a href="lesson.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
-              <div data-i18n="Tables">Leson</div>
+              <i class="menu-icon fa-solid fa-book-open"></i>
+              <div data-i18n="Tables">Lesson</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item ">
             <a href="audio.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <i class="menu-icon fa-solid fa-play"></i>
               <div data-i18n="Tables">Audio</div>
             </a>
           </li>
           <li class="menu-item">
             <a href="image.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <i class="menu-icon fa-solid fa-image"></i>
               <div data-i18n="Tables">Image</div>
             </a>
           </li>
           <li class="menu-item">
             <a href="card.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
+              <i class="menu-icon fa-solid fa-clone"></i>
               <div data-i18n="Tables">Card</div>
             </a>
           </li>
 
           <!-- SUPPORT -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
-          <li class="menu-item">
-            <a href="https://www.facebook.com/minhhieu159" target="_blank" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-support"></i>
-              <div data-i18n="Support">Support</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-file"></i>
-              <div data-i18n="Documentation">Documentation</div>
-            </a>
-          </li>
+            <li class="menu-item">
+              <a
+                href="pages-misc-under-maintenance.html"
+                target="_blank"
+                class="menu-link"
+              >
+                <i class="menu-icon fa-solid fa-circle-info"></i>
+                <div data-i18n="Documentation">Documentation</div>
+              </a>
+            </li>
         </ul>
       </aside>
       <!-- / Menu -->
@@ -271,9 +271,25 @@
                 <!-- / Content -->
             </div>
           </div>
-
-          <!--Modal -->
-
+          <!-- Footer -->
+          <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , made with ❤️ by
+                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
+                    Hieu</a>
+                </div>
+                <div>
+                  <i class="fa-solid fa-headset"></i>
+                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
+                </div>
+              </div>
+          </footer>
+          <!-- / Footer -->
         </div>
       </div>
     </div>
@@ -332,12 +348,17 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
   $(document).ready(function () {
     let idImage;
     let totalPageImage = 1;
-
+    let cookie = $.cookie("Cookie-admin");
     $.ajax({
+      headers: {
+        'Authorization': 'Bearer ' + cookie
+      },
       method: "GET",
       url: "http://localhost:8080/api/v1/lesson/findAll",
       success: function (res) {
@@ -364,7 +385,8 @@
       }
       $.ajax({
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': 'Bearer ' + cookie
         },
         method: "POST",
         url: "http://localhost:8080/api/v1/course/insertCourse",
@@ -396,6 +418,9 @@
     //image
     function findAll(startPage) {
       $.ajax({
+        headers: {
+          'Authorization': 'Bearer ' + cookie
+        },
         method: "GET",
         url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
         success: function (res) {
@@ -531,6 +556,9 @@
       }
       document.getElementById(idImage).style.border = "4px solid red";
       $.ajax({
+        headers: {
+          'Authorization': 'Bearer ' + cookie
+        },
         method: "GET",
         url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + idImage,
         success: function (param) {
