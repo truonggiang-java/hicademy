@@ -1,5 +1,6 @@
 package com.example.lessonEnglish.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,9 @@ public interface UserRepository extends JpaRepository<Users, String>{
 	@Query(value="select * from Users u where u.email=:email",nativeQuery = true)
 	Optional<Users> findByEmail(@Param("email") String email);
 	
+	@Query(value="select * from Users u order by u.update_date desc",nativeQuery = true)
+	List<Users> findAllUser();
 	
+	@Query(value="select * from Users u where u.id=:id",nativeQuery = true)
+	Users findByIdUser(@Param("id") String id);
 }
