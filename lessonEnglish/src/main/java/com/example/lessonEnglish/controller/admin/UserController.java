@@ -1,5 +1,7 @@
 package com.example.lessonEnglish.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lessonEnglish.dto.UserDto;
+import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.dto.response.ResponseDto;
 import com.example.lessonEnglish.jwt.JwtUtlis;
@@ -59,5 +62,10 @@ public class UserController {
 	@PostMapping("/insertUser")
 	public String insertUser(@RequestBody UserDto userDto) {
 		return userService.insertUser(userDto);
+	}
+	
+	@GetMapping("/findAll")
+	public List<UserImageDto> findAllUser() {
+		return userService.findAllUser();
 	}
 }
