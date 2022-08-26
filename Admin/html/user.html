@@ -190,7 +190,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" id="logoutAdmin">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -292,6 +292,14 @@
     <script>
       $(document).ready(function () {
         let cookie = $.cookie("Cookie-admin");
+        if (!cookie) {
+          $("#bodyAdmin").html("");
+          window.location.href = "auth-login-basic.html";
+        }
+        $(document).on('click', '#logoutAdmin', function (e) {
+          $.removeCookie("Cookie-admin");
+          window.location.href = "auth-login-basic.html";
+        })
         function findAll() {
           $.ajax({
             headers: {
