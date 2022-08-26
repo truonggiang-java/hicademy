@@ -3,6 +3,7 @@ package com.example.lessonEnglish.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lessonEnglish.dto.UserDto;
 import com.example.lessonEnglish.dto.UserImageDto;
+import com.example.lessonEnglish.dto.UserRoleDto;
 import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.dto.response.ResponseDto;
 import com.example.lessonEnglish.jwt.JwtUtlis;
@@ -55,21 +57,29 @@ public class UserController {
 	}
 	
 	@GetMapping("/getUserByToken")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public String getUserByToken(@RequestParam("token") String token) {
 		return jwtUtils.getUsernameByToken(token);
 	}
-	
+	@GetMapping("/getRoleByToken")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+	public UserRoleDto getRoleByToken(@RequestParam("token") String token) {
+		return userService.getRoleByToken(token);
+	}
 	@PostMapping("/insertUser")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String insertUser(@RequestBody UserDto userDto) {
 		return userService.insertUser(userDto);
 	}
 	
 	@GetMapping("/findAll")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public List<UserImageDto> findAllUser() {
 		return userService.findAllUser();
 	}
 	
 	@GetMapping("/findById")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public UserImageDto findByIdUser(@RequestParam("id") String id) {
 		return userService.findByIdUser(id);
 	}

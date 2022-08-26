@@ -12,8 +12,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.lessonEnglish.constants.Gender;
 import com.example.lessonEnglish.dto.UserDto;
 import com.example.lessonEnglish.dto.UserImageDto;
+import com.example.lessonEnglish.dto.UserRoleDto;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.entity.Users;
+import com.example.lessonEnglish.jwt.JwtUtlis;
 import com.example.lessonEnglish.repository.LogoRepository;
 import com.example.lessonEnglish.repository.UserRepository;
 
@@ -28,6 +30,9 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private JwtUtlis jwtUtils;
 
 	public String insertUser(UserDto userDto) {
 		try {
@@ -99,5 +104,18 @@ public class UserService {
 		userImageDto.setLink(fileName);
 
 		return userImageDto;
+	}
+	
+	public UserRoleDto getRoleByToken(String token) {
+		String email=jwtUtils.getUsernameByToken(token);
+		UserRoleDto userRoleDto=new UserRoleDto();
+		Users user=userRepository.findByEmail(email).get();
+		userRoleDto.setName(user.getName());
+		userRoleDto.setRole(user.getRole());
+		userRoleDto.setId(user.getId());
+		String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/logo/view/")
+				.path(user.getIdLogo()).toUriString();
+		userRoleDto.setLinkUrl(fileName);
+		return userRoleDto;
 	}
 }

@@ -3,6 +3,7 @@ package com.example.lessonEnglish.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,16 +28,19 @@ public class LessonController {
 	private LessonService lessonService;
 	
 	@PostMapping("/insertLesson")
-	private String insertLesson(@RequestBody LessonDto lessonDto) {
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+	public String insertLesson(@RequestBody LessonDto lessonDto) {
 		return lessonService.insertLesson(lessonDto);
 	}
 	
 	@GetMapping("/findAll")
-	private List<Lesson> findAllLesson(){
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+	public List<Lesson> findAllLesson(){
 		return lessonService.findAllLesson();
 	}
 
 	@GetMapping("/findAllPageable")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public PageableLessonDto findAll(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
 			@RequestParam(name="size",required = false, defaultValue = "8") Integer size,
 			@RequestParam(name="input",required = false,defaultValue = "") String input){
@@ -44,16 +48,19 @@ public class LessonController {
 	}
 
 	@DeleteMapping("/delete")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteLessonById(@RequestBody List<String> id) {
 		return lessonService.deleteLessonByListId(id);
 	}
 
 	@PutMapping("/updateLesson/{id}")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public String updateLesson(@RequestBody LessonDto lessonDto, @PathVariable("id") String id) {
 		return lessonService.updateLesson(lessonDto, id);
 	}
 
 	@GetMapping("/findById")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public LessonImageDto findById(@RequestParam("id") String id) {
 		return lessonService.findByIdLesson(id);
 	}

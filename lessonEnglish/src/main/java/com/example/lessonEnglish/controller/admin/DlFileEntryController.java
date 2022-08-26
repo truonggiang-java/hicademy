@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class DlFileEntryController {
 	
 
 	@PostMapping("/uploadFile")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public String uploadToFile(@RequestParam("file") List<MultipartFile> file) {
 		return dlFileEntryService.uploadToProject(file);
 	}
@@ -38,11 +40,13 @@ public class DlFileEntryController {
 	}
 	
 	@DeleteMapping("/deleteFile")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteFile(@RequestBody List<String> id) {
 		return dlFileEntryService.deleteFile(id);
 	}
 	
 	@GetMapping("/findAll")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public PageableDlFileEntryDto findAllPage(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
 			@RequestParam(name="size",required = false, defaultValue = "6") Integer size,
 			@RequestParam(name="input",required = false,defaultValue = ".") String input) {
@@ -50,6 +54,7 @@ public class DlFileEntryController {
 	}
 	
 	@GetMapping("/findById")
+	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public String findByIdDlFileEntry(@RequestParam(name="id") String id) {
 		return dlFileEntryService.findByIdDlFileEntry(id);
 	}
