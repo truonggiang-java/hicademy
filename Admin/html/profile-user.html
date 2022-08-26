@@ -219,8 +219,10 @@
                   <!-- Account -->
                   <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                      <img src="../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100"
-                        width="100" id="uploadedAvatar" />
+                      <div id="my-image">
+
+                        
+                      </div>
                       <div class="button-wrapper">
                         <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                           <span class="d-none d-sm-block">Upload new photo</span>
@@ -363,12 +365,15 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/user/findById?id=" + cookieUser,
           success:function(data){
+            console.log(data);
+            let html=`<img src="${data.link}" alt="user-avatar" class="d-block rounded" height="100"
+                          width="100" id="uploadedAvatar" />`
+            $("#my-image").html(html);
             $("#firstName").val(data.name);
             $("#email").val(data.email);
             $("#phoneNumber").val(data.phone);
             $("#address").val(data.address);
             $("#birthday").val(data.date);
-            console.log(data);
           }
         })
 
