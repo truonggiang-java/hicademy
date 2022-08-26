@@ -795,9 +795,13 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
+  </script>
   <script>
     let cookie = $.cookie("Cookie-admin");
     $(document).ready(function () {
+
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
