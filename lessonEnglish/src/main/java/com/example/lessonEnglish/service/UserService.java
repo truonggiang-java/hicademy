@@ -41,11 +41,11 @@ public class UserService {
 			Users users = new Users();
 			users.setAddress(userDto.getAddress());
 			users.setGender(userDto.getGender());
-			String fileName = "";
-			if (userDto.getGender().equals("MALE")) {
-				fileName = "avatar-nam.jpg";
-			} else if (userDto.getGender().equals("FEMALE")) {
-				fileName = "avatar-nu.jpg";
+			String fileName="";
+			if(userDto.getGender().equals("MALE")) {
+				fileName="ava_nam.png";
+			}else if(userDto.getGender().equals("FEMALE")){
+				fileName="ava_nu.png";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			users.setDateOfBirth(format.parse(userDto.getDateOfBirth()));

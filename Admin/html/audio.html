@@ -104,7 +104,7 @@
                 <div data-i18n="Tables">Lesson</div>
               </a>
             </li>
-            <li class="menu-item ">
+            <li class="menu-item active">
               <a href="audio.html" class="menu-link">
                 <i class="menu-icon fa-solid fa-play"></i>
                 <div data-i18n="Tables">Audio</div>
@@ -206,7 +206,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" id="logoutAdmin">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -399,6 +399,14 @@
         let value = "";
         var $videoSrc;  
         let cookie = $.cookie("Cookie-admin");
+        if (!cookie) {
+        $("#bodyAdmin").html("");
+          window.location.href = "auth-login-basic.html";
+        }
+        $(document).on('click', '#logoutAdmin', function (e) {
+          $.removeCookie("Cookie-admin");
+          window.location.href = "auth-login-basic.html";
+        })
         function fetchNotes(input){
           let url;
           if(input && input !==""){

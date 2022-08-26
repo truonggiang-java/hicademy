@@ -96,7 +96,7 @@
               <div data-i18n="Tables">Course</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item active">
             <a href="lesson.html" class="menu-link">
               <i class="menu-icon fa-solid fa-book-open"></i>
               <div data-i18n="Tables">Lesson</div>
@@ -198,7 +198,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="auth-login-basic.html">
+                    <a class="dropdown-item" id="logoutAdmin">
                       <i class="bx bx-power-off me-2"></i>
                       <span class="align-middle">Log Out</span>
                     </a>
@@ -433,6 +433,14 @@
         let value = " ";
         let optionValue = document.getElementById('hall').value = "4";
         let cookie = $.cookie("Cookie-admin");
+        if (!cookie) {
+        $("#bodyAdmin").html("");
+          window.location.href = "auth-login-basic.html";
+        }
+        $(document).on('click', '#logoutAdmin', function (e) {
+          $.removeCookie("Cookie-admin");
+          window.location.href = "auth-login-basic.html";
+        })
         function fetchNotes(startPage, optionValue, value) {
           let url;
           if (value) {
