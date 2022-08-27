@@ -1,5 +1,6 @@
 package com.example.lessonEnglish.controller.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,9 @@ public class UserController {
 		}
 		UserServiceImpl userServiceImpl=(UserServiceImpl) userDetailService.loadUserByUsername(request.getEmail());
 		String token=jwtUtils.generateToken(userServiceImpl);
-		
-		return new ResponseDto(token);
+		Date expriation=jwtUtils.getExpriationDateFromToken(token);
+//		long expriationTime=expriation.getTime();
+		return new ResponseDto(token,expriation);
 		
 	}
 	
@@ -77,6 +79,8 @@ public class UserController {
 	public List<UserImageDto> findAllUser() {
 		return userService.findAllUser();
 	}
+	
+	
 	
 	@GetMapping("/findById")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")

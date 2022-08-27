@@ -160,7 +160,6 @@
 
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
               <!-- User -->
-
               <!--/ User -->
             </ul>
           </div>
@@ -458,6 +457,7 @@
         }
       })
       $(document).on('click', '#logoutAdmin', function (e) {
+        // console.log("abc");
         $.removeCookie("Cookie-admin");
         window.location.href = "auth-login-basic.html";
       })
