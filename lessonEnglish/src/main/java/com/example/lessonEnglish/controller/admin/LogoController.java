@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.lessonEnglish.dto.LogoDto;
 import com.example.lessonEnglish.service.LogoService;
 
 @RestController
@@ -24,7 +25,7 @@ public class LogoController {
 	
 	@PostMapping("/upload")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-	public String updateFileLogo(@RequestParam("file") MultipartFile file) {
+	public LogoDto updateFileLogo(@RequestParam("file") MultipartFile file) {
 		return logoService.uploadToProject(file);
 	}
 	

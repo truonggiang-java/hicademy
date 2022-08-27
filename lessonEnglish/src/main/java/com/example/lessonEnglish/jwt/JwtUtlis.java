@@ -60,7 +60,7 @@ public class JwtUtlis {
 	}
 
 
-	private Date getExpriationDateFromToken(String token) {
+	public Date getExpriationDateFromToken(String token) {
 		// TODO Auto-generated method stub
 		return getAllClaimsToken(token, Claims::getExpiration);
 	}

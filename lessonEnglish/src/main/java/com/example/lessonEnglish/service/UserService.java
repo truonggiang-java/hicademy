@@ -43,9 +43,9 @@ public class UserService {
 			users.setGender(userDto.getGender());
 			String fileName="";
 			if(userDto.getGender().equals("MALE")) {
-				fileName="ava_nam.png";
+				fileName="avatar-nam.png";
 			}else if(userDto.getGender().equals("FEMALE")){
-				fileName="ava_nu.png";
+				fileName="avatar-nu.png";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			users.setDateOfBirth(format.parse(userDto.getDateOfBirth()));

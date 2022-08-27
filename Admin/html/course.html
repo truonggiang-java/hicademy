@@ -160,7 +160,6 @@
 
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
               <!-- User -->
-<<<<<<< HEAD
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
@@ -203,9 +202,7 @@
                   </li>
                 </ul>
               </li>
-=======
 
->>>>>>> 5728ed0e8bb7f0882b06b814690db4796d36a598
               <!--/ User -->
             </ul>
           </div>
@@ -502,6 +499,7 @@
         }
       })
       $(document).on('click', '#logoutAdmin', function (e) {
+        // console.log("abc");
         $.removeCookie("Cookie-admin");
         window.location.href = "auth-login-basic.html";
       })
