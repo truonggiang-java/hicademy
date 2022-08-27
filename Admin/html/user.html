@@ -153,50 +153,9 @@
                   </div>
               </div>
               <!-- /Search -->
-              <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
                 <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                    </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="profile-user.html">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" id="logoutAdmin">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+                
                 <!--/ User -->
               </ul>
             </div>
@@ -272,7 +231,6 @@
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  
     <script src="../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
   
@@ -288,14 +246,70 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
+    </script>
     <script>
       $(document).ready(function () {
         let cookie = $.cookie("Cookie-admin");
         if (!cookie) {
           $("#bodyAdmin").html("");
           window.location.href = "auth-login-basic.html";
-        }
+        }else if (cookie) {
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
+          success: function (data) {
+            let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="avatar avatar-online">
+                    <img src="${data.linkUrl}" alt class="w-px-40 h-auto rounded-circle" />
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="d-flex" >
+                        <div class="flex-shrink-0 me-3">
+                          <div class="avatar avatar-online">
+                            <img src="${data.linkUrl}" alt class="w-px-40 h-auto rounded-circle" />
+                          </div>
+                        </div>
+                        <div class="flex-grow-1">
+                          <span class="fw-semibold d-block">${data.name}</span>
+                          <small class="text-muted">${data.role}</small>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item logoutAdmin" href="profile-user.html" id="${data.id}">
+                      <i class="bx bx-user me-2"></i>
+                      <span class="align-middle">My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item " href="#" id="logoutAdmin">
+                      <i class="bx bx-power-off me-2"></i>
+                      <span class="align-middle">Log Out</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>`;
+
+            $("#profile-user").html(html);
+          }
+        })
+      }
+
         $(document).on('click', '#logoutAdmin', function (e) {
           $.removeCookie("Cookie-admin");
           window.location.href = "auth-login-basic.html";
@@ -324,13 +338,13 @@
                           <h5> Birthday: ${data.date} </h5>
                           <h5> Role: ${data.role} </h5>
                           <h5> Gmail: ${data.email} </h5>
+                          <h5> Phone: ${data.phone} </h5>
                           <h5> Address: ${data.address} </h5>
-                          <h5> Telephone: ${data.phone} </h5>
                         </div>
                         <div style= "display:flex">
                           <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
                           <a class="dropdown-item editUser"  
-                          style="text-decoration:none; width:30%; border-radius: 10px; margin-left: 20px;" id="${data.id}"
+                          style="text-decoration:none; width:30%; border-radius: 10px; margin-left: 225px;" id="${data.id}"
                             ><i class="bx bx-edit-alt me-1"></i> Edit
                           </a>
                         </div>
