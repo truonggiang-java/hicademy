@@ -77,14 +77,13 @@
                 </a>
               </div>
 
-              <div class="input-group input-group-merge">
+              <div class=" input-group-merge">
                 <input type="password" id="password" class="form-control" name="password"
                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                   aria-describedby="password" />
-                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
               </div>
+                <span class="input-group-text cursor-pointer" style="margin-top: 15px; border:0px;"><i class="bx bx-hide"></i></span>
             </div>
-            <div style="color:red;display: flex;justify-content: center;padding-bottom: 10px;" id="error-sigin"></div>
             <div class="mb-3">
               <button class="btn btn-primary d-grid w-100" type="submit" id="loginHicademy">Sign in</button>
             </div>
@@ -154,10 +153,6 @@
             if (data) {
               window.location.href = "index.html"
             }
-          },
-          error: function(data){
-            let html=`<span>Tài khoản hoặc mật khẩu của bạn không đúng</span>`;
-            $("#error-sigin").html(html);
           }
         })
       })
