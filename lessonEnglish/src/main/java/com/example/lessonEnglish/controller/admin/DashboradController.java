@@ -24,4 +24,5 @@ public class DashboradController {
 	public List<DashboradDto> dashborad(){
 		return dashboradService.dashborad();
 	}
+	
 }
