@@ -308,7 +308,7 @@
   <script src="../assets/vendor/libs/popper/popper.js"></script>
   <script src="../assets/vendor/js/bootstrap.js"></script>
   <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../assets/vendor/js/menu.js"></script>
   <!-- endbuild -->
 
@@ -507,6 +507,7 @@
         })
       });
 
+      //update
       $(document).on("click", '#submitUser', function () {
         let idImage = $(".imageLogo").attr("id");
         let firstName = $("#firstName").val();
@@ -524,17 +525,33 @@
           role: adminRole,
           gender: gender
         }
-        $.ajax({
-
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "PUT",
-          url: "http://localhost:8080/api/v1/user/updateUser/" + cookieUser,
-          data: JSON.stringify(value),
-          success: function (data) {
-            console.log(data);
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, save it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              $.ajax({
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+              'Authorization': 'Bearer ' + cookie
+            },
+            method: "PUT",
+            url: "http://localhost:8080/api/v1/user/updateUser/" + cookieUser,
+            data: JSON.stringify(value),
+            success: function (data) {
+              console.log(data);
+            }
+          })
+            Swal.fire(
+              'Saved!',
+              'Your file has been Saved.',
+              'success'
+            )
           }
         })
       })
@@ -578,8 +595,6 @@
         })
       })
     });
-
-
   </script>
 </body>
 

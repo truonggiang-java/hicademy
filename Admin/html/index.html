@@ -60,7 +60,13 @@
       25% {background-image: url("https://i.pinimg.com/736x/53/f5/7d/53f57d0e78d83eb6ff62cb876df661ba.jpg");}
       50% {background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-fresh-hand-painted-classroom-advertising-background-backgroundfreshcloudblue-skygrasslandtreeslearnstudent-image_68052.jpg");}
       75% {background-image: url("https://img.pikbest.com/backgrounds/20190306/fresh-cartoon-school-on-the-road-character-school-background_1870339.jpg!bw700");}
-}
+    }
+    .clock {
+    color: #ffff;
+    font-size: 49px;
+    font-family: Orbitron;
+    letter-spacing: 7px;
+    }
   </style>
 </head>
 
@@ -188,7 +194,7 @@
             <div class="row">
               <div class="col-lg-8 mb-4 order-0">
                 <div class="card">
-                  <div class="d-flex align-items-end row" id="backgroundImage">
+                  <div class="d-flex align-items-end row" id="backgroundImage" style="border-radius: 10px;">
                     <div class="col-sm-7">
                       <div class="card-body" id="textPrimary">
 
@@ -206,20 +212,11 @@
                 <div class="row">
                   <div class="col-12 mb-4">
                     <div class="card">
-                      <div class="card-body">
+                      <div class="card-body" style="border-radius: 10px; background: linear-gradient(DeepSkyBlue, rgb(236, 242, 69));">
                         <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                           <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                            <div class="card-title">
-                              <h5 class="text-nowrap mb-2">Profile Report</h5>
-                              <span class="badge bg-label-warning rounded-pill">Year 2021</span>
-                            </div>
-                            <div class="mt-sm-auto">
-                              <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
-                                68.2%</small>
-                              <h3 class="mb-0">$84,686k</h3>
-                            </div>
+                            <div id="MyClockDisplay" class="clock" onload="showTime()"></div>
                           </div>
-                          <div id="profileReportChart"></div>
                         </div>
                       </div>
                     </div>
@@ -560,6 +557,34 @@
         $.removeCookie("Cookie-admin");
         window.location.href = "auth-login-basic.html";
       })
+      
+      //clock
+      function showTime(){
+      var date = new Date();
+      var h = date.getHours(); // 0 - 23
+      var m = date.getMinutes(); // 0 - 59
+      var s = date.getSeconds(); // 0 - 59
+      var session = "AM";
+      
+      if(h == 0){
+          h = 12;
+      }
+      
+      if(h > 12){
+          h = h - 12;
+          session = "PM";
+      }
+      
+      h = (h < 10) ? "0" + h : h;
+      m = (m < 10) ? "0" + m : m;
+      s = (s < 10) ? "0" + s : s;
+      
+      var time = h + ":" + m + ":" + s + " " + session;
+      document.getElementById("MyClockDisplay").innerText = time;
+      document.getElementById("MyClockDisplay").textContent = time;
+      setTimeout(showTime, 1000);  
+      }
+      showTime();
     })
   </script>
 </body>
