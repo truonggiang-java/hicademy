@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.lessonEnglish.dto.CourseDto;
 import com.example.lessonEnglish.dto.CourseImageDto;
+import com.example.lessonEnglish.dto.CourseImageUserDto;
 import com.example.lessonEnglish.dto.PageDto;
 import com.example.lessonEnglish.dto.PageableCourseDto;
 import com.example.lessonEnglish.dto.response.LessonImageResponse;
@@ -112,7 +113,22 @@ public class CourseService {
 		pageableCourseDto.setCourseImage(listImage);
 		return pageableCourseDto;
 	}
-
+	public List<CourseImageUserDto> findAllCouserUser(){
+		List<CourseImageUserDto> courseImageUserDtos=new ArrayList<>();
+		List<Course> courses=courseRepository.findAll();
+		for (Course course : courses) {
+			CourseImageUserDto courseImageUserDto=new CourseImageUserDto();
+			courseImageUserDto.setDescription(course.getDescription());
+			String link = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.path("/api/v1/dlFileEntry/viewImage/").path(course.getIdDlFileEntry()).toUriString();
+			courseImageUserDto.setLink(link);
+			courseImageUserDto.setId(course.getId());
+			courseImageUserDto.setName(course.getName());
+			courseImageUserDtos.add(courseImageUserDto);
+		}
+		return courseImageUserDtos;
+	}
+	
 	public CourseImageDto findByIdCourse(String id) {
 		CourseImageDto courseImageDto = new CourseImageDto();
 		Course course = courseRepository.findById(id).get();
