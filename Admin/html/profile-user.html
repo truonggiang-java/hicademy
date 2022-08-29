@@ -151,7 +151,7 @@
 
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
               <!-- User -->
-            
+
               <!--/ User -->
             </ul>
           </div>
@@ -237,16 +237,19 @@
                           </select>
                         </div>
                         <div class="mb-3 col-md-6">
-                          <label for="gender" class="form-label">Role</label>
-                          <select name="gender" id="gender" class="form-control">
-                            <option value="customer">User</option>
-                            <option value="customer">Customer</option>
-                            <option value="admin">Admin</option>
+                          <label for="role" class="form-label">Role</label>
+                          <select name="role" id="role" class="form-control">
+                            <option value="User">User</option>
+                            <option value="Customer">Customer</option>
+                            <option value="Admin">Admin</option>
                           </select>
+                        </div>
+                        <div class="mb-3 col-md-6" id="role">
+
                         </div>
                       </div>
                       <div class="mt-2" style="text-align: center;">
-                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="submit" class="btn btn-success" id="submitUser">Save changes</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                       </div>
                     </form>
@@ -255,47 +258,12 @@
                 </div>
 
                 <!-- / ChanghePass User -->
-                <div class="card" style="display:none" id="user">
-                  <form method="POST" onsubmit="return false">
-                    <h5 class="card-header">Change Password</h5>
-                    <div class="card-body">
-                      <div class="mb-3 col-12 mb-0">
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">Current Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="Current Password">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">New Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="New Password" id="newpass">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">Comfirm Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="Comfirm Password" id="comfirm">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2" style="text-align: center; padding-bottom: 25px;">
-                      <button type="submit" class="btn btn-success" id="changePass"> Comfirm
-                      </button>
-                      <button type="reset" class="btn btn-outline-secondary">Cancel</button>
-                    </div>
-                  </form>
+                <div class="card" id="user">
+
                 </div>
                 <!-- / ChanghePass Admin -->
-                <div style="display: none;" id="admin">
-                  <button class="btn btn-primary">Reset Password</button>
+                <div id="admin">
+
                 </div>
               </div>
             </div>
@@ -365,7 +333,7 @@
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
-      }else if (cookie) {
+      } else if (cookie) {
         $.ajax({
           headers: {
             'Authorization': 'Bearer ' + cookie
@@ -373,6 +341,55 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
           success: function (data) {
+            // console.log(data);
+            if (data.role == "ADMIN") {
+              let htmlRole = `<label for="role" class="form-label" >Role</label>
+                          <select name="" id="adminRole" class="form-control">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                          </select>`;
+              $("#role").html(htmlRole);
+
+              $("#admin").html(` <button class="btn btn-primary" id="resetPassword">Reset Password</button>`);
+
+            } else {
+              $("#user").html(`<form method="POST" onsubmit="return false">
+                    <h5 class="card-header">Change Password</h5>
+                    <div class="card-body">
+                      <div class="mb-3 col-12 mb-0">
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">Current Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="Current Password" id="currentPassword">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">New Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="New Password" id="newpass">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">Comfirm Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="Comfirm Password" id="comfirm">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-2" style="text-align: center; padding-bottom: 25px;">
+                      <button type="submit" class="btn btn-success" id="changePass"> Comfirm
+                      </button>
+                      <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                    </div>
+                  </form>`)
+            }
             let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
@@ -433,15 +450,16 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/user/findById?id=" + cookieUser,
           success: function (data) {
-            // console.log(data);
-            let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded" height="100"
-                          width="100" id="uploadedAvatar" />`
+            let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded imageLogo" height="100"
+                          width="100" id="${data.idLogo}" />`
             $("#my-image").html(html);
             $("#firstName").val(data.name);
             $("#email").val(data.email);
             $("#phoneNumber").val(data.phone);
             $("#address").val(data.address);
             $("#birthday").val(data.date);
+            $("#adminRole").val(data.role);
+            $("#gender").val(data.gender);
           }
         })
 
@@ -466,7 +484,6 @@
       })
 
       $('input[id=files]').change(function (ev) {
-        console.log("abc");
         var form_data = new FormData();
         form_data.append("file", document.getElementById('files').files[0]);
         $.ajax({
@@ -480,19 +497,86 @@
           processData: false,
           method: 'POST',
           success: function (data) {
-            console.log(data);
             setTimeout(() => {
-              let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded" height="100"
+              let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded imageLogo" height="100"
                             width="100" id="${data.id}" />`
               $("#my-image").html(html);
-            }, 2000)
+            }, 3000)
 
           }
         })
       });
 
+      $(document).on("click", '#submitUser', function () {
+        let idImage = $(".imageLogo").attr("id");
+        let firstName = $("#firstName").val();
+        let phoneNumber = $("#phoneNumber").val();
+        let address = $("#address").val();
+        let birthday = $("#birthday").val();
+        let adminRole = $("#adminRole").val() ? $("#adminRole").val() : null;
+        let gender = $("#gender").val();
+        let value = {
+          idLogo: idImage,
+          name: firstName,
+          phoneNumber: phoneNumber,
+          address: address,
+          date: birthday,
+          role: adminRole,
+          gender: gender
+        }
+        $.ajax({
 
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "PUT",
+          url: "http://localhost:8080/api/v1/user/updateUser/" + cookieUser,
+          data: JSON.stringify(value),
+          success: function (data) {
+            console.log(data);
+          }
+        })
+      })
 
+      $(document).on('click', '#resetPassword', function () {
+        let email = $("#email").val();
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: "http://localhost:8080/api/v1/user/resetPassword?email=" + email,
+          success: function (data) {
+            console.log(data);
+          }
+        })
+      })
+
+      $(document).on('click', '#changePass', function () {
+        let email = $("#email").val();
+        let currentPassword = $("#currentPassword").val();
+        let confirmPassword = $("#comfirm").val();
+        let value = {
+          email: email,
+          changePassword: confirmPassword,
+          currentPassword: currentPassword
+        }
+
+        $.ajax({
+
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "POST",
+          url: "http://localhost:8080/api/v1/user/changePassword",
+          data: JSON.stringify(value),
+          success: function (data) {
+            console.log(data);
+          }
+        })
+      })
     });
 
 
