@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserImageDto {
 	private String id;
+	private String idLogo;
 	private String name;
 	private String gender;
 	private String email;
