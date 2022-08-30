@@ -409,37 +409,36 @@
         idDlfileEntry: image,
         nameCourse: selectedValues
       }
-      $.ajax({
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Authorization': 'Bearer ' + cookie
-        },
-        method: "POST",
-        url: "http://localhost:8080/api/v1/lesson/insertLesson",
-        data: JSON.stringify(value),
-        success: function (data) {
+      if (!name || !description || !image) {
+        alert("Vui lòng nhập đủ thông tin!")
+      }else {
+        Swal.fire({
+          title: 'Do you want to save the changes?',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Save',
+          denyButtonText: `Don't save`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            $.ajax({
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Bearer ' + cookie
+              },
+              method: "POST",
+              url: "http://localhost:8080/api/v1/lesson/insertLesson",
+              data: JSON.stringify(value),
+              success: function (data) {
 
-        }
-      })
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      Toast.fire({
-        icon: 'success',
-        title: 'Created Lesson successfully'
-      })
-      window.setTimeout(function () {
-        window.location.reload();
-      }, 1000);
+              }
+            })
+            Swal.fire('Saved!', '', 'success')
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        }) 
+      }
     })
     //image
     function findAll(startPage) {
