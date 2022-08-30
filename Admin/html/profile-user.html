@@ -343,7 +343,42 @@
               $("#role").html(htmlRole);
 
               $("#admin").html(` <button class="btn btn-primary" id="resetPassword">Reset Password</button>`);
-
+              $("#user").html(`<form method="POST" onsubmit="return false">
+                    <h5 class="card-header">Change Password</h5>
+                    <div class="card-body">
+                      <div class="mb-3 col-12 mb-0">
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">Current Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="Current Password" id="currentPassword">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">New Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="New Password" id="newpass">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label class="form-label">Comfirm Password</label>
+                            <div class="form-group pass_show">
+                              <input type="password" class="form-control" placeholder="Comfirm Password" id="comfirm">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-2" style="text-align: center; padding-bottom: 25px;">
+                      <button type="submit" class="btn btn-success" id="changePass"> Comfirm
+                      </button>
+                      <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                    </div>
+                  </form>`)
             } else {
               $("#user").html(`<form method="POST" onsubmit="return false">
                     <h5 class="card-header">Change Password</h5>
