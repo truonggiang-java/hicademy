@@ -560,11 +560,9 @@
       $(document).on('click', '#resetPassword', function () {
         let email = $("#email").val();
         $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
+          
           method: "GET",
-          url: "http://localhost:8080/api/v1/user/resetPassword?email=" + email,
+          url: "http://localhost:8080/api/v1/user/resetPassword/" + email,
           success: function (data) {
             console.log(data);
           }

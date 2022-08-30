@@ -97,9 +97,8 @@ public class UserController {
 		return userService.findByIdUser(id);
 	}
 	
-	@GetMapping("/resetPassword")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public String resetPassword(@RequestParam("email") String email) {
+	@GetMapping("/resetPassword/{email}")
+	public String resetPassword(@PathVariable("email") String email) {
 		return userService.resetPassword(email);
 	}
 	
