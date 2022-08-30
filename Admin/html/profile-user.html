@@ -236,14 +236,14 @@
                             <option value="FEMALE">Female</option>
                           </select>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <!-- <div class="mb-3 col-md-6">
                           <label for="role" class="form-label">Role</label>
                           <select name="role" id="role" class="form-control">
                             <option value="User">User</option>
                             <option value="Customer">Customer</option>
                             <option value="Admin">Admin</option>
                           </select>
-                        </div>
+                        </div> -->
                         <div class="mb-3 col-md-6" id="role">
 
                         </div>
@@ -514,7 +514,7 @@
         let phoneNumber = $("#phoneNumber").val();
         let address = $("#address").val();
         let birthday = $("#birthday").val();
-        let adminRole = $("#adminRole").val() ? $("#adminRole").val() : null;
+        let adminRole = $("#adminRole").val();
         let gender = $("#gender").val();
         let value = {
           idLogo: idImage,
@@ -525,6 +525,7 @@
           role: adminRole,
           gender: gender
         }
+        console.log(value)
         Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",

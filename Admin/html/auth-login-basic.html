@@ -82,6 +82,7 @@
                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                   aria-describedby="password" />
               </div>
+              <div id="errorLogin"></div>
                 <span class="input-group-text cursor-pointer" style="margin-top: 15px; border:0px;"><i class="bx bx-hide"></i></span>
             </div>
             <div class="mb-3">
@@ -159,6 +160,9 @@
             if (data) {
               window.location.href = "index.html"
             }
+          }, error: function(data){
+            let error=`<div style="color:red;">Tài khoản hoặc mật khẩu không đúng</div>`
+            $("#errorLogin").html(error)
           }
         })
       })

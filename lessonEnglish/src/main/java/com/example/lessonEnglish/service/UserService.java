@@ -16,6 +16,7 @@ import com.example.lessonEnglish.dto.UserDto;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.UserRoleDto;
 import com.example.lessonEnglish.dto.request.UserRequestDto;
+import com.example.lessonEnglish.entity.Lesson;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.entity.Users;
 import com.example.lessonEnglish.jwt.JwtUtlis;
@@ -41,16 +42,16 @@ public class UserService {
 	private EmailService emailService;
 	public String insertUser(UserDto userDto) {
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 			Users users = new Users();
 			users.setAddress(userDto.getAddress());
 			users.setGender(userDto.getGender());
 			String fileName="";
 			if(userDto.getGender().equals("MALE")) {
-				fileName="avatar-nam.png";
+				fileName="avatar-nam.jpg";
 			}else if(userDto.getGender().equals("FEMALE")){
-				fileName="avatar-nu.png";
+				fileName="avatar-nu.jpg";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			users.setDateOfBirth(format.parse(userDto.getDateOfBirth()));
@@ -63,6 +64,7 @@ public class UserService {
 			userRepository.save(users);
 			return "Bạn thêm người dùng thành công";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "Bạn thêm người dùng thất bại";
 			// TODO: handle exception
 		}
@@ -186,5 +188,11 @@ public class UserService {
 			return "Change password fail";
 			// TODO: handle exception
 		}
+	}
+	
+	public String deleteUserByListId(List<String> id) {
+		List<Users> lesson = userRepository.findListIdUser(id);
+		userRepository.deleteAll(lesson);
+		return "Bạn đã xóa người dùng thành công";
 	}
 }
