@@ -252,6 +252,16 @@
     <script>
       $(document).ready(function () {
         let cookie = $.cookie("Cookie-admin");
+        let cookieUser = $.cookie("Cookie-user");
+        $(document).on('click', ".logoutAdmin", function (e) {
+          let id = $(this).attr("id");
+          if (cookieUser) {
+            $.removeCookie("Cookie-user");
+            $.cookie("Cookie-user", id);
+          } else {
+            $.cookie("Cookie-user", id);
+          }
+        })
         if (!cookie) {
           $("#bodyAdmin").html("");
           window.location.href = "auth-login-basic.html";
@@ -313,6 +323,7 @@
 
         $(document).on('click', '#logoutAdmin', function (e) {
           $.removeCookie("Cookie-admin");
+          $.removeCookie("Cookie-user");
           window.location.href = "auth-login-basic.html";
         })
         function findAll() {

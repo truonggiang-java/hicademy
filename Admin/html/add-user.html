@@ -214,7 +214,8 @@
                         <div class="mb-3 col-md-6">
                           <label class="form-label">New Password</label>
                           <div class="form-group pass_show">
-                            <input type="password" value="Hieu@123" class="form-control" placeholder="New Password" id="passwordUser">
+                            <input type="password" value="Hieu@123" class="form-control" placeholder="New Password"
+                              id="passwordUser">
                           </div>
                         </div>
                       </div>
@@ -317,6 +318,16 @@
     $(document).ready(function () {
       $('.pass_show').append('<span class="ptxt">Show</span>');
       let cookie = $.cookie("Cookie-admin")
+      let cookieUser = $.cookie("Cookie-user");
+      $(document).on('click', ".logoutAdmin", function (e) {
+        let id = $(this).attr("id");
+        if (cookieUser) {
+          $.removeCookie("Cookie-user");
+          $.cookie("Cookie-user", id);
+        } else {
+          $.cookie("Cookie-user", id);
+        }
+      })
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
@@ -378,6 +389,7 @@
 
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
+        $.removeCookie("Cookie-user");
         window.location.href = "auth-login-basic.html";
       })
       $(document).on('click', '.pass_show .ptxt', function () {
@@ -386,38 +398,38 @@
 
         $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
 
-      });  
+      });
 
-      $(document).on('click','#createUser',function(){
-        var name=$("#firstName").val();
-        var email=$("#email").val();
-        var phoneNumber=$("#phoneNumber").val();
-        var address=$("#address").val();
-        var birthday=$("#birthday").val();
-        var gender=$("#gender").val();
-        var passwordUser=$("#passwordUser").val();
-        var role=$("#role").val();
-        let value={
-          name:name,
-          gender:gender,
-          dateOfBirth:birthday,
-          address:address,
-          telephone:phoneNumber,
-          email:email,
-          password:passwordUser,
-          role:role
+      $(document).on('click', '#createUser', function () {
+        var name = $("#firstName").val();
+        var email = $("#email").val();
+        var phoneNumber = $("#phoneNumber").val();
+        var address = $("#address").val();
+        var birthday = $("#birthday").val();
+        var gender = $("#gender").val();
+        var passwordUser = $("#passwordUser").val();
+        var role = $("#role").val();
+        let value = {
+          name: name,
+          gender: gender,
+          dateOfBirth: birthday,
+          address: address,
+          telephone: phoneNumber,
+          email: email,
+          password: passwordUser,
+          role: role
         }
         $.ajax({
           headers: {
-              'Content-Type': 'application/json;charset=utf-8',
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "POST",
-            url: "http://localhost:8080/api/v1/user/insertUser",
-            data: JSON.stringify(value),
-            success: function (data) {
-              console.log(data);
-            }
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "POST",
+          url: "http://localhost:8080/api/v1/user/insertUser",
+          data: JSON.stringify(value),
+          success: function (data) {
+            console.log(data);
+          }
         })
       })
     });

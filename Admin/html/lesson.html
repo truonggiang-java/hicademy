@@ -123,16 +123,12 @@
 
           <!-- SUPPORT -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
-            <li class="menu-item">
-              <a
-                href="pages-misc-under-maintenance.html"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon fa-solid fa-circle-info"></i>
-                <div data-i18n="Documentation">Documentation</div>
-              </a>
-            </li>>
+          <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
+              <i class="menu-icon fa-solid fa-circle-info"></i>
+              <div data-i18n="Documentation">Documentation</div>
+            </a>
+          </li>>
         </ul>
       </aside>
       <!-- / Menu -->
@@ -163,7 +159,7 @@
 
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
               <!-- User -->
-            
+
               <!--/ User -->
             </ul>
           </div>
@@ -351,7 +347,7 @@
           </div>
           <div class="modal-footer">
             <a href="#" data-dismiss="modal" class="btn">Close</a>
-            
+
           </div>
         </div>
       </div>
@@ -381,7 +377,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
       $(document).ready(function () {
         let totalPages = 1;
@@ -392,18 +388,28 @@
         let value = " ";
         let optionValue = document.getElementById('hall').value = "4";
         let cookie = $.cookie("Cookie-admin");
+        let cookieUser = $.cookie("Cookie-user");
+        $(document).on('click', ".logoutAdmin", function (e) {
+          let id = $(this).attr("id");
+          if (cookieUser) {
+            $.removeCookie("Cookie-user");
+            $.cookie("Cookie-user", id);
+          } else {
+            $.cookie("Cookie-user", id);
+          }
+        })
         if (!cookie) {
-        $("#bodyAdmin").html("");
+          $("#bodyAdmin").html("");
           window.location.href = "auth-login-basic.html";
-        }else if (cookie) {
-        $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "GET",
-          url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
-          success: function (data) {
-            let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
+        } else if (cookie) {
+          $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
+            method: "GET",
+            url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
+            success: function (data) {
+              let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
                     <img src="${data.linkUrl}" alt class="w-px-40 h-auto rounded-circle" />
@@ -446,13 +452,14 @@
                 </ul>
               </li>`;
 
-            $("#profile-user").html(html);
-          }
-        })
-      }
+              $("#profile-user").html(html);
+            }
+          })
+        }
 
         $(document).on('click', '#logoutAdmin', function (e) {
           $.removeCookie("Cookie-admin");
+          $.removeCookie("Cookie-user");
           window.location.href = "auth-login-basic.html";
         })
         function fetchNotes(startPage, optionValue, value) {

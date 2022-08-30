@@ -134,16 +134,12 @@
 
           <!-- SUPPORT -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
-            <li class="menu-item">
-              <a
-                href="pages-misc-under-maintenance.html"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon fa-solid fa-circle-info"></i>
-                <div data-i18n="Documentation">Documentation</div>
-              </a>
-            </li>
+          <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
+              <i class="menu-icon fa-solid fa-circle-info"></i>
+              <div data-i18n="Documentation">Documentation</div>
+            </a>
+          </li>
         </ul>
       </aside>
       <!-- / Menu -->
@@ -166,7 +162,7 @@
 
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
               <!-- User -->
-              
+
               <!--/ User -->
             </ul>
           </div>
@@ -196,7 +192,7 @@
                   <div class="mb-3 col-md-6">
                     <label for="lastName" class="form-label">Description</label>
                     <input class="form-control" type="text" name="descriptionCourse" id="descriptionCourse"
-                      placeholder="Enter something" required/>
+                      placeholder="Enter something" required />
                   </div>
 
                   <div class="mb-3 col-md-6" style="text-align: center;
@@ -233,20 +229,20 @@
           <!-- Footer -->
           <footer class="content-footer footer bg-footer-theme">
             <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                <div class="mb-2 mb-md-0">
-                  ©
-                  <script>
-                    document.write(new Date().getFullYear());
-                  </script>
-                  , made with ❤️ by
-                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
-                    Hieu</a>
-                </div>
-                <div>
-                  <i class="fa-solid fa-headset"></i>
-                  <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
-                </div>
+              <div class="mb-2 mb-md-0">
+                ©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                , made with ❤️ by
+                <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link fw-bolder">Le Minh
+                  Hieu</a>
               </div>
+              <div>
+                <i class="fa-solid fa-headset"></i>
+                <a href="https://www.facebook.com/minhhieu159" target="_blank" class="footer-link me-4">Support</a>
+              </div>
+            </div>
           </footer>
           <!-- / Footer -->
         </div>
@@ -308,24 +304,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
   $(document).ready(function () {
     let idImage;
     let totalPageImage = 1;
     let cookie = $.cookie("Cookie-admin");
+    let cookieUser = $.cookie("Cookie-user");
+    $(document).on('click', ".logoutAdmin", function (e) {
+      let id = $(this).attr("id");
+      if (cookieUser) {
+        $.removeCookie("Cookie-user");
+        $.cookie("Cookie-user", id);
+      } else {
+        $.cookie("Cookie-user", id);
+      }
+    })
     if (!cookie) {
-        $("#bodyAdmin").html("");
-        window.location.href = "auth-login-basic.html";
-    }else if (cookie) {
-        $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "GET",
-          url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
-          success: function (data) {
-            let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
+      $("#bodyAdmin").html("");
+      window.location.href = "auth-login-basic.html";
+    } else if (cookie) {
+      $.ajax({
+        headers: {
+          'Authorization': 'Bearer ' + cookie
+        },
+        method: "GET",
+        url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
+        success: function (data) {
+          let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
                     <img src="${data.linkUrl}" alt class="w-px-40 h-auto rounded-circle" />
@@ -368,15 +374,16 @@
                 </ul>
               </li>`;
 
-            $("#profile-user").html(html);
-          }
-        })
-      }
-
-      $(document).on('click', '#logoutAdmin', function (e) {
-        $.removeCookie("Cookie-admin");
-        window.location.href = "auth-login-basic.html";
+          $("#profile-user").html(html);
+        }
       })
+    }
+
+    $(document).on('click', '#logoutAdmin', function (e) {
+      $.removeCookie("Cookie-admin");
+      $.removeCookie("Cookie-user");
+      window.location.href = "auth-login-basic.html";
+    })
     $.ajax({
       headers: {
         'Authorization': 'Bearer ' + cookie
@@ -407,7 +414,7 @@
       }
       if (!name || !description || !image) {
         alert("Vui lòng nhập đủ thông tin!")
-      }else {
+      } else {
         Swal.fire({
           title: 'Do you want to save the changes?',
           showDenyButton: true,
@@ -433,7 +440,7 @@
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info')
           }
-        }) 
+        })
       }
     })
 
