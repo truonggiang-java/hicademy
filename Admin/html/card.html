@@ -119,16 +119,12 @@
 
           <!-- SUPPORT -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
-            <li class="menu-item">
-              <a
-                href="pages-misc-under-maintenance.html"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon fa-solid fa-circle-info"></i>
-                <div data-i18n="Documentation">Documentation</div>
-              </a>
-            </li>
+          <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
+              <i class="menu-icon fa-solid fa-circle-info"></i>
+              <div data-i18n="Documentation">Documentation</div>
+            </a>
+          </li>
         </ul>
       </aside>
       <!-- / Menu -->
@@ -160,7 +156,7 @@
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
               <!-- Place this tag where you want the button to render. -->
               <!-- User -->
-              
+
               <!--/ User -->
             </ul>
           </div>
@@ -234,8 +230,8 @@
         </div>
         <div style="padding: 10px 100px;">
           <label class="form-label">Name Card</label>
-          <input class="form-control" type="text" id="nameCard" name="NameCard" placeholder="Enter data"
-            autofocus required/>
+          <input class="form-control" type="text" id="nameCard" name="NameCard" placeholder="Enter data" autofocus
+            required />
         </div>
         <form id="data" method='post' action='' enctype="multipart/form-data">
           <div class="modal-body">
@@ -288,18 +284,28 @@
     $(document).ready(function () {
       let totalPages = 1;
       let cookie = $.cookie("Cookie-admin");
+      let cookieUser = $.cookie("Cookie-user");
+      $(document).on('click', ".logoutAdmin", function (e) {
+        let id = $(this).attr("id");
+        if (cookieUser) {
+          $.removeCookie("Cookie-user");
+          $.cookie("Cookie-user", id);
+        } else {
+          $.cookie("Cookie-user", id);
+        }
+      })
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
-      }else if (cookie) {
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
-            success: function (data) {
-              let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
+      } else if (cookie) {
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
+          success: function (data) {
+            let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                       <img src="${data.linkUrl}" alt class="w-px-40 h-auto rounded-circle" />
@@ -342,19 +348,20 @@
                   </ul>
                 </li>`;
 
-              $("#profile-user").html(html);
-            }
-          })
-        }
+            $("#profile-user").html(html);
+          }
+        })
+      }
 
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
+        $.removeCookie("Cookie-user");
         window.location.href = "auth-login-basic.html";
       })
       function findAllImage() {
         $.ajax({
           headers: {
-              'Authorization': 'Bearer ' + cookie
+            'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
           url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
@@ -374,153 +381,153 @@
             })
 
             $("#image").html(html)
-            
+
           }
         })
       }
       function findAll(startPage) {
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
-            success: function (res) {
-              let html = "";
-              res.dlFile.forEach(data => {
-                html += `
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
+          success: function (res) {
+            let html = "";
+            res.dlFile.forEach(data => {
+              html += `
                 <div>
                 <img src="${data.link}" alt="" class="viewImage" id="${data.id}"
                   style="width: 100%; cursor: pointer; height:100%;">
                 </div>`
-              })
+            })
 
-              $("#viewImage").html(html)
-              if ($('ul.paginationImage li').length - 3 != res.page.totalPage) {
-                // build pagination list at the first time loading
-                $('ul.paginationImage').empty();
-                buildPaginationImage(res.page, startPage);
-              }
-            }
-          })
-        }
-        function buildPaginationImage(response, page) {
-
-          totalPagesImage = response.totalPage;
-          var pageNumber = page;
-          var numLinks = 5;
-
-          // print 'previous' link only if not on page one
-          var first = '';
-          var prev = '';
-
-          if (pageNumber > 1) {
-            if (pageNumber !== 1) {
-              first = '<li class="page-item"><a class="page-link">« First</a></li>';
-            }
-            prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
-          } else {
-            prev = ''; // on the page one, don't show 'previous' link
-            first = ''; // nor 'first page' link
-          }
-
-          // print 'next' link only if not on the last page
-          var next = '';
-          var last = '';
-
-          if (pageNumber <= totalPagesImage) {
-            if (pageNumber !== totalPagesImage) {
-              next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
-              last = '<li class="page-item"><a class="page-link">Last »</a></li>';
-            }
-          } else {
-            next = ''; // on the last page, don't show 'next' link
-            last = ''; // nor 'last page' link
-          }
-
-          var start = pageNumber - (pageNumber % numLinks) + 1;
-          var end = start + numLinks - 1;
-          end = Math.min(totalPagesImage, end);
-          var pagingLink = '';
-          for (var i = start; i <= end; i++) {
-            if (i == pageNumber) {
-              pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
-            } else {
-              pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+            $("#viewImage").html(html)
+            if ($('ul.paginationImage li').length - 3 != res.page.totalPage) {
+              // build pagination list at the first time loading
+              $('ul.paginationImage').empty();
+              buildPaginationImage(res.page, startPage);
             }
           }
-          pagingLink = first + prev + pagingLink + next + last;
-          console.log(pagingLink)
-          $("ul.paginationImage").append(pagingLink);
-        }
-
-        $(document).on("click", "ul.paginationImage li a", function () {
-          var data = $(this).attr('data');
-          let val = $(this).text();
-
-          if (val.toUpperCase() === "« FIRST") {
-
-            let currentActive = $("ul.paginationImage li.active");
-            findAll(1);
-            $("ul.paginationImage li.active").removeClass("active");
-            // add .active to next-pagination li
-            currentActive.next().addClass("active");
-          } else if (val.toUpperCase() === "LAST »") {
-            let currentActive = $("ul.paginationImage li.active");
-            findAll(totalPagesImage);
-            $("ul.paginationImage li.active").removeClass("active");
-            // add .active to next-pagination li
-            currentActive.next().addClass("active");
-          } else if (val.toUpperCase() === "NEXT ›") {
-            let currentActive = $("ul.paginationImage li.active");
-            let activeValue = parseInt($("ul.paginationImage li.active").text()) + 1;
-
-            if (activeValue <= totalPagesImage) {
-              let currentActive = $("ul.paginationImage li.active");
-              startPage = activeValue;
-
-              findAll(startPage);
-              // remove .active class for the old li tag
-              $("ul.paginationImage li.active").removeClass("active");
-              // add .active to next-pagination li
-              currentActive.next().addClass("active");
-            }
-          } else if (val.toUpperCase() === "‹ PREV") {
-            let activeValue = parseInt($("ul.paginationImage li.active").text());
-            if (activeValue > 1) {
-
-              // get the previous page
-              startPage = activeValue - 1;
-              findAll(startPage);
-              let currentActive = $("ul.paginationImage li.active");
-              currentActive.removeClass("active");
-              // add .active to previous-pagination li
-              currentActive.prev().addClass("active");
-            }
-          } else {
-            startPage = parseInt(val);
-            findAll(startPage);
-            // add focus to the li tag
-            $("ul.paginationImage li.active").removeClass("active");
-            $(this).parent().addClass("active");
-            //$(this).addClass("active");
-          }
-        });
-
-
-        $(document).on('click', '#chooseImage', function () {
-          findAll(1);
         })
+      }
+      function buildPaginationImage(response, page) {
+
+        totalPagesImage = response.totalPage;
+        var pageNumber = page;
+        var numLinks = 5;
+
+        // print 'previous' link only if not on page one
+        var first = '';
+        var prev = '';
+
+        if (pageNumber > 1) {
+          if (pageNumber !== 1) {
+            first = '<li class="page-item"><a class="page-link">« First</a></li>';
+          }
+          prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+        } else {
+          prev = ''; // on the page one, don't show 'previous' link
+          first = ''; // nor 'first page' link
+        }
+
+        // print 'next' link only if not on the last page
+        var next = '';
+        var last = '';
+
+        if (pageNumber <= totalPagesImage) {
+          if (pageNumber !== totalPagesImage) {
+            next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+            last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+          }
+        } else {
+          next = ''; // on the last page, don't show 'next' link
+          last = ''; // nor 'last page' link
+        }
+
+        var start = pageNumber - (pageNumber % numLinks) + 1;
+        var end = start + numLinks - 1;
+        end = Math.min(totalPagesImage, end);
+        var pagingLink = '';
+        for (var i = start; i <= end; i++) {
+          if (i == pageNumber) {
+            pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+          } else {
+            pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+          }
+        }
+        pagingLink = first + prev + pagingLink + next + last;
+        console.log(pagingLink)
+        $("ul.paginationImage").append(pagingLink);
+      }
+
+      $(document).on("click", "ul.paginationImage li a", function () {
+        var data = $(this).attr('data');
+        let val = $(this).text();
+
+        if (val.toUpperCase() === "« FIRST") {
+
+          let currentActive = $("ul.paginationImage li.active");
+          findAll(1);
+          $("ul.paginationImage li.active").removeClass("active");
+          // add .active to next-pagination li
+          currentActive.next().addClass("active");
+        } else if (val.toUpperCase() === "LAST »") {
+          let currentActive = $("ul.paginationImage li.active");
+          findAll(totalPagesImage);
+          $("ul.paginationImage li.active").removeClass("active");
+          // add .active to next-pagination li
+          currentActive.next().addClass("active");
+        } else if (val.toUpperCase() === "NEXT ›") {
+          let currentActive = $("ul.paginationImage li.active");
+          let activeValue = parseInt($("ul.paginationImage li.active").text()) + 1;
+
+          if (activeValue <= totalPagesImage) {
+            let currentActive = $("ul.paginationImage li.active");
+            startPage = activeValue;
+
+            findAll(startPage);
+            // remove .active class for the old li tag
+            $("ul.paginationImage li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          }
+        } else if (val.toUpperCase() === "‹ PREV") {
+          let activeValue = parseInt($("ul.paginationImage li.active").text());
+          if (activeValue > 1) {
+
+            // get the previous page
+            startPage = activeValue - 1;
+            findAll(startPage);
+            let currentActive = $("ul.paginationImage li.active");
+            currentActive.removeClass("active");
+            // add .active to previous-pagination li
+            currentActive.prev().addClass("active");
+          }
+        } else {
+          startPage = parseInt(val);
+          findAll(startPage);
+          // add focus to the li tag
+          $("ul.paginationImage li.active").removeClass("active");
+          $(this).parent().addClass("active");
+          //$(this).addClass("active");
+        }
+      });
+
+
+      $(document).on('click', '#chooseImage', function () {
+        findAll(1);
+      })
       findAllImage();
 
       $(document).on('click', '.viewImage', function (e) {
-          idImage = $(this).attr("id")
-          var nodes = document.getElementsByClassName("viewImage");
-          for (let i = 0; i < nodes.length; i++) {
-            nodes[i].style.border = "none";
-          }
-          document.getElementById(idImage).style.border = "4px solid red";
-        })
+        idImage = $(this).attr("id")
+        var nodes = document.getElementsByClassName("viewImage");
+        for (let i = 0; i < nodes.length; i++) {
+          nodes[i].style.border = "none";
+        }
+        document.getElementById(idImage).style.border = "4px solid red";
+      })
 
       $(document).on('click', '.messageCheckbox', function () {
         var checkedValue = $('.messageCheckbox:checked').val();
@@ -543,7 +550,7 @@
           resolve(checkedValued);
         })
         myPromise.then(value => {
-      
+
           Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -573,7 +580,7 @@
                 'success'
               )
             }
-          })      
+          })
         })
       })
 
@@ -587,8 +594,8 @@
         }
         $.ajax({
           headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
+            'Authorization': 'Bearer ' + cookie
+          },
           url: "http://localhost:8080/api/v1/dlFileEntry/uploadFile",
           data: form_data,
           dataType: 'json',

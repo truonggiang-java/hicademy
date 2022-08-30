@@ -119,16 +119,12 @@
 
           <!-- SUPPORT -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">SUPPORT</span></li>
-            <li class="menu-item">
-              <a
-                href="pages-misc-under-maintenance.html"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon fa-solid fa-circle-info"></i>
-                <div data-i18n="Documentation">Documentation</div>
-              </a>
-            </li>
+          <li class="menu-item">
+            <a href="pages-misc-under-maintenance.html" target="_blank" class="menu-link">
+              <i class="menu-icon fa-solid fa-circle-info"></i>
+              <div data-i18n="Documentation">Documentation</div>
+            </a>
+          </li>
         </ul>
       </aside>
       <!-- / Menu -->
@@ -291,18 +287,28 @@
     $(document).ready(function () {
       let totalPages = 1;
       let cookie = $.cookie("Cookie-admin");
+      let cookieUser = $.cookie("Cookie-user");
+      $(document).on('click', ".logoutAdmin", function (e) {
+        let id = $(this).attr("id");
+        if (cookieUser) {
+          $.removeCookie("Cookie-user");
+          $.cookie("Cookie-user", id);
+        } else {
+          $.cookie("Cookie-user", id);
+        }
+      })
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
-      }else if (cookie) {
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
-            success: function (data) {
-              let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
+      } else if (cookie) {
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
+          success: function (data) {
+            let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                       <img src="${data.linkUrl}" alt class="w-px-40 h-auto rounded-circle" />
@@ -345,19 +351,20 @@
                   </ul>
                 </li>`;
 
-              $("#profile-user").html(html);
-            }
-          })
-        }
+            $("#profile-user").html(html);
+          }
+        })
+      }
 
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
+        $.removeCookie("Cookie-user");
         window.location.href = "auth-login-basic.html";
       })
       function findAll(startPage) {
         $.ajax({
           headers: {
-              'Authorization': 'Bearer ' + cookie
+            'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
           url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
@@ -439,7 +446,7 @@
       $(document).on("click", "ul.pagination li a", function () {
         var data = $(this).attr('data');
         let val = $(this).text();
-      
+
         if (val.toUpperCase() === "« FIRST") {
 
           let currentActive = $("li.active");
@@ -487,7 +494,7 @@
           //$(this).addClass("active");
         }
       });
-      
+
       (function () {
         // get first-page at initial time
         findAll(1);
@@ -515,7 +522,7 @@
           resolve(checkedValued);
         })
         myPromise.then(value => {
-      
+
           Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -545,7 +552,7 @@
                 'success'
               )
             }
-          })      
+          })
         })
       })
 
@@ -559,8 +566,8 @@
         }
         $.ajax({
           headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
+            'Authorization': 'Bearer ' + cookie
+          },
           url: "http://localhost:8080/api/v1/dlFileEntry/uploadFile",
           data: form_data,
           dataType: 'json',
