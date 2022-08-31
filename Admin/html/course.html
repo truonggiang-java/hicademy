@@ -549,6 +549,9 @@
       //image
       function findAll(startPage) {
         $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
           method: "GET",
           url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
           success: function (res) {

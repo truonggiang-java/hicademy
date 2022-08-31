@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -40,7 +42,7 @@ public class TagsService {
 	
 	public List<TagsImageDto> listTagsImageDto(){
 		List<TagsImageDto> listTagsImageDtos=new ArrayList<>();
-		List<Tags> listTags=tagsRepository.findAll();
+		List<Tags> listTags=tagsRepository.findAll(Sort.by(Direction.DESC, "updatedDate"));
 		for (Tags tags : listTags) {
 			DlFileEntry dlFileEntry=dlFileEntryRepository.findListDlFileEntryByName(tags.getFileName());
 			TagsImageDto tagsImageDto = new TagsImageDto();
@@ -60,5 +62,18 @@ public class TagsService {
 			listTagsImageDtos.add(tagsImageDto);
 		}
 		return listTagsImageDtos;
+	}
+	
+	public List<String> randomTags(Integer number){
+		List<String> listTags=new ArrayList<>();
+		List<String> paramTags=tagsRepository.randomParamTags();
+		Integer i = (int) Math.floor((Math.random() * paramTags.size()));
+		List<Tags> listTagsRandom=tagsRepository.findListTagsRandom(paramTags.get(i), number*2);
+		for (Tags tags : listTagsRandom) {
+			String name=tags.getFileName();
+			listTags.add(name);
+			listTags.add(name);
+		}
+		return listTags;
 	}
 }
