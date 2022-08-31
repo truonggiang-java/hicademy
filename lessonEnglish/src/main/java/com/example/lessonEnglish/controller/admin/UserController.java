@@ -98,6 +98,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/resetPassword/{email}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String resetPassword(@PathVariable("email") String email) {
 		return userService.resetPassword(email);
 	}
