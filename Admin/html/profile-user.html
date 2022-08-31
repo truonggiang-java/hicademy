@@ -633,11 +633,9 @@
                 console.log(data);
               }
             })
-            Swal.fire(
-              'Success!',
-              'Password has been changed.',
-              'success'
-            )
+            window.setTimeout(function () {
+              window.location.reload();
+            }, 2000);
           }
         })
 
