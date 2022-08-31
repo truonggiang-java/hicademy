@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lessonEnglish.dto.ChangePasswordDto;
+import com.example.lessonEnglish.dto.InformationUserResetPassword;
 import com.example.lessonEnglish.dto.UserDto;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.UserRoleDto;
@@ -101,6 +102,11 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String resetPassword(@PathVariable("email") String email) {
 		return userService.resetPassword(email);
+	}
+	
+	@PostMapping("/informationResetPassword")
+	public String informationResetPassword(@RequestBody InformationUserResetPassword informationUserResetPassword) {
+		return userService.informationUserResetPassword(informationUserResetPassword);
 	}
 	
 	@PostMapping("/changePassword")

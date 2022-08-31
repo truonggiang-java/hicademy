@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.lessonEnglish.constants.Gender;
 import com.example.lessonEnglish.dto.ChangePasswordDto;
+import com.example.lessonEnglish.dto.InformationUserResetPassword;
 import com.example.lessonEnglish.dto.UserDto;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.UserRoleDto;
@@ -34,12 +35,13 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Autowired
 	private JwtUtlis jwtUtils;
-	
+
 	@Autowired
 	private EmailService emailService;
+
 	public String insertUser(UserDto userDto) {
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,11 +49,11 @@ public class UserService {
 			Users users = new Users();
 			users.setAddress(userDto.getAddress());
 			users.setGender(userDto.getGender());
-			String fileName="";
-			if(userDto.getGender().equals("MALE")) {
-				fileName="ava_nam.png";
-			}else if(userDto.getGender().equals("FEMALE")){
-				fileName="ava_nu.png";
+			String fileName = "";
+			if (userDto.getGender().equals("MALE")) {
+				fileName = "ava_nam.png";
+			} else if (userDto.getGender().equals("FEMALE")) {
+				fileName = "ava_nu.png";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			users.setDateOfBirth(format.parse(userDto.getDateOfBirth()));
@@ -69,16 +71,17 @@ public class UserService {
 			// TODO: handle exception
 		}
 	}
-	public String updateUser(UserRequestDto userRequestDto,String id) {
+
+	public String updateUser(UserRequestDto userRequestDto, String id) {
 		try {
-			
-			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd"); 
-			Users users=userRepository.findById(id).get();
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Users users = userRepository.findById(id).get();
 			users.setAddress(userRequestDto.getAddress());
-			if(userRequestDto.getRole() !=null) {
+			if (userRequestDto.getRole() != null) {
 				users.setRole(userRequestDto.getRole());
 			}
-			if(userRequestDto.getIdLogo() !=null) {
+			if (userRequestDto.getIdLogo() != null) {
 				users.setIdLogo(userRequestDto.getIdLogo());
 			}
 			users.setName(userRequestDto.getName());
@@ -93,6 +96,7 @@ public class UserService {
 			// TODO: handle exception
 		}
 	}
+
 	public List<UserImageDto> findAllUser() {
 		List<Users> listUsers = userRepository.findAllUser();
 		List<UserImageDto> listUserImageDto = new ArrayList<>();
@@ -136,11 +140,11 @@ public class UserService {
 
 		return userImageDto;
 	}
-	
+
 	public UserRoleDto getRoleByToken(String token) {
-		String email=jwtUtils.getUsernameByToken(token);
-		UserRoleDto userRoleDto=new UserRoleDto();
-		Users user=userRepository.findByEmail(email).get();
+		String email = jwtUtils.getUsernameByToken(token);
+		UserRoleDto userRoleDto = new UserRoleDto();
+		Users user = userRepository.findByEmail(email).get();
 		userRoleDto.setName(user.getName());
 		userRoleDto.setRole(user.getRole());
 		userRoleDto.setId(user.getId());
@@ -149,21 +153,15 @@ public class UserService {
 		userRoleDto.setLinkUrl(fileName);
 		return userRoleDto;
 	}
-	
+
 	public String resetPassword(String email) {
 		try {
-			String random=RandomStringUtils.randomAlphabetic(6);
-			String body="<div  style='background-color: #008CBA;\n" +
-					"	border: none;\n" +
-					"  color: white;\n" +
-					"  padding: 20px 100px;\n" +
-					"  text-align: center;\n" +
-					"  text-decoration: none;\n" +
-					"  display: inline-block;\n" +
-					"  font-size: 16px;\n" +
-					"  margin: 4px 2px;\n" +
-					"  '>" + random + "</div>";
-			Users users=userRepository.findByEmail(email).get();
+			String random = RandomStringUtils.randomAlphabetic(6);
+			String body = "<div  style='background-color: #008CBA;\n" + "	border: none;\n" + "  color: white;\n"
+					+ "  padding: 20px 100px;\n" + "  text-align: center;\n" + "  text-decoration: none;\n"
+					+ "  display: inline-block;\n" + "  font-size: 16px;\n" + "  margin: 4px 2px;\n" + "  '>" + random
+					+ "</div>";
+			Users users = userRepository.findByEmail(email).get();
 			users.setPassword(encoder.encode(random));
 			userRepository.save(users);
 			emailService.sendEmailAttachment(email, body, "Password current");
@@ -173,15 +171,47 @@ public class UserService {
 			return "Reset password fail";
 		}
 	}
-	
+
+	public String informationUserResetPassword(InformationUserResetPassword informationUserResetPassword) {
+		try {
+			String random = RandomStringUtils.randomAlphabetic(6);
+			String body = "<div  style='background-color: #008CBA;\n" + "	border: none;\n" + "  color: white;\n"
+					+ "  padding: 20px 100px;\n" + "  text-align: center;\n" + "  text-decoration: none;\n"
+					+ "  display: inline-block;\n" + "  font-size: 16px;\n" + "  margin: 4px 2px;\n" + "  '>" + random
+					+ "</div>";
+			Users users = userRepository.findByEmail(informationUserResetPassword.getEmail()).get();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			if (users != null) {
+				String usersDate=format.format(users.getDateOfBirth());
+				if (users.getEmail().equals(informationUserResetPassword.getEmail())
+						&& users.getTelephone().equals(informationUserResetPassword.getTelephone())
+						&& users.getName().equals(informationUserResetPassword.getName())
+						&& usersDate.equals(informationUserResetPassword.getDateBirthDay())) {
+					
+					users.setPassword(encoder.encode(random));
+					userRepository.save(users);
+					emailService.sendEmailAttachment(informationUserResetPassword.getEmail(), body, "Password current");
+					return "Reset password success";
+				}else {
+					return "Reset password fail";
+				}
+			} else {
+				return "Reset password fail";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Reset password fail";
+		}
+	}
+
 	public String changePassword(ChangePasswordDto changePasswordDto) {
 		try {
-			Users users=userRepository.findByEmail(changePasswordDto.getEmail()).get();
-			if(encoder.matches(changePasswordDto.getCurrentPassword(), users.getPassword())) {
+			Users users = userRepository.findByEmail(changePasswordDto.getEmail()).get();
+			if (encoder.matches(changePasswordDto.getCurrentPassword(), users.getPassword())) {
 				users.setPassword(encoder.encode(changePasswordDto.getChangePassword()));
 				userRepository.save(users);
 				return "Change password success";
-			}else {
+			} else {
 				return "Incorrect password";
 			}
 		} catch (Exception e) {
@@ -189,7 +219,7 @@ public class UserService {
 			// TODO: handle exception
 		}
 	}
-	
+
 	public String deleteUserByListId(List<String> id) {
 		List<Users> lesson = userRepository.findListIdUser(id);
 		userRepository.deleteAll(lesson);
