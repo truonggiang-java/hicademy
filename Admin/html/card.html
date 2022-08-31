@@ -373,7 +373,7 @@
           success: function (res) {
             console.log(res)
             let html = "";
-            
+
             res.forEach(data => {
               html += `
                 <div class="col-md-6 col-lg-4 mb-3">
@@ -524,14 +524,17 @@
         findAll(1);
       })
       findAllImage();
-
+      let myPromise2
       $(document).on('click', '.viewImage', function (e) {
-        idImage = $(this).attr("id")
-        var nodes = document.getElementsByClassName("viewImage");
-        for (let i = 0; i < nodes.length; i++) {
-          nodes[i].style.border = "none";
-        }
-        document.getElementById(idImage).style.border = "4px solid red";
+        myPromise2 = new Promise(resolve => {
+          idImage = $(this).attr("id")
+          var nodes = document.getElementsByClassName("viewImage");
+          for (let i = 0; i < nodes.length; i++) {
+            nodes[i].style.border = "none";
+          }
+          document.getElementById(idImage).style.border = "4px solid red";
+          resolve(idImage);
+        })
       })
 
       $(document).on('click', '.messageCheckbox', function () {
@@ -591,28 +594,32 @@
 
 
       $(document).on('click', '#submit', function (e) {
-        let idImage = $(".viewImage").attr("id");
-        let nameCard = $("#nameCard").val();
-        let paramCard = $("#paramCard").val();
-        let value = {
-          idDlFileEntry: idImage,
-          description: nameCard,
-          param: paramCard
-        }
-        $.ajax({
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "POST",
-          url: "http://localhost:8080/api/v1/tags/insertTags",
-          data: JSON.stringify(value),
-          success: function (data) {
-            console.log(data);
-            window.setTimeout(function () {
-              window.location.reload();
-            }, 2000);
+
+        myPromise2.then(image => {
+
+          let nameCard = $("#nameCard").val();
+          let paramCard = $("#paramCard").val();
+          let value = {
+            idDlFileEntry: image,
+            description: nameCard,
+            param: paramCard
           }
+          console.log(value);
+          $.ajax({
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+              'Authorization': 'Bearer ' + cookie
+            },
+            method: "POST",
+            url: "http://localhost:8080/api/v1/tags/insertTags",
+            data: JSON.stringify(value),
+            success: function (data) {
+              console.log(data);
+              window.setTimeout(function () {
+                window.location.reload();
+              }, 2000);
+            }
+          })
         })
       })
     })
