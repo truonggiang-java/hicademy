@@ -89,8 +89,7 @@ public class UserController {
 	public List<UserImageDto> findAllUser() {
 		return userService.findAllUser();
 	}
-	
-	
+
 	
 	@GetMapping("/findById")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")

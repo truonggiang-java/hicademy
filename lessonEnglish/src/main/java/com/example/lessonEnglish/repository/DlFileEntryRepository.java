@@ -18,4 +18,7 @@ public interface DlFileEntryRepository  extends JpaRepository<DlFileEntry, Strin
 	
 	@Query("select d from DlFileEntry d where d.id in :id")
 	List<DlFileEntry> findListDlFileEntry(@Param("id") List<String> id);
+	
+	@Query("select d from DlFileEntry d where d.fileName=:name")
+	DlFileEntry findListDlFileEntryByName(@Param("name") String name);
 }

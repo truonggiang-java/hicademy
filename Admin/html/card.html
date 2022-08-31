@@ -229,8 +229,13 @@
           <h4 class="modal-title">Add Card</h4>
         </div>
         <div style="padding: 10px 100px;">
-          <label class="form-label">Name Card</label>
+          <label class="form-label">Description Card</label>
           <input class="form-control" type="text" id="nameCard" name="NameCard" placeholder="Enter data" autofocus
+            required />
+        </div>
+        <div style="padding: 10px 100px;">
+          <label class="form-label">Param</label>
+          <input class="form-control" type="text" id="paramCard" name="paramCard" placeholder="Enter data" autofocus
             required />
         </div>
         <form id="data" method='post' action='' enctype="multipart/form-data">
@@ -364,10 +369,12 @@
             'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
-          url: "http://localhost:8080/api/v1/dlFileEntry/findAll",
+          url: "http://localhost:8080/api/v1/tags/findAll",
           success: function (res) {
+            console.log(res)
             let html = "";
-            res.dlFile.forEach(data => {
+            
+            res.forEach(data => {
               html += `
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card h-100 hover01">
@@ -379,9 +386,7 @@
                   </div>
                 </div>`
             })
-
             $("#image").html(html)
-
           }
         })
       }
@@ -586,29 +591,29 @@
 
 
       $(document).on('click', '#submit', function (e) {
-
-        var form_data = new FormData();
-        var totalfiles = document.getElementById('files').files.length;
-        for (var index = 0; index < totalfiles; index++) {
-          form_data.append("file", document.getElementById('files').files[index]);
+        let idImage = $(".viewImage").attr("id");
+        let nameCard = $("#nameCard").val();
+        let paramCard = $("#paramCard").val();
+        let value = {
+          idDlFileEntry: idImage,
+          description: nameCard,
+          param: paramCard
         }
         $.ajax({
           headers: {
+            'Content-Type': 'application/json;charset=utf-8',
             'Authorization': 'Bearer ' + cookie
           },
-          url: "http://localhost:8080/api/v1/dlFileEntry/uploadFile",
-          data: form_data,
-          dataType: 'json',
-          contentType: false,
-          processData: false,
-          method: 'POST',
+          method: "POST",
+          url: "http://localhost:8080/api/v1/tags/insertTags",
+          data: JSON.stringify(value),
           success: function (data) {
-
+            console.log(data);
           }
         })
-        window.setTimeout(function () {
-          window.location.reload();
-        }, 5000);
+        // window.setTimeout(function () {
+        //   window.location.reload();
+        // }, 5000);
       })
     })
   </script>
