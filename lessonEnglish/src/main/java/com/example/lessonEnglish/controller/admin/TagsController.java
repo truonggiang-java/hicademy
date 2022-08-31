@@ -31,6 +31,6 @@ public class TagsController {
 	@GetMapping("/findAll")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public List<TagsImageDto> findAllTags() {
-		return tagsService.listTagsImageDto();
+		return tagsService.listTagsImageDto();	
 	}
 }

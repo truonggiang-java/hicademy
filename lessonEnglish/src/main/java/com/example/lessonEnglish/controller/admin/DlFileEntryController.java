@@ -48,7 +48,7 @@ public class DlFileEntryController {
 	@GetMapping("/findAll")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public PageableDlFileEntryDto findAllPage(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
-			@RequestParam(name="size",required = false, defaultValue = "6") Integer size,
+			@RequestParam(name="size",required = false, defaultValue = "8") Integer size,
 			@RequestParam(name="input",required = false,defaultValue = ".") String input) {
 		return dlFileEntryService.findAllDlFileEntry(page, size, input);
 	}

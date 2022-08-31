@@ -226,10 +226,10 @@
                     </div>
                     <div class="option-select">
                       <select name="hall" id="hall" class="country" style="width: 50%; ">
-                        <option value="4" selected>4</option>
+                        <option value="4">4</option>
                         <option value="5">5</option>
                         <option value="6">6</option>
-                        <option value="7">7</option>
+                        <option value="7" selected>7</option>
                         <option value="1000">All</option>
                       </select>
                     </div>
@@ -386,7 +386,7 @@
         var doneTypingInterval = 200;  //time in ms, 5 seconds for example
         var $input = $('#myInput');
         let value = " ";
-        let optionValue = document.getElementById('hall').value = "4";
+        let optionValue = document.getElementById('hall').value = "7";
         let cookie = $.cookie("Cookie-admin");
         let cookieUser = $.cookie("Cookie-user");
         $(document).on('click', ".logoutAdmin", function (e) {
