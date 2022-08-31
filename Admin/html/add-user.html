@@ -207,8 +207,8 @@
                         <div class="mb-3 col-md-6">
                           <label for="role" class="form-label">Role</label>
                           <select name="role" id="role" class="form-control">
-                            <option value="ADMIN">Admin</option>
                             <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
                           </select>
                         </div>
                         <div class="mb-3 col-md-6">
@@ -310,7 +310,7 @@
 
   <!-- Page JS -->
   <script src="../assets/js/pages-account-settings-account.js"></script>
-
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Place this tag in your head or just before your close body tag. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
@@ -419,16 +419,33 @@
           password: passwordUser,
           role: role
         }
-        $.ajax({
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "POST",
-          url: "http://localhost:8080/api/v1/user/insertUser",
-          data: JSON.stringify(value),
-          success: function (data) {
-            console.log(data);
+        Swal.fire({
+          title: 'Do you want to save the changes?',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Save',
+          denyButtonText: `Don't save`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            $.ajax({
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Bearer ' + cookie
+              },
+              method: "POST",
+              url: "http://localhost:8080/api/v1/user/insertUser",
+              data: JSON.stringify(value),
+              success: function (data) {
+                console.log(data);
+              }
+            })
+            Swal.fire('Saved!', '', 'success')
+            window.setTimeout(function () {
+              window.location.reload();
+            }, 2000);
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
           }
         })
       })

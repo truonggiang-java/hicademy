@@ -235,14 +235,6 @@
                             <option value="FEMALE">Female</option>
                           </select>
                         </div>
-                        <!-- <div class="mb-3 col-md-6">
-                          <label for="role" class="form-label">Role</label>
-                          <select name="role" id="role" class="form-control">
-                            <option value="User">User</option>
-                            <option value="Customer">Customer</option>
-                            <option value="Admin">Admin</option>
-                          </select>
-                        </div> -->
                         <div class="mb-3 col-md-6" id="role">
 
                         </div>
@@ -476,6 +468,12 @@
         $.removeCookie("Cookie-admin");
         window.location.href = "auth-login-basic.html";
       })
+
+      $(document).on('click', '.pass_show .ptxt', function () {
+        $(this).text($(this).text() == "Show" ? "Hide" : "Show");
+        $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+      }); 
+      
       function fetchData() {
         $.ajax({
           headers: {
@@ -635,11 +633,9 @@
                 console.log(data);
               }
             })
-            Swal.fire(
-              'Success!',
-              'Password has been changed.',
-              'success'
-            )
+            window.setTimeout(function () {
+              window.location.reload();
+            }, 2000);
           }
         })
 
