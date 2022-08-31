@@ -609,11 +609,11 @@
           data: JSON.stringify(value),
           success: function (data) {
             console.log(data);
+            window.setTimeout(function () {
+              window.location.reload();
+            }, 2000);
           }
         })
-        // window.setTimeout(function () {
-        //   window.location.reload();
-        // }, 5000);
       })
     })
   </script>
