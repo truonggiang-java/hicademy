@@ -700,14 +700,20 @@
                 data: JSON.stringify(value),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
+                  Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )
                   findAllImage(1,".");
+                },error:function(errors){
+                  Swal.fire(
+                    'Fail!',
+                    'You have no authority.',
+                    'warning'
+                  )
                 }
               })
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
               window.setTimeout(function () {
                 window.location.reload();
               }, 2000);
