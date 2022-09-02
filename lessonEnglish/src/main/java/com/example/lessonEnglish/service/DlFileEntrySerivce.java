@@ -24,14 +24,19 @@ import com.example.lessonEnglish.dto.DlFileEntryDto;
 import com.example.lessonEnglish.dto.PageDto;
 import com.example.lessonEnglish.dto.PageableDlFileEntryDto;
 import com.example.lessonEnglish.entity.DlFileEntry;
+import com.example.lessonEnglish.entity.Tags;
 import com.example.lessonEnglish.page.PageBasic;
 import com.example.lessonEnglish.repository.DlFileEntryRepository;
+import com.example.lessonEnglish.repository.TagsRepository;
 
 @Service
 public class DlFileEntrySerivce {
 
 	@Autowired
 	private DlFileEntryRepository dlfileEntryRepository;
+	
+	@Autowired
+	private TagsRepository tagsRepository;
 
 	@Autowired
 	private PageBasic pageBasic;
@@ -82,6 +87,12 @@ public class DlFileEntrySerivce {
 
 	public String deleteFile(List<String> id) {
 		List<DlFileEntry> listDlFileEntries = dlfileEntryRepository.findListDlFileEntry(id);
+		for(DlFileEntry dlFileEntry:listDlFileEntries) {
+			Tags tags=tagsRepository.findTagsByName(dlFileEntry.getFileName());
+			if(tags !=null) {
+				tagsRepository.deleteById(tags.getId());
+			}
+		}
 		if (listDlFileEntries.size() > 0) {
 
 			for (DlFileEntry dlFileEntry : listDlFileEntries) {

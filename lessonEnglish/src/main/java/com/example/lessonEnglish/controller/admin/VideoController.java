@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.lessonEnglish.dto.PageableDto;
 import com.example.lessonEnglish.dto.VideoDto;
 import com.example.lessonEnglish.entity.Video;
+import com.example.lessonEnglish.page.PageableBasic;
 import com.example.lessonEnglish.service.VideoService;
 
 @RestController
@@ -32,8 +35,10 @@ public class VideoController {
 
     @GetMapping("/findAllVideo")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    public List<Video> findAllVideo(@RequestParam(name="input",required = false,defaultValue = "") String input) {
-        return videoService.findAll(input);
+    public PageableDto<Video> findAllVideo(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
+			@RequestParam(name="size",required = false, defaultValue = "7") Integer size,
+			@RequestParam(name="input",required = false,defaultValue = "") String input) {
+        return videoService.findAll(page,size,input);
     }
 
     @GetMapping("/findByIdVideo")

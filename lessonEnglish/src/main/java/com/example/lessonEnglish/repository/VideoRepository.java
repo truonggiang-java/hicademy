@@ -13,9 +13,12 @@ public interface VideoRepository extends JpaRepository<Video, String> {
 	@Query("select c from Video c where c.id in :id")
 	List<Video> deleteListVideo(@Param("id") List<String> id);
 
-	@Query(value = "select * from Video c where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%') or upper(c.param) like concat(concat('%',upper(:input)),'%') order by c.update_date desc", nativeQuery = true)
-	List<Video> findAllVideo(@Param("input") String video);
+	@Query(value = "select * from Video c where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%') or upper(c.param) like concat(concat('%',upper(:input)),'%') order by c.update_date desc limit :page, :size", nativeQuery = true)
+	List<Video> findAllVideo(@Param("input") String video,@Param("page") Integer page,@Param("size") Integer size);
 
 	@Query(value = "select * from Video c where c.param = :input", nativeQuery = true)
 	List<Video> findVideoByParam(@Param("input") String inout);
+	
+	@Query(value="select count(*) from Video c where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.description) like concat(concat('%',upper(:input)),'%')",nativeQuery = true)
+	Long countVideo(@Param("input") String input);
 }
