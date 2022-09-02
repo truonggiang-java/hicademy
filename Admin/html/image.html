@@ -543,14 +543,20 @@
                 data: JSON.stringify(value),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
+                  Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )
                   findAll(1);
+                },error:function(errors){
+                  Swal.fire(
+                    'Fail!',
+                    'You have no authority.',
+                    'warning'
+                  )
                 }
               })
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
             }
           })
         })
@@ -558,7 +564,6 @@
 
 
       $(document).on('click', '#submit', function (e) {
-
         var form_data = new FormData();
         var totalfiles = document.getElementById('files').files.length;
         for (var index = 0; index < totalfiles; index++) {
@@ -580,7 +585,7 @@
         })
         window.setTimeout(function () {
           window.location.reload();
-        }, 5000);
+        }, 2500);
       })
     })
   </script>

@@ -228,7 +228,7 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                         <option value="6">6</option>
-                        <option value="6" selected>7</option>
+                        <option value="7" selected>7</option>
                         <option value="1000">All</option>
                       </select>
                     </div>
@@ -388,6 +388,79 @@
       let optionValue = document.getElementById('hall').value = "7";
       let idImage;
       let sort;
+      function fetchNotes(startPage, optionValue, value, sort) {
+        let url;
+        if (value && sort) {
+          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value + "&sort=" + sort;
+        } else if (sort && !value) {
+          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&sort=" + sort;
+        } else if (value && !sort) {
+          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value;
+        } else {
+          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue
+        }
+
+        $.ajax({
+          headers: {
+            'Authorization': 'Bearer ' + cookie
+          },
+          method: "GET",
+          url: url,
+          success: function (res) {
+            // console.log(res);
+            let html = "";
+            let i = 0;
+            res.courseImage.forEach(data => {
+              const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info", "table-light", "table-dark"];
+              html += `
+              <tr class="${color[i]}" id="${data.id}">
+                <td style="width: 2%; padding-left: 15px" id="checkRole">
+                  <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
+                </td>
+                <td><strong>${data.name}</strong></td>
+                <td>${data.description}</td>
+                <td>
+                  <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
+                    <li
+                      data-bs-toggle="tooltip"
+                      data-popup="tooltip-custom"
+                      data-bs-placement="top"
+                      class="avatar avatar-xs pull-up"
+                      title="${data.description}"
+                    >
+                      <img src="${data.link}" alt="image" class="rounded-circle" />
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <div class="wrapper">
+                    <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.lesson}" >${data.countLesson}</a>
+                  </div>
+                <td>
+                  <a class="dropdown-item editCourse" data-toggle="modal" href="#myModal" 
+                    style="text-decoration:none; width:40%; border-radius: 10px;" id="${data.id}"
+                  ><i class="bx bx-edit-alt me-1"></i> 
+                    Edit
+                  </a>
+                </td>
+              </tr>`
+              if (i == color.length - 1) {
+                i = 0;
+              } else i++
+            });
+            $("#content").html(html)
+            // console.log($('ul.pagination li').length - 3);
+            // console.log(res.page.totalPage);
+            if ($('ul.paginationCourse li').length - (optionValue + 1) != res.page.totalPage) {
+              // build pagination list at the first time loading
+              $('ul.paginationCourse').empty();
+              buildPagination(res.page, startPage);
+
+            }
+
+          }
+        })
+      }
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
@@ -722,7 +795,6 @@
           resolve(checkedValued);
         })
         myPromise.then(value => {
-
           Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -734,7 +806,6 @@
           }).then((result) => {
             if (result.isConfirmed) {
               $.ajax({
-
                 headers: {
                   'Content-Type': 'application/json;charset=utf-8',
                   'Authorization': 'Bearer ' + cookie
@@ -744,14 +815,20 @@
                 data: JSON.stringify(value),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
+                  Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )
                   fetchNotes(1, optionValue)
+                },error:function(errors){
+                  Swal.fire(
+                    'Fail!',
+                    'You have no authority.',
+                    'warning'
+                  )
                 }
               })
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
             }
           })
         })
@@ -763,79 +840,6 @@
         fetchNotes(1, optionValue, " ", sort)
       })
 
-      function fetchNotes(startPage, optionValue, value, sort) {
-        let url;
-        if (value && sort) {
-          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value + "&sort=" + sort;
-        } else if (sort && !value) {
-          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&sort=" + sort;
-        } else if (value && !sort) {
-          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value;
-        } else {
-          url = "http://localhost:8080/api/v1/course/findAll?page=" + startPage + "&size=" + optionValue
-        }
-
-        $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "GET",
-          url: url,
-          success: function (res) {
-            // console.log(res);
-            let html = "";
-            let i = 0;
-            res.courseImage.forEach(data => {
-              const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info", "table-light", "table-dark"];
-              html += `
-              <tr class="${color[i]}" id="${data.id}">
-                <td style="width: 2%; padding-left: 15px">
-                  <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
-                </td>
-                <td><strong>${data.name}</strong></td>
-                <td>${data.description}</td>
-                <td>
-                  <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
-                    <li
-                      data-bs-toggle="tooltip"
-                      data-popup="tooltip-custom"
-                      data-bs-placement="top"
-                      class="avatar avatar-xs pull-up"
-                      title="${data.description}"
-                    >
-                      <img src="${data.link}" alt="image" class="rounded-circle" />
-                    </li>
-                  </ul>
-                </td>
-                <td>
-                  <div class="wrapper">
-                    <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.lesson}" >${data.countLesson}</a>
-                  </div>
-                <td>
-                  <a class="dropdown-item editCourse" data-toggle="modal" href="#myModal" 
-                    style="text-decoration:none; width:40%; border-radius: 10px;" id="${data.id}"
-                  ><i class="bx bx-edit-alt me-1"></i> 
-                    Edit
-                  </a>
-                </td>
-              </tr>`
-              if (i == color.length - 1) {
-                i = 0;
-              } else i++
-            });
-            $("#content").html(html)
-            // console.log($('ul.pagination li').length - 3);
-            // console.log(res.page.totalPage);
-            if ($('ul.paginationCourse li').length - (optionValue + 1) != res.page.totalPage) {
-              // build pagination list at the first time loading
-              $('ul.paginationCourse').empty();
-              buildPagination(res.page, startPage);
-
-            }
-
-          }
-        })
-      }
       function buildPagination(response, page) {
 
         totalPages = response.totalPage;

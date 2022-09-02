@@ -432,8 +432,10 @@
               method: "POST",
               url: "http://localhost:8080/api/v1/course/insertCourse",
               data: JSON.stringify(value),
-              success: function (data) {
-
+                success: function (data) {
+                  window.setTimeout(function () {
+                  window.location.reload();
+                },500);
               }
             })
             Swal.fire('Saved!', '', 'success')
