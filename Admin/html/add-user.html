@@ -164,7 +164,7 @@
         <div class="content-wrapper">
           <!-- Content -->
 
-          <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="container-xxl flex-grow-1 container-p-y" id="content">
             <div class="row">
               <div class="col-md-12">
                 <div class="card mb-4">
@@ -339,6 +339,14 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
           success: function (data) {
+            if(data.role!="ADMIN"){
+              let roleUser = `
+                <div style="display: flex; justify-content:center; align-items:center; height:100%">
+                  <h1>You do not have permission to access this item!</h1>
+                </div>
+              `;
+              $("#content").html(roleUser);
+            }
             let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
@@ -419,35 +427,39 @@
           password: passwordUser,
           role: role
         }
-        Swal.fire({
-          title: 'Do you want to save the changes?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Save',
-          denyButtonText: `Don't save`,
-        }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
-          if (result.isConfirmed) {
-            $.ajax({
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + cookie
-              },
-              method: "POST",
-              url: "http://localhost:8080/api/v1/user/insertUser",
-              data: JSON.stringify(value),
-              success: function (data) {
-                console.log(data);
+        if (!name || !gender || !birthday || !address || !phoneNumber || !email ||!passwordUser || !role) {
+        alert("Please enter enough information!")
+        } else {  
+          Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+          }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                $.ajax({
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + cookie
+                  },
+                  method: "POST",
+                  url: "http://localhost:8080/api/v1/user/insertUser",
+                  data: JSON.stringify(value),
+                  success: function (data) {
+                    console.log(data);
+                  }
+                })
+                Swal.fire('Saved!', '', 'success')
+                window.setTimeout(function () {
+                  window.location.reload();
+                }, 2000);
+              } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
               }
             })
-            Swal.fire('Saved!', '', 'success')
-            window.setTimeout(function () {
-              window.location.reload();
-            }, 2000);
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
           }
-        })
       })
     });
   </script>
