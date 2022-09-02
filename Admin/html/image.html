@@ -376,9 +376,9 @@
             let html = "";
             res.dlFile.forEach(data => {
               html += `
-                <div class="col-md-6 col-lg-4 mb-3">
+                <div class="col-md-6 col-lg-3 mb-3">
                   <div class="card h-100 hover01">
-                    <figure><img class="card-img-top" src="${data.link}" alt="Card image cap" style="height:300px;"/></figure>
+                    <figure><img class="card-img-top" src="${data.link}" alt="Card image cap" style="height:250px;"/></figure>
                     <div class="card-body">
                       <h5 class="card-title">Name : ${data.name}</h5>
                       <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
@@ -544,14 +544,20 @@
                 data: JSON.stringify(idDelete),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
-                  findAll(1, value);
+                  Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )
+                  findAll(1);
+                },error:function(errors){
+                  Swal.fire(
+                    'Fail!',
+                    'You have no authority.',
+                    'warning'
+                  )
                 }
               })
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
             }
           })
         })
@@ -559,7 +565,6 @@
 
 
       $(document).on('click', '#submit', function (e) {
-
         var form_data = new FormData();
         var totalfiles = document.getElementById('files').files.length;
         for (var index = 0; index < totalfiles; index++) {

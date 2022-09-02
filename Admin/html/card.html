@@ -247,7 +247,7 @@
         </div>
         <form id="data" method='post' action='' enctype="multipart/form-data">
           <div class="modal-body">
-            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:1.5%;margin-left: -10px;"
+            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:0.5%;margin-left: -10px;"
               id="viewImage">
 
             </div>
@@ -388,9 +388,9 @@
 
             res.dlFile.forEach(data => {
               html += `
-                <div class="col-md-6 col-lg-4 mb-3">
+                <div class="col-md-6 col-lg-3 mb-2">
                   <div class="card h-100 hover01">
-                    <figure><img class="card-img-top" src="${data.link}" alt="Card image cap" style="height:300px;"/></figure>
+                    <figure><img class="card-img-top" src="${data.link}" alt="Card image cap" style="height:250px;"/></figure>
                     <div class="card-body">
                       <h5 class="card-title">Name : ${data.name}</h5>
                       <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
@@ -708,6 +708,9 @@
                 'Your file has been deleted.',
                 'success'
               )
+              window.setTimeout(function () {
+                window.location.reload();
+              }, 2000);
             }
           })
         })
@@ -715,8 +718,8 @@
 
 
       $(document).on('click', '#submit', function (e) {
-        myPromise2.then(image => {
 
+        myPromise2.then(image => {
           let nameCard = $("#nameCard").val();
           let paramCard = $("#paramCard").val();
           let value = {
@@ -725,21 +728,39 @@
             param: paramCard
           }
           console.log(value);
-          $.ajax({
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8',
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "POST",
-            url: "http://localhost:8080/api/v1/tags/insertTags",
-            data: JSON.stringify(value),
-            success: function (data) {
-              console.log(data);
-              window.setTimeout(function () {
-                window.location.reload();
-              }, 2000);
-            }
-          })
+          if (!nameCard || !paramCard || !image) {
+            alert("Please enter enough information!")
+          } else {  
+            Swal.fire({
+              title: 'Do you want to save the changes?',
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: 'Save',
+              denyButtonText: `Don't save`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                $.ajax({
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + cookie
+                  },
+                  method: "POST",
+                  url: "http://localhost:8080/api/v1/tags/insertTags",
+                  data: JSON.stringify(value),
+                  success: function (data) {
+                    console.log(data);
+                    window.setTimeout(function () {
+                      window.location.reload();
+                    }, 2000);
+                  }
+                })
+                Swal.fire('Saved!', '', 'success')
+              } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+              }
+            })
+          }
         })
       })
       $input.on('keyup', function () {
