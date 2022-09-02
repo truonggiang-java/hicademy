@@ -5,14 +5,21 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.lessonEnglish.dto.PageDto;
+import com.example.lessonEnglish.dto.PageableDto;
+import com.example.lessonEnglish.dto.PageableLessonDto;
 import com.example.lessonEnglish.dto.VideoDto;
 import com.example.lessonEnglish.entity.Video;
+import com.example.lessonEnglish.page.PageableBasic;
 import com.example.lessonEnglish.repository.VideoRepository;
 
 @Service
 public class VideoService {
     @Autowired
     private VideoRepository videoRepository;
+    
+    @Autowired
+    private PageableBasic<Video> pageableBasic;
    
     public String insertVideo(VideoDto videoDto) {
         try {
@@ -34,8 +41,12 @@ public class VideoService {
         }
     }
 
-    public java.util.List<Video> findAll(String input) {
-        return videoRepository.findAllVideo(input);
+    public PageableDto<Video> findAll(Integer page, Integer size,String input) {
+    	Long listVideo = videoRepository.countVideo(input);
+    	List<Video> pageVideo=videoRepository.findAllVideo(input,(page - 1) * size, size);
+    	int totalPage = (int) Math.ceil((double) listVideo / size);
+    	PageableDto<Video> data = pageableBasic.pageableBasic(pageVideo, new PageDto(totalPage, listVideo, pageVideo.size(), size));
+        return data;
     }
 
     public Video findById(String id) {

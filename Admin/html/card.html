@@ -148,7 +148,7 @@
               <div class="nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
                 <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                  aria-label="Search..." />
+                  aria-label="Search..." id="myInput"/>
               </div>
             </div>
             <!-- /Search -->
@@ -187,6 +187,13 @@
             <!-- Image -->
             <div class="row mb-5" id="image">
 
+            </div>
+            <div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination paginationTags justify-content-end">
+
+                </ul>
+              </nav>
             </div>
           </div>
 
@@ -287,9 +294,14 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script>
     $(document).ready(function () {
-      let totalPages = 1;
+      let totalPagesImage = 1;
+      let totalPagesTags=1;
       let cookie = $.cookie("Cookie-admin");
       let cookieUser = $.cookie("Cookie-user");
+      let value = ".";
+      var $input = $('#myInput');
+      var typingTimer;                //timer identifier
+      var doneTypingInterval = 200;  //time in ms, 5 seconds for example
       $(document).on('click', ".logoutAdmin", function (e) {
         let id = $(this).attr("id");
         if (cookieUser) {
@@ -363,18 +375,18 @@
         $.removeCookie("Cookie-user");
         window.location.href = "auth-login-basic.html";
       })
-      function findAllImage() {
+      function findAllImage(startPage, value) {
         $.ajax({
           headers: {
             'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
-          url: "http://localhost:8080/api/v1/tags/findAll",
+          url: "http://localhost:8080/api/v1/tags/findAllTags?page=" + startPage + "&input=" + value,
           success: function (res) {
             console.log(res)
             let html = "";
 
-            res.forEach(data => {
+            res.dlFile.forEach(data => {
               html += `
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card h-100 hover01">
@@ -387,9 +399,118 @@
                 </div>`
             })
             $("#image").html(html)
+
+            if ($('ul.paginationTags li').length - 3 != res.page.totalPage) {
+              // build pagination list at the first time loading
+              $('ul.paginationTags').empty();
+              buildpaginationTags(res.page, startPage);
+
+            }
           }
         })
       }
+      function buildpaginationTags(response, page) {
+
+        totalPagesTags = response.totalPage;
+        var pageNumber = page;
+        var numLinks = 5;
+
+        // print 'previous' link only if not on page one
+        var first = '';
+        var prev = '';
+
+        if (pageNumber > 1) {
+          if (pageNumber !== 1) {
+            first = '<li class="page-item"><a class="page-link">« First</a></li>';
+          }
+          prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+        } else {
+          prev = ''; // on the page one, don't show 'previous' link
+          first = ''; // nor 'first page' link
+        }
+
+        // print 'next' link only if not on the last page
+        var next = '';
+        var last = '';
+
+        if (pageNumber <= totalPagesTags) {
+          if (pageNumber !== totalPagesTags) {
+            next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+            last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+          }
+        } else {
+          next = ''; // on the last page, don't show 'next' link
+          last = ''; // nor 'last page' link
+        }
+
+        var start = pageNumber - (pageNumber % numLinks) + 1;
+        var end = start + numLinks - 1;
+        end = Math.min(totalPagesTags, end);
+        var pagingLink = '';
+        for (var i = start; i <= end; i++) {
+          if (i == pageNumber) {
+            pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+          } else {
+            pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+          }
+        }
+        pagingLink = first + prev + pagingLink + next + last;
+
+        $("ul.paginationTags").append(pagingLink);
+      }
+      $(document).on("click", "ul.paginationTags li a", function () {
+        var data = $(this).attr('data');
+        let val = $(this).text();
+        if (val.toUpperCase() === "« FIRST") {
+
+          let currentActive = $("ul.paginationTags  li.active");
+          findAllImage(1, value);
+          $("ul.paginationTags li.active").removeClass("active");
+          // add .active to next-pagination li
+          currentActive.next().addClass("active");
+        } else if (val.toUpperCase() === "LAST »") {
+          let currentActive = $("ul.paginationTags  li.active");
+          findAllImage(totalPagesTags, value);
+          $("ul.paginationTags  li.active").removeClass("active");
+          // add .active to next-pagination li
+          currentActive.next().addClass("active");
+        } else if (val.toUpperCase() === "NEXT ›") {
+          let currentActive = $("ul.paginationTags  li.active");
+          let activeValue = parseInt($("ul.paginationTags li.active").text()) + 1;
+
+          if (activeValue <= totalPagesTags) {
+            let currentActive = $("ul.paginationTags  li.active");
+            startPage = activeValue;
+
+            findAllImage(startPage, value);
+            // remove .active class for the old li tag
+            $("ul.paginationTags  li.active").removeClass("active");
+            // add .active to next-pagination li
+            currentActive.next().addClass("active");
+          }
+        } else if (val.toUpperCase() === "‹ PREV") {
+          let activeValue = parseInt($("ul.paginationTags li.active").text());
+          if (activeValue > 1) {
+            // console.log(activeValue)
+            // get the previous page
+            startPage = activeValue - 1;
+            findAllImage(startPage, value);
+            let currentActive = $("ul.paginationTags  li.active");
+            currentActive.removeClass("active");
+            // add .active to previous-pagination li
+            currentActive.prev().addClass("active");
+          }
+        } else {
+          startPage = parseInt(val);
+          findAllImage(startPage, value);
+          // add focus to the li tag
+          $("ul.paginationTags  li.active").removeClass("active");
+          $(this).parent().addClass("active");
+          //$(this).addClass("active");
+        }
+      });
+
+
       function findAll(startPage) {
         $.ajax({
           headers: {
@@ -523,7 +644,7 @@
       $(document).on('click', '#chooseImage', function () {
         findAll(1);
       })
-      findAllImage();
+
       let myPromise2
       $(document).on('click', '.viewImage', function (e) {
         myPromise2 = new Promise(resolve => {
@@ -575,11 +696,11 @@
                   'Authorization': 'Bearer ' + cookie
                 },
                 method: "DELETE",
-                url: "http://localhost:8080/api/v1/dlFileEntry/deleteFile",
+                url: "http://localhost:8080/api/v1/tags/deleteTags",
                 data: JSON.stringify(value),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
-                  findAll(1);
+                  findAllImage(1,".");
                 }
               })
               Swal.fire(
@@ -621,6 +742,25 @@
           })
         })
       })
+      $input.on('keyup', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      });
+      //on keydown, clear the countdown 
+      $input.on('keydown', function () {
+        clearTimeout(typingTimer);
+      });
+
+      function doneTyping() {
+        value = $("#myInput").val();
+        // console.log(value);
+        findAllImage(1, value);
+      }
+
+      (function () {
+        // get first-page at initial time
+        findAllImage(1, value);
+      })();
     })
   </script>
 </body>

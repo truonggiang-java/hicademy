@@ -148,7 +148,7 @@
               <div class="nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
                 <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                  aria-label="Search..." />
+                  aria-label="Search..." id="myInput" />
               </div>
             </div>
             <!-- /Search -->
@@ -288,6 +288,10 @@
       let totalPages = 1;
       let cookie = $.cookie("Cookie-admin");
       let cookieUser = $.cookie("Cookie-user");
+      let value = ".";
+      var $input = $('#myInput');
+      var typingTimer;                //timer identifier
+      var doneTypingInterval = 200;  //time in ms, 5 seconds for example
       $(document).on('click', ".logoutAdmin", function (e) {
         let id = $(this).attr("id");
         if (cookieUser) {
@@ -361,13 +365,13 @@
         $.removeCookie("Cookie-user");
         window.location.href = "auth-login-basic.html";
       })
-      function findAll(startPage) {
+      function findAll(startPage, value) {
         $.ajax({
           headers: {
             'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
-          url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage,
+          url: "http://localhost:8080/api/v1/dlFileEntry/findAll?page=" + startPage + "&input=" + value,
           success: function (res) {
             let html = "";
             res.dlFile.forEach(data => {
@@ -450,13 +454,13 @@
         if (val.toUpperCase() === "« FIRST") {
 
           let currentActive = $("li.active");
-          findAll(1);
+          findAll(1, value);
           $("li.active").removeClass("active");
           // add .active to next-pagination li
           currentActive.next().addClass("active");
         } else if (val.toUpperCase() === "LAST »") {
           let currentActive = $("li.active");
-          findAll(totalPages);
+          findAll(totalPages, value);
           $("li.active").removeClass("active");
           // add .active to next-pagination li
           currentActive.next().addClass("active");
@@ -468,7 +472,7 @@
             let currentActive = $("li.active");
             startPage = activeValue;
 
-            findAll(startPage);
+            findAll(startPage, value);
             // remove .active class for the old li tag
             $("li.active").removeClass("active");
             // add .active to next-pagination li
@@ -479,7 +483,7 @@
           if (activeValue > 1) {
             // get the previous page
             startPage = activeValue - 1;
-            findAll(startPage);
+            findAll(startPage, value);
             let currentActive = $("li.active");
             currentActive.removeClass("active");
             // add .active to previous-pagination li
@@ -487,7 +491,7 @@
           }
         } else {
           startPage = parseInt(val);
-          findAll(startPage);
+          findAll(startPage, value);
           // add focus to the li tag
           $("li.active").removeClass("active");
           $(this).parent().addClass("active");
@@ -495,10 +499,7 @@
         }
       });
 
-      (function () {
-        // get first-page at initial time
-        findAll(1);
-      })();
+
 
 
       $(document).on('click', '.messageCheckbox', function () {
@@ -543,7 +544,7 @@
                 data: JSON.stringify(value),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
-                  findAll(1);
+                  findAll(1, value);
                 }
               })
               Swal.fire(
@@ -579,13 +580,30 @@
           }
         })
         window.setTimeout(function () {
-          window.location.reload();
-        }, 5000);
+          findAll(1, ".");
+        }, 2000);
       })
 
+      //search
+      $input.on('keyup', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      });
+      //on keydown, clear the countdown 
+      $input.on('keydown', function () {
+        clearTimeout(typingTimer);
+      });
 
+      function doneTyping() {
+        value = $("#myInput").val();
+        // console.log(value);
+        findAll(1, value);
+      }
 
-
+      (function () {
+        // get first-page at initial time
+        findAll(1, value);
+      })();
     })
   </script>
 </body>
