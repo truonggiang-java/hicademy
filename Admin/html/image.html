@@ -522,7 +522,7 @@
           }
           resolve(checkedValued);
         })
-        myPromise.then(value => {
+        myPromise.then(idDelete => {
 
           Swal.fire({
             title: 'Are you sure?',
@@ -541,7 +541,7 @@
                 },
                 method: "DELETE",
                 url: "http://localhost:8080/api/v1/dlFileEntry/deleteFile",
-                data: JSON.stringify(value),
+                data: JSON.stringify(idDelete),
                 success: function (data) {
                   document.getElementById("delete").style.display = "none";
                   findAll(1, value);
