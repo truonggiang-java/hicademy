@@ -32,6 +32,9 @@ public class Course extends BaseEntity{
 	@Column(name="id_dlfileentry")
 	private String idDlFileEntry;
 	
+	@Column(name="param")
+	private String param;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="course_lesson",joinColumns = @JoinColumn(name="course_id"),inverseJoinColumns = @JoinColumn(name="lesson_id"))
 	@JsonIgnore

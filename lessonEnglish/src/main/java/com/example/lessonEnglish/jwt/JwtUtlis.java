@@ -27,7 +27,7 @@ public class JwtUtlis {
 	
 	private String doGenerateToken(UserServiceImpl userServiceImpl, Map<String, Object> claims) {
 		// TODO Auto-generated method stub
-		return Jwts.builder().setClaims(claims).setSubject(userServiceImpl.getUsername())
+		return Jwts.builder().setClaims(claims).setSubject(userServiceImpl.getEmail())
 				.setExpiration(new Date(System.currentTimeMillis()+ expireToken))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.signWith(SignatureAlgorithm.HS512, secretKey).compact();

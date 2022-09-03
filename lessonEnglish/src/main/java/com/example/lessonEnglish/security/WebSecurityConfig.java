@@ -3,6 +3,7 @@ package com.example.lessonEnglish.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,53 +16,78 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.lessonEnglish.jwt.JwtFillter;
+import com.example.lessonEnglish.security.service.CustomerServiceImpl;
 import com.example.lessonEnglish.security.service.UserDetailService;
 
 @Configuration
 @SuppressWarnings("deprecation")
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
-(prePostEnabled = true,
-proxyTargetClass = true, 
-securedEnabled = true, 
-jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder(10);
 	}
-	@Autowired
-	private JwtFillter jwtFilter;
 
-	@Autowired
-	private UserDetailService userDetailService;
-	
-	
+	@Order(1)
+	@Configuration
+	public static class AdminSecurity extends WebSecurityConfigurerAdapter {
 
-	@Override
-	@Bean
-	protected AuthenticationManager authenticationManager() throws Exception {
-		// TODO Auto-generated method stub
-		return super.authenticationManager();
+		@Autowired
+		private JwtFillter jwtFilter;
+
+		@Autowired
+		private UserDetailService userDetailService;
+
+		@Autowired
+		private PasswordEncoder encoder;
+
+		@Override
+		@Bean
+		protected AuthenticationManager authenticationManager() throws Exception {
+			// TODO Auto-generated method stub
+			return super.authenticationManager();
+		}
+
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.userDetailsService(userDetailService).passwordEncoder(encoder);
+		}
+
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.cors().and().csrf().disable().sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+					.antMatchers("/api/v1/user/signin").permitAll().antMatchers("/api/v1/dlFileEntry/viewImage/**")
+					.permitAll().antMatchers("/api/v1/logo/view/**").permitAll()
+					.antMatchers("/api/v1/user/informationResetPassword").permitAll().and().antMatcher("/api/v1/**")
+					.authorizeRequests().anyRequest().authenticated();
+			http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		}
 	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailService).passwordEncoder(encoder());
-	}
+	@Order(2)
+	@Configuration
+	public static class CustomerSecurity extends WebSecurityConfigurerAdapter {
+		@Autowired
+		private PasswordEncoder encoder;
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().authorizeRequests()
-				.antMatchers("/api/v1/user/signin").permitAll()
-				.antMatchers("/api/v1/dlFileEntry/viewImage/**").permitAll()
-				.antMatchers("/api/v1/logo/view/**").permitAll()
-				.antMatchers("/api/v1/user/informationResetPassword").permitAll()
-				.and()
-				.antMatcher("/api/v1/**")
-				.authorizeRequests().anyRequest().authenticated();
-		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		@Autowired
+		private CustomerServiceImpl customerDetailSerivce;
+
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.userDetailsService(customerDetailSerivce).passwordEncoder(encoder);
+		}
+
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.cors().and().csrf().disable().sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+					.antMatchers("/api/v2/**").permitAll();
+
+		}
+
 	}
 
 }
