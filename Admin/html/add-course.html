@@ -194,11 +194,24 @@
                     <input class="form-control" type="text" name="descriptionCourse" id="descriptionCourse"
                       placeholder="Enter something" required />
                   </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="lastName" class="form-label">Role</label>
+                    <select class="form-select" aria-label="Default select example" id="roleCourse">
+                      <option value="VIP">VIP</option>
+                      <option value="NOMARL" selected>NOMARL</option>
+                    </select>
+                  </div>
 
-                  <div class="mb-3 col-md-6" style="text-align: center;
-                  align-items: center;
-                  display: flex;
-                  justify-content: center;" id="imageAttr">
+                  
+
+                  <div class="mb-3 col-md-6">
+                    <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
+                    <br />
+                    <select class="form-control" multiple="multiple" id="selectLesson">
+
+                    </select>
+                  </div>
+                  <div class="mb-3 col-md-12"  id="imageAttr">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
                       id="chooseImage">Image</button>
                     <div id="imageCourseAvatar" style="padding: 10px; display: flex;
@@ -207,14 +220,6 @@
                       text-align: center;">
 
                     </div>
-                  </div>
-
-                  <div class="mb-3 col-md-6">
-                    <label for="lastName" class="form-label">Select Lesson</label style="width:15%;">
-                    <br />
-                    <select class="form-control" multiple="multiple" id="selectLesson">
-
-                    </select>
                   </div>
                   <div>
                     <button type="submit" class="btn btn-success" id="submitCourse"
@@ -405,13 +410,16 @@
       let description = $("#descriptionCourse").val();
       let image = $("#imageCourseAvatar img").attr("id");
       var selectedValues = $('#selectLesson').val();
-      console.log(selectedValues)
+      var param=$('#roleCourse').val();
+      
       let value = {
         name: name,
         description: description,
         idDlfileEntry: image,
+        param:param,
         nameLesson: selectedValues
       }
+      console.log(value)
       if (!name || !description || !image) {
         alert("Please enter enough information!")
       } else {
@@ -432,10 +440,10 @@
               method: "POST",
               url: "http://localhost:8080/api/v1/course/insertCourse",
               data: JSON.stringify(value),
-                success: function (data) {
-                  window.setTimeout(function () {
-                  window.location.reload();
-                },500);
+              success: function (data) {
+                // window.setTimeout(function () {
+                //   window.location.reload();
+                // }, 500);
               }
             })
             Swal.fire('Saved!', '', 'success')

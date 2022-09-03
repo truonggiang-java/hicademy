@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseImageDto {
-	private String id;
+public class CustomerDto {
 	private String name;
-	private String description;
-	private String link;
-	private String param;
-	private Integer countLesson;
-	private String lesson;
+	private String gender;
+	private String dateOfBirth;
+	private String address;
+	private String telephone;
+	private String email;
+	private String password;
 }

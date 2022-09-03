@@ -50,6 +50,17 @@
     .multiselect-dropdown {
       width: 100% !important;
     }
+
+    .vip {
+      background-color: #4158D0;
+      background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    }
+
+    .normal {
+      background-color: #0093E9;
+      background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+    }
   </style>
 </head>
 
@@ -203,6 +214,7 @@
                       <th class="sortCourse" name="description" style="cursor: pointer;">Description</th>
                       <th>Image</th>
                       <th style="cursor: pointer;">Lesson</th>
+                      <th>Param</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -298,6 +310,13 @@
                   <br />
                   <select multiple id="selectLesson" style="width: 100%;">
 
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Role</label>
+                  <select class="form-select" aria-label="Default select example" id="roleCourse">
+                    <option value="VIP">VIP</option>
+                    <option value="NOMARL" selected>NOMARL</option>
                   </select>
                 </div>
                 <div class="mb-3 ">
@@ -410,6 +429,7 @@
             // console.log(res);
             let html = "";
             let i = 0;
+            console.log(res);
             res.courseImage.forEach(data => {
               const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info", "table-light", "table-dark"];
               html += `
@@ -436,6 +456,14 @@
                   <div class="wrapper">
                     <a href="#" class="btn btn-lg" data-toggle="tooltip" data-placement="top" title="${data.lesson}" >${data.countLesson}</a>
                   </div>
+                </td>
+                <td>
+                  <div class="${data.param == 'VIP' ? 'vip' : 'normal'}" style="text-align: center;
+    color: white;
+    border-radius: 6%;
+    width: 60%;
+    padding: 5px;">${data.param}</div> 
+                </td>
                 <td>
                   <a class="dropdown-item editCourse" data-toggle="modal" href="#myModal" 
                     style="text-decoration:none; width:40%; border-radius: 10px;" id="${data.id}"
@@ -520,12 +548,12 @@
           }
         })
       }
-      $(document).on('click',".logoutAdmin",function(e){
-        let id=$(this).attr("id");
-        if(cookieUser){
+      $(document).on('click', ".logoutAdmin", function (e) {
+        let id = $(this).attr("id");
+        if (cookieUser) {
           $.removeCookie("Cookie-user");
           $.cookie("Cookie-user", id);
-        }else{
+        } else {
           $.cookie("Cookie-user", id);
         }
       })
@@ -562,12 +590,13 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/course/findById?id=" + id,
           success: function (data) {
-
+            console.log(data);
             let html = `<img src="${data.link}" alt="" id="${data.id}"
                         style="width: 90%;">`
             $("#nameCourse").val(data.name);
             $("#descriptionCourse").val(data.description);
             $("#imageCourseAvatar").html(html);
+            $("#roleCourse").val(data.param);
             var values = data.lesson.split(',');
 
             $mSelect[0].selectize.setValue(values)
@@ -580,10 +609,12 @@
         let name = $('#nameCourse').val();
         let description = $("#descriptionCourse").val();
         let image = $("#imageCourseAvatar img").attr("id");
+        let param = $("#roleCourse").val();
         let value = {
           name: name,
           description: description,
           idDlfileEntry: image,
+          param:param,
           nameLesson: select
         }
         Swal.fire({
@@ -821,7 +852,7 @@
                     'success'
                   )
                   fetchNotes(1, optionValue)
-                },error:function(errors){
+                }, error: function (errors) {
                   Swal.fire(
                     'Fail!',
                     'You have no authority.',

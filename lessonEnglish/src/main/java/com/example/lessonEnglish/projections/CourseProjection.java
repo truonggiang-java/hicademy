@@ -5,5 +5,6 @@ public interface CourseProjection {
 	String getName();
 	String getDescription();
 	String getIdDlFileEntry();
+	String getParam();
 	Integer getCountLesson();
 }

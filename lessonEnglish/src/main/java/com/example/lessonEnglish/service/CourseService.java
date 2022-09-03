@@ -38,6 +38,7 @@ public class CourseService {
 			course.setName(courseDto.getName());
 			course.setDescription(courseDto.getDescription());
 			course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
+			course.setParam(courseDto.getParam());
 			if (lessons.size() > 0) {
 				course.setLessons(lessons);
 			}
@@ -56,6 +57,7 @@ public class CourseService {
 		course.setName(courseDto.getName());
 		course.setDescription(courseDto.getDescription());
 		course.setIdDlFileEntry(courseDto.getIdDlfileEntry());
+		course.setParam(courseDto.getParam());
 		course.setLessons(lessons);
 		courseRepository.save(course);
 		return "Bạn đã cập nhật khóa học thành công";
@@ -71,6 +73,7 @@ public class CourseService {
 			courseImageDto.setDescription(course.getDescription());
 			courseImageDto.setId(course.getId());
 			courseImageDto.setName(course.getName());
+			courseImageDto.setParam(course.getParam());
 			String fileName = ServletUriComponentsBuilder.fromCurrentContextPath()
 					.path("/api/v1/dlFileEntry/viewImage/").path(course.getIdDlFileEntry()).toUriString();
 			courseImageDto.setLink(fileName);
@@ -135,6 +138,7 @@ public class CourseService {
 		courseImageDto.setDescription(course.getDescription());
 		courseImageDto.setId(course.getIdDlFileEntry());
 		courseImageDto.setName(course.getName());
+		courseImageDto.setParam(course.getParam());
 		String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
 				.path(course.getIdDlFileEntry()).toUriString();
 		courseImageDto.setLink(fileName);
