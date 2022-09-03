@@ -216,14 +216,14 @@
                 </div>
                 <div class="option-line" style="padding-top: 15px; text-align: right; padding-right: 10px;">
                   <div class="line-current">
-                    Số dòng hiển thị
+                    Line number
                   </div>
                   <div class="option-select">
                     <select name="hall" id="hall" class="country" style="width: 50%; ">
-                      <option value="4" selected>4</option>
+                      <option value="4">4</option>
                       <option value="5">5</option>
                       <option value="6">6</option>
-                      <option value="6">7</option>
+                      <option value="7" selected>7</option>
                       <option value="1000">All</option>
                     </select>
                   </div>
@@ -363,7 +363,7 @@
         let value = "";
         var $videoSrc;
         let totalPages = 1;
-        let optionValue = document.getElementById('hall').value = "4";
+        let optionValue = document.getElementById('hall').value = "7";
         let cookie = $.cookie("Cookie-admin");
         if (!cookie) {
           $("#bodyAdmin").html("");
