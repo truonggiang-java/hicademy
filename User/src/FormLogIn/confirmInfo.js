@@ -18,7 +18,7 @@ function ConfirmPass() {
             address:'',
             phone:'',
             gender:'',
-            birth:'',
+            birthday:'',
         },
         validationSchema: Yup.object({
             password: Yup.string().required('Required').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 
@@ -28,6 +28,7 @@ function ConfirmPass() {
             address: Yup.string().required('Required'),
             phone: Yup.string().required('Required'),
             gender: Yup.string().required('Required'),
+            birth: Yup.string().required('Required'),
         }),
         onSubmit: (values) => {
             console.log(values)
@@ -89,6 +90,48 @@ function ConfirmPass() {
                             </div>
                             <div>
                                 <input 
+                                    placeholder='Phonenumber'
+                                    type='text'
+                                    id = 'phone'
+                                    name = 'phone'
+                                    required    
+                                    onChange={formik.handleChange}
+                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                </input>
+                                {formik.errors.phone &&(
+                                    <p id='errorMsg'>{formik.errors.phone}</p>
+                                )}
+                            </div>
+                            <div>
+                                <input 
+                                    placeholder='Gender'
+                                    type='text'
+                                    id = 'gender'
+                                    name = 'gender'
+                                    required    
+                                    onChange={formik.handleChange}
+                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                </input>
+                                {formik.errors.gender &&(
+                                    <p id='errorMsg'>{formik.errors.gender}</p>
+                                )}
+                            </div>
+                            <div>
+                                <input 
+                                    placeholder='Birthday'
+                                    type='date'
+                                    id = 'birthday'
+                                    name = 'birthday'
+                                    required    
+                                    onChange={formik.handleChange}
+                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                </input>
+                                {formik.errors.birthday &&(
+                                    <p id='errorMsg'>{formik.errors.birthday}</p>
+                                )}
+                            </div>
+                            <div>
+                                <input 
                                     placeholder='Password'
                                     type='password'
                                     id = 'password'
@@ -102,7 +145,6 @@ function ConfirmPass() {
                                     <p id='errorMsg'>{formik.errors.password}</p>
                                 )}
                             </div>
-
                             <div>
                                 <input 
                                     placeholder='Confirm Password'

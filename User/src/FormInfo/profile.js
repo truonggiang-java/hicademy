@@ -4,13 +4,18 @@ import * as React from 'react';
 import { useState} from "react";
 import "../assets/style/profile.css";
 import Form from 'react-bootstrap/Form';
+import {Link } from "react-router-dom";
 export default function Profile() {
     const infoUser = 
         {
             "email": 'Hieule159@gmail.com',
             "name": "MinhHieu",
             "birthday":  new Date(1999,9,15),
-            "password:" : "Abc123456"
+            "password:" : "Abc123456",
+            "gender" : "",
+            "phone" : "",
+            "address" : "",
+            "birthday" : "birthday"
         }
     
 
@@ -39,7 +44,7 @@ export default function Profile() {
     return (
     <React.Fragment>
         <Form onSubmit={formik.handleSubmit} style={{textAlign:"center", paddingTop:"50px"}}>
-            <div style={{display: "grid", gridTemplateColumns: "50% 50%"}}>
+            <div >
                 <div>
                     <input
                         disabled
@@ -59,8 +64,7 @@ export default function Profile() {
                         type='text'
                         id = 'name'
                         name = 'name'
-                        required
-                        value={formik.values.name}
+                        required    
                         onChange={formik.handleChange}
                         style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
                     </input>
@@ -70,17 +74,77 @@ export default function Profile() {
                 </div>
                 <div>
                     <input 
+                        placeholder='Address'
+                        type='text'
+                        id = 'address'
+                        name = 'address'
+                        required    
+                        onChange={formik.handleChange}
+                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                    </input>
+                    {formik.errors.password &&(
+                        <p id='errorMsg'>{formik.errors.password}</p>
+                    )}
+                </div>
+                <div>
+                    <input 
+                        placeholder='Phonenumber'
+                        type='text'
+                        id = 'phone'
+                        name = 'phone'
+                        required    
+                        onChange={formik.handleChange}
+                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                    </input>
+                    {formik.errors.phone &&(
+                        <p id='errorMsg'>{formik.errors.phone}</p>
+                    )}
+                </div>
+                <div>
+                    <input 
+                        placeholder='Gender'
+                        type='text'
+                        id = 'gender'
+                        name = 'gender'
+                        required    
+                        onChange={formik.handleChange}
+                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                    </input>
+                    {formik.errors.gender &&(
+                        <p id='errorMsg'>{formik.errors.gender}</p>
+                    )}
+                </div>
+                <div>
+                    <input 
                         placeholder='Birthday'
                         type='date'
                         id = 'birthday'
                         name = 'birthday'
-                        required
-                        value={formik.values.birthday}
+                        required    
                         onChange={formik.handleChange}
                         style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
                     </input>
+                    {formik.errors.birthday &&(
+                        <p id='errorMsg'>{formik.errors.birthday}</p>
+                    )}
                 </div>
             </div>
+            <Link to="/changePassword">
+                <button 
+                    style={{
+                        color:'#1CB0F6',
+                        backgroundColor:'white',
+                        border: '1px solid black', 
+                        width:'350px', 
+                        height:'42px',
+                        borderRadius:'27px',
+                    }}
+                    type='submit'
+                    onClick={() => { check()}}
+                >
+                    CHANGE PASSWORD
+                </button>
+            </Link>
             <button 
                 style={{
                     color:'white',

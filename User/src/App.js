@@ -16,7 +16,7 @@ import Navbar from './Shared/navbar';
 import * as React from 'react';
 import Selection from './FormLearn/selection';
 import Profile from './FormInfo/profile';
-import ChangePass from './FormInfo/changePassword';
+import ChangePassword from './FormInfo/changePassword';
 import GameBoard from './FormGame/GameBoard';
 
 function App() {  
@@ -40,7 +40,7 @@ function App() {
           <Route path='/Audio' element={<Audio/>}/>
           <Route path='/Test' element={<Test/>}/>
           <Route path='/Profile' element={<Profile/>}/>
-          <Route path='/ChangePass' element={<ChangePass/>}/>
+          <Route path='/ChangePassword' element={<ChangePassword/>}/>
           <Route path='/GameBoard' element={<GameBoard/>}/>
         </Routes>
       </div>
