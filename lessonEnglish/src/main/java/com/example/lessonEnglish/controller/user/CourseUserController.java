@@ -29,12 +29,6 @@ import com.example.lessonEnglish.service.CourseService;
 public class CourseUserController {
 	@Autowired
 	private CourseService courseService;
-	
-	
-	
-	
-	
-	
 
 	@GetMapping("/findAllCourse")
 	// @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
@@ -47,7 +41,6 @@ public class CourseUserController {
 	public CourseImageDto findById(@RequestParam("id") String id) {
 		return courseService.findByIdCourse(id);
 	}
-	
 	
 	@GetMapping("/findLessonByIdCourse")
 	// @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
