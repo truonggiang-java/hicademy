@@ -48,119 +48,137 @@ function ConfirmPass() {
     return(
         <React.Fragment>
                 <form onSubmit={formik.handleSubmit}>
-                    <Container maxWidth="sm" style={{textAlign:'center',minHeight:'calc(100vh - 100px - 133px - 60px)', marginTop:'20px'}}>
+                    <Container maxWidth="lg"  style={{textAlign:'center',minHeight:'calc(100vh - 100px - 133px - 60px)', marginTop:'20px'}}>
                         <Stack
                             component=""
                             sx={{
-                                width: '350px',
+                                width: '768px',
                                 margin: '0 auto'
                             }}
                             spacing={2}
                         >
                             <span style={{fontFamily:'initial', fontWeight:'bold', fontSize:'30px', textAlign:'center'}}>
                                 Information
-                            </span>  
-                            <div>
-                                <input 
-                                    placeholder='Name'
-                                    type='text'
-                                    id = 'name'
-                                    name = 'name'
-                                    required    
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                </input>
-                                {formik.errors.name &&(
-                                    <p id='errorMsg'>{formik.errors.name}</p>
-                                )}
-                            </div>
-                            <div>
-                                <input 
-                                    placeholder='Address'
-                                    type='text'
-                                    id = 'address'
-                                    name = 'address'
-                                    required    
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                </input>
-                                {formik.errors.password &&(
-                                    <p id='errorMsg'>{formik.errors.password}</p>
-                                )}
-                            </div>
-                            <div>
-                                <input 
-                                    placeholder='Phonenumber'
-                                    type='text'
-                                    id = 'phone'
-                                    name = 'phone'
-                                    required    
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                </input>
-                                {formik.errors.phone &&(
-                                    <p id='errorMsg'>{formik.errors.phone}</p>
-                                )}
-                            </div>
-                            <div>
-                                <input 
-                                    placeholder='Gender'
-                                    type='text'
-                                    id = 'gender'
-                                    name = 'gender'
-                                    required    
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                </input>
-                                {formik.errors.gender &&(
-                                    <p id='errorMsg'>{formik.errors.gender}</p>
-                                )}
-                            </div>
-                            <div>
-                                <input 
-                                    placeholder='Birthday'
-                                    type='date'
-                                    id = 'birthday'
-                                    name = 'birthday'
-                                    required    
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                </input>
-                                {formik.errors.birthday &&(
-                                    <p id='errorMsg'>{formik.errors.birthday}</p>
-                                )}
-                            </div>
-                            <div>
-                                <input 
-                                    placeholder='Password'
-                                    type='password'
-                                    id = 'password'
-                                    name = 'password'
-                                    required
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                </input>
-                                {formik.errors.password &&(
-                                    <p id='errorMsg'>{formik.errors.password}</p>
-                                )}
-                            </div>
-                            <div>
-                                <input 
-                                    placeholder='Confirm Password'
-                                    type='password'
-                                    id = 'confirm'
-                                    name = 'confirm'
-                                    required
-                                    value={formik.values.confirm}
-                                    onChange={formik.handleChange}
-                                    style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}
-                                >
-                                </input>
-                                {formik.errors.confirm &&(
-                                    <p id='errorMsg'>{formik.errors.confirm}</p>
-                                )}
-                            </div>
+                            </span> 
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <input
+                                        disabled
+                                        className='input'
+                                        title='This information cannot be edited'
+                                        type='email'
+                                        id = 'email'
+                                        name = 'emal'
+                                        required
+                                        value={formik.values.email}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}> 
+                                    </input>
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Name'
+                                        type='text'
+                                        id = 'name'
+                                        name = 'name'
+                                        required    
+                                        onChange={formik.handleChange}
+                                        className="inputInfo"
+                                        // style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}
+                                        >
+                                    </input>
+                                    {formik.errors.name &&(
+                                        <p id='errorMsg'>{formik.errors.name}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Address'
+                                        type='text'
+                                        id = 'address'
+                                        name = 'address'
+                                        required    
+                                        onChange={formik.handleChange}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                    </input>
+                                    {formik.errors.password &&(
+                                        <p id='errorMsg'>{formik.errors.password}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Phonenumber'
+                                        type='text'
+                                        id = 'phone'
+                                        name = 'phone'
+                                        required    
+                                        onChange={formik.handleChange}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                    </input>
+                                    {formik.errors.phone &&(
+                                        <p id='errorMsg'>{formik.errors.phone}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Gender'
+                                        type='text'
+                                        id = 'gender'
+                                        name = 'gender'
+                                        required    
+                                        onChange={formik.handleChange}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                    </input>
+                                    {formik.errors.gender &&(
+                                        <p id='errorMsg'>{formik.errors.gender}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Password'
+                                        type='password'
+                                        id = 'password'
+                                        name = 'password'
+                                        required
+                                        value={formik.values.password}
+                                        onChange={formik.handleChange}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                    </input>
+                                    {formik.errors.password &&(
+                                        <p id='errorMsg'>{formik.errors.password}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Confirm Password'
+                                        type='password'
+                                        id = 'confirm'
+                                        name = 'confirm'
+                                        required
+                                        value={formik.values.confirm}
+                                        onChange={formik.handleChange}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}
+                                    >
+                                    </input>
+                                    {formik.errors.confirm &&(
+                                        <p id='errorMsg'>{formik.errors.confirm}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input 
+                                        placeholder='Birthday'
+                                        type='date'
+                                        id = 'birthday'
+                                        name = 'birthday'
+                                        required    
+                                        onChange={formik.handleChange}
+                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                    </input>
+                                    {formik.errors.birthday &&(
+                                        <p id='errorMsg'>{formik.errors.birthday}</p>
+                                    )}
+                                </div>
+                            </div> 
+
 
                             <Link to={link||""}>
                                 <button 
