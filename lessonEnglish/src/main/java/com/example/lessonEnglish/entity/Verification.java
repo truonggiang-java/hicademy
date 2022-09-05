@@ -11,11 +11,15 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="verification")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Verification {
 	@Id
 	@GeneratedValue(generator = "UUID")

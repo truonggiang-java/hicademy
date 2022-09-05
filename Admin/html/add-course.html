@@ -447,6 +447,9 @@
               }
             })
             Swal.fire('Saved!', '', 'success')
+            window.setTimeout(function () {
+                window.location.reload();
+              }, 300);
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info')
           }

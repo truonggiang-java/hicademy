@@ -11,12 +11,11 @@ export default function Profile() {
   const infoUser = {
     email: "Hieule159@gmail.com",
     name: "MinhHieu",
-    birthday: new Date(1999, 9, 15),
-    "password:": "Abc123456",
+    password : "Abc123456",
     gender: "",
     phone: "",
     address: "",
-    birthday: "birthday",
+    birthday: "",
   };
 
   const getInfo = () => {

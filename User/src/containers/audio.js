@@ -86,7 +86,8 @@ function Audio() {
                   maxWidth: 360,
                   bgcolor: "background.paper",
                   borderRadius: "20px",
-                  overflow: "hidden",
+                  overflow: "auto",
+                  maxHeight: 360,
                 }}
                 component="nav"
                 aria-labelledby="nested-list-subheader"
@@ -103,7 +104,9 @@ function Audio() {
               >
                 {audio.map((current) => (
                   <ListItemButton onClick={() => now(current)} key={current.id}>
-                    {current.name}
+                    <div>
+                      {current.name}
+                    </div>
                   </ListItemButton>
                 ))}
               </List>

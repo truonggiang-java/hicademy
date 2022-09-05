@@ -12,17 +12,17 @@ function ConfirmPass() {
 
     const formik = useFormik({
         initialValues:{
-            password: '',
-            confirm: '',
-            name:'',
-            address:'',
-            phone:'',
-            gender:'',
-            birthday:'',
+            password: "",
+            confirm: "",
+            name: "",
+            address: "",
+            phone: "",
+            gender: "",
+            birthday: "",
         },
         validationSchema: Yup.object({
-            password: Yup.string().required('Required').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 
-            'Password must more than 8 characters and must contain a capital letter and a special character '),
+            password: Yup.string().required('Required').matches(/^.{6,}$/, 
+            'Password must more than 6 characters'),
             confirm: Yup.string().required('Required').oneOf([Yup.ref('password'),null],'Password must match'),
             name: Yup.string().required('Required'),
             address: Yup.string().required('Required'),
@@ -39,12 +39,16 @@ function ConfirmPass() {
 
     function check(){
         return(
-            ((formik.values.password) !== "" & (formik.values.confirm) !== "") ? (
+            ((formik.values.password) !== "" & (formik.values.confirm) !== "")
+            & (formik.values.name) !== "" & (formik.values.address) !== ""
+            & (formik.values.phone) !== "" & (formik.values.gender) !== ""
+            & (formik.values.birthday) !== "" ? (
                 setLink('/home')
             ) : ( alert('Please enter full information!')),
             console.log(link)
         )
-    }
+    }   
+    console.log(formik.values)
     return(
         <React.Fragment>
                 <form onSubmit={formik.handleSubmit}>
@@ -64,14 +68,13 @@ function ConfirmPass() {
                                 <div>
                                     <input
                                         disabled
-                                        className='input'
+                                        className='inputInfo'
                                         title='This information cannot be edited'
                                         type='email'
                                         id = 'email'
                                         name = 'emal'
                                         required
-                                        value={formik.values.email}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}> 
+                                        value={formik.values.email}> 
                                     </input>
                                 </div>
                                 <div>
@@ -82,9 +85,7 @@ function ConfirmPass() {
                                         name = 'name'
                                         required    
                                         onChange={formik.handleChange}
-                                        className="inputInfo"
-                                        // style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}
-                                        >
+                                        className="inputInfo"                                        >
                                     </input>
                                     {formik.errors.name &&(
                                         <p id='errorMsg'>{formik.errors.name}</p>
@@ -98,10 +99,11 @@ function ConfirmPass() {
                                         name = 'address'
                                         required    
                                         onChange={formik.handleChange}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                        className="inputInfo"   
+                                    >
                                     </input>
-                                    {formik.errors.password &&(
-                                        <p id='errorMsg'>{formik.errors.password}</p>
+                                    {formik.errors.address &&(
+                                        <p id='errorMsg'>{formik.errors.address}</p>
                                     )}
                                 </div>
                                 <div>
@@ -112,22 +114,17 @@ function ConfirmPass() {
                                         name = 'phone'
                                         required    
                                         onChange={formik.handleChange}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                        className="inputInfo">
                                     </input>
                                     {formik.errors.phone &&(
                                         <p id='errorMsg'>{formik.errors.phone}</p>
                                     )}
                                 </div>
                                 <div>
-                                    <input 
-                                        placeholder='Gender'
-                                        type='text'
-                                        id = 'gender'
-                                        name = 'gender'
-                                        required    
-                                        onChange={formik.handleChange}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
-                                    </input>
+                                    <select id= 'gender' name = 'gender' onChange={formik.handleChange} className="inputInfo">
+                                        <option value={'MALE'} selected>Male</option>
+                                        <option value={'FEMALE'}>Female</option>
+                                    </select>
                                     {formik.errors.gender &&(
                                         <p id='errorMsg'>{formik.errors.gender}</p>
                                     )}
@@ -141,7 +138,7 @@ function ConfirmPass() {
                                         required
                                         value={formik.values.password}
                                         onChange={formik.handleChange}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                        className="inputInfo">
                                     </input>
                                     {formik.errors.password &&(
                                         <p id='errorMsg'>{formik.errors.password}</p>
@@ -156,7 +153,7 @@ function ConfirmPass() {
                                         required
                                         value={formik.values.confirm}
                                         onChange={formik.handleChange}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}
+                                        className="inputInfo"   
                                     >
                                     </input>
                                     {formik.errors.confirm &&(
@@ -171,15 +168,13 @@ function ConfirmPass() {
                                         name = 'birthday'
                                         required    
                                         onChange={formik.handleChange}
-                                        style={{border: '1px solid black', borderRadius:'20px', padding:'8px 12px',width:'350px'}}>
+                                        className="inputInfo">
                                     </input>
                                     {formik.errors.birthday &&(
                                         <p id='errorMsg'>{formik.errors.birthday}</p>
                                     )}
                                 </div>
                             </div> 
-
-
                             <Link to={link||""}>
                                 <button 
                                     style={{

@@ -100,7 +100,7 @@ function Selection() {
                         <Slider {...settings}>
                         {suggestions.data.map((current) => (
                             <div key={current.id} onClick={()=>go(current)}>
-                                <Link to={`/LessonOne/${current.name}`} style={{textDecoration:"none", fontSize:"large"}}>
+                                <Link to={`/LessonOne/${current.id}`} style={{textDecoration:"none", fontSize:"large"}}>
                                   <div className="card">
                                       <img
                                       alt={"users here"}

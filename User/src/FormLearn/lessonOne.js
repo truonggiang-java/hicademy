@@ -5,76 +5,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../assets/style/selection.css";
-import image1 from '../assets/image/conlon.png';
-import image2 from '../assets/image/conech.png';
-import image3 from '../assets/image/concua.png';
-import image4 from '../assets/image/conga.png';
 import '../assets/style/lessonOne.css';
 import { useSpeechSynthesis } from "react-speech-kit";
 import {useParams} from "react-router-dom"
-
-const Animal = [
-    {
-      "id": 1,
-      "nameLesson": "Animal",
-      "name": "Pig",
-      "image": image1,
-    },
-    {
-        "id": 2,
-        "nameLesson": "Animal",
-        "name": "Frog",
-        "image": image2,
-    },
-    {
-        "id": 3,
-        "nameLesson": "Animal",
-        "name": "Crab",
-        "image": image3,
-    },
-    {
-        "id": 4,
-        "nameLesson": "Animal",
-        "name": "Rooster",
-        "image": image4,
-    },
-    {
-        "id": 4,
-        "nameLesson": "Color",
-        "name": "Rooster",
-        "image": image4,
-    }
-]
-
-const Color = [
-    {
-      "id": 1,
-      "nameLesson": "Color",
-      "name": "Green",
-      "image": image1,
-    },
-    {
-        "id": 2,
-        "nameLesson": "Color",
-        "name": "Red",
-        "image": image2,
-    },
-]
-
-const Tree = [
-    {
-      "id": 1,
-      "nameLesson": "Tree",
-      "name": "aaaa",
-      "image": image1,
-    },
-    {
-        "id": 2,
-        "nameLesson": "Tree",
-        "name": "bbbb",
-        "image": image2,
-    },
-]
+import axios from '../utils/axios';
 
 function LessonOne(props) {
     const { speak, voices } = useSpeechSynthesis(); 
@@ -83,20 +17,14 @@ function LessonOne(props) {
 
     useEffect(() => {
         console.log(params)
-        switch (params.name) {
-            case 'Animal':
-                setSuggestions(Animal)
-                break;
-            case 'Color':
-                setSuggestions(Color)
-                break;
-            case 'Tree':
-                setSuggestions(Tree)
-                break;
-            default:
-                setSuggestions(Animal);
-                break;
-        }
+        const fetchData = async () => {
+            const response = await axios.get(`/api/v2/course/findLessonByIdCourse?id=${params.name}`);
+            console.log('responsen', response.data);
+            if(response) {
+              setSuggestions(response.data);
+            }
+          }
+          fetchData();
     },[params]);
 
     let settings = {
@@ -144,7 +72,7 @@ function LessonOne(props) {
                                 <div className="card">
                                     <img
                                     alt={"users here"}
-                                    src={`${current.image}`}
+                                    src={`${current.link}`}
                                     height={400}
                                     width={400}
                                     />
