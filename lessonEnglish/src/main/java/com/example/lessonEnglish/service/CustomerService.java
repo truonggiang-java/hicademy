@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.lessonEnglish.dto.CustomerDto;
+import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.entity.Customer;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.repository.CustomerRepository;
@@ -49,6 +50,26 @@ public class CustomerService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Bạn thêm người dùng thất bại";
+			// TODO: handle exception
+		}
+	}
+	
+	public String signin(RequestDto request) {
+		try {
+			Customer customer =customerRepository.findByEmail(request.getEmail()).get();
+			if(customer !=null) {
+				if(encoder.matches(request.getPassword(), customer.getPassword())) {
+					
+					return "Đặng nhập thành công";
+				}else {
+					return "Tài khoản hoặc mật khẩu không đúng";
+				}				
+			}else {
+				return "Tài khoản hoặc mật khẩu không đúng";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Đăng nhập thất bại";
 			// TODO: handle exception
 		}
 	}

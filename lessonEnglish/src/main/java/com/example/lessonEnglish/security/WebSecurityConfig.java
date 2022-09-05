@@ -28,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder(10);
 	}
-
 	@Order(1)
 	@Configuration
 	public static class AdminSecurity extends WebSecurityConfigurerAdapter {
@@ -36,18 +35,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Autowired
 		private JwtFillter jwtFilter;
 
-		@Autowired
-		private UserDetailService userDetailService;
-
-		@Autowired
-		private PasswordEncoder encoder;
-
 		@Override
 		@Bean
 		protected AuthenticationManager authenticationManager() throws Exception {
 			// TODO Auto-generated method stub
 			return super.authenticationManager();
 		}
+		@Autowired
+		private UserDetailService userDetailService;
+
+		@Autowired
+		private PasswordEncoder encoder;
+
+		
 
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -74,7 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		@Autowired
 		private CustomerServiceImpl customerDetailSerivce;
-
+		
+		
+		
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 			auth.userDetailsService(customerDetailSerivce).passwordEncoder(encoder);
@@ -84,8 +86,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.cors().and().csrf().disable().sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+<<<<<<< HEAD
 					.antMatchers("/api/v2/**").permitAll();
 					
+=======
+					.antMatchers("/api/v2/customer/signin").permitAll()
+					.antMatchers("/api/v2/customer/insert").permitAll()
+					.antMatchers("/api/v2/verification/**").permitAll()
+					.and().antMatcher("/api/v2/**")
+					.authorizeRequests().anyRequest().authenticated().and()
+					.httpBasic();
+>>>>>>> caaadf73c938a57c0524f481336507ba62fefbf1
 
 		}
 

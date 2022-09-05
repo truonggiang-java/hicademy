@@ -72,15 +72,23 @@ public class TagsService {
 		return listTagsImageDtos;
 	}
 
-	public List<String> randomTags(Integer number) {
-		List<String> listTags = new ArrayList<>();
+	public List<TagsImageDto> randomTags(Integer number) {
+		List<TagsImageDto> listTags = new ArrayList<>();
 		List<String> paramTags = tagsRepository.randomParamTags();
 		Integer i = (int) Math.floor((Math.random() * paramTags.size()));
 		List<Tags> listTagsRandom = tagsRepository.findListTagsRandom(paramTags.get(i), number * 2);
 		for (Tags tags : listTagsRandom) {
+			TagsImageDto tagsImageDto=new TagsImageDto();
+			DlFileEntry dlFileEntry = dlFileEntryRepository.findListDlFileEntryByName(tags.getFileName());
 			String name = tags.getFileName();
-			listTags.add(name);
-			listTags.add(name);
+			String id=tags.getId();
+			String link =ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/dlFileEntry/viewImage/")
+					.path(dlFileEntry.getId()).toUriString();
+			tagsImageDto.setId(id);
+			tagsImageDto.setLink(link);
+			tagsImageDto.setName(name);
+			listTags.add(tagsImageDto);
+			listTags.add(tagsImageDto);
 		}
 		return listTags;
 	}

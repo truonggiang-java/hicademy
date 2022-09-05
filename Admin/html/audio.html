@@ -713,19 +713,16 @@
               Swal.fire('Saved!', '', 'success')
               $.ajax({
                 headers: {
-                  'Content-Type': 'application/json;charset=utf-8'
+                  'Content-Type': 'application/json;charset=utf-8',
+                  'Authorization': 'Bearer ' + cookie
                 },
                 method: "PUT",
                 url: "http://localhost:8080/api/v1/video/updateVideo/" + id,
                 data: JSON.stringify(value),
                 success: function (data) {
+                  fetchNotes(1,optionValue,"");  
                 }
               })
-              window.setTimeout(function () {
-                window.location.reload();
-              }, 300);
-
-
             } else if (result.isDenied) {
               Swal.fire('Changes are not saved', '', 'info')
             }

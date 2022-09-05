@@ -43,8 +43,4 @@ public class Verification {
 		this.exprieDate = LocalDateTime.now().plusMinutes(1);
 		this.email = email;
 	}
-
-	
-	
-	
 }

@@ -61,13 +61,20 @@ public class VideoService {
     }
 
     public String updateVideo( VideoDto videoDto , String id) {
-        Video video = videoRepository.findById(id).get();
-        video.setName(videoDto.getName());
-        video.setDescription(videoDto.getDescription());
-        video.setLink(videoDto.getLink());
-        video.setParam(videoDto.getParam());
-        videoRepository.save(video);
-        return "Bạn đã cập nhật vieo thành công ";
+    	try {
+			
+    		Video video = videoRepository.findById(id).get();
+    		video.setName(videoDto.getName());
+    		video.setDescription(videoDto.getDescription());
+    		video.setLink(videoDto.getLink());
+    		video.setParam(videoDto.getParam());
+    		videoRepository.save(video);
+    		return "Bạn đã cập nhật vieo thành công ";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Bạn đã cập nhật vieo thất bại";
+			// TODO: handle exception
+		}
     }
 
     public List<Video> findVideoByParam ( String param){
