@@ -7,6 +7,8 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
 import {Link, useLocation } from 'react-router-dom';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 export default function Navbar() {
   const [state, setState] = React.useState({
@@ -137,31 +139,33 @@ export default function Navbar() {
                 </React.Fragment>
             ))}
         </div>
-
+        <Stack direction="row" spacing={2}>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </Stack>
         { visibleLogin.includes(location.pathname) ? (
             <div className="navbar-login">
-                { location.pathname === '/login' ? '' : (<div>
-                    <Link to= "/login">
-                        <button style={{background:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
-                            LOGIN
-                        </button>
-                    </Link>
-                </div>) }
-                { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword' ? '' : (<div
-                >
-                    <Link to="/confirmEmail">
-                        <button style={{backgroundColor:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
-                            CREATE ACCOUNT
-                        </button>
-                    </Link>
-                </div>)}
-                { location.pathname === '/profile' ? (<div>
-                    <Link to= "/ChangePass">
-                        <button style={{background:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
-                            Change Password
-                        </button>
-                    </Link>
-                </div>) : ''}
+              { location.pathname === '/login' ? '' : (<div>
+                  <Link to= "/login">
+                      <button style={{background:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
+                          LOGIN
+                      </button>
+                  </Link>
+              </div>) }
+              { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword' ? '' : (<div
+              >
+                  <Link to="/confirmEmail">
+                      <button style={{backgroundColor:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
+                          CREATE ACCOUNT
+                      </button>
+                  </Link>
+              </div>)}
+              { location.pathname === '/profile' ? (<div>
+                  <Link to= "/ChangePass">
+                      <button style={{background:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
+                          Change Password
+                      </button>
+                  </Link>
+              </div>) : ''}
             </div>) : ''}
     </div>
   );

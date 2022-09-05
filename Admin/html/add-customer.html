@@ -7,7 +7,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Admin Dashboard - ProfileUser </title>
+  <title>Account </title>
 
   <meta name="description" content="" />
 
@@ -39,8 +39,7 @@
 
   <!-- Helpers -->
   <script src="../assets/vendor/js/helpers.js"></script>
-  <!-- Icons -->
-  <script src="https://kit.fontawesome.com/af1dffc13d.js" crossorigin="anonymous"></script>
+
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="../assets/js/config.js"></script>
@@ -150,6 +149,8 @@
             <!-- /Search -->
 
             <ul class="navbar-nav flex-row align-items-center ms-auto" id="profile-user">
+              <!-- Place this tag where you want the button to render. -->
+
               <!-- User -->
 
               <!--/ User -->
@@ -163,56 +164,24 @@
         <div class="content-wrapper">
           <!-- Content -->
 
-          <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="container-xxl flex-grow-1 container-p-y" id="content">
             <div class="row">
               <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12">
-                    <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="pages-account-settings-account.html"><i
-                            class="bx bx-user me-1"></i>Edit User</a>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);"
-                          ><i class="bx bx-bell me-1"></i>Customer</a
-                        >
-                      </li> -->
-                    </ul>
-                  </div>
-                </div>
                 <div class="card mb-4">
                   <h5 class="card-header">Profile Details</h5>
                   <!-- Account -->
-                  <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                      <div id="my-image">
-
-
-                      </div>
-                      <div class="button-wrapper">
-                        <label for="files" class="btn btn-primary me-2 mb-4" tabindex="0">
-                          <span class="d-none d-sm-block">Upload new photo</span>
-                          <i class="bx bx-upload d-block d-sm-none"></i>
-                          <input type="file" id="files" class="account-file-input" hidden
-                            accept="image/png, image/jpeg" />
-                        </label>
-                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-                      </div>
-                    </div>
-                  </div>
                   <hr class="my-0" />
                   <div class="card-body">
                     <form id="formAccountSettings" method="POST" onsubmit="return false">
                       <div class="row">
                         <div class="mb-3 col-md-6">
                           <label for="firstName" class="form-label">Name</label>
-                          <input class="form-control" type="text" id="firstName" name="firstName" placeholder="name" />
+                          <input class="form-control" type="text" id="firstName" name="firstName"
+                            placeholder="Le Minh Hieu" autofocus />
                         </div>
                         <div class="mb-3 col-md-6">
-                          <label for="email" class="form-label">E-mail</label>
-                          <input class="form-control" type="text" id="email" name="email"
-                            placeholder="john.doe@example.com" disabled />
+                          <label for="email" class="form-label">Gmail</label>
+                          <input class="form-control" type="text" id="email" name="email" placeholder="Gmail" />
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="phoneNumber" class="form-label">Phone Number</label>
@@ -235,26 +204,28 @@
                             <option value="FEMALE">Female</option>
                           </select>
                         </div>
-                        <div class="mb-3 col-md-6" id="role">
-
+                        <div class="mb-3 col-md-6">
+                          <label for="role" class="form-label">Role</label>
+                          <select name="role" id="role" class="form-control">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                          </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                          <label class="form-label">New Password</label>
+                          <div class="form-group pass_show">
+                            <input type="password" value="Hieu@123" class="form-control" placeholder="New Password"
+                              id="passwordUser">
+                          </div>
                         </div>
                       </div>
                       <div class="mt-2" style="text-align: center;">
-                        <button type="submit" class="btn btn-success" id="submitUser">Save changes</button>
+                        <button type="submit" class="btn btn-success" id="createUser">Create Customer</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                       </div>
                     </form>
                   </div>
                   <!-- /Account -->
-                </div>
-
-                <!-- / ChanghePass User -->
-                <div class="card" id="user">
-
-                </div>
-                <!-- / ChanghePass Admin -->
-                <div id="admin">
-
                 </div>
               </div>
             </div>
@@ -280,6 +251,7 @@
             </div>
           </footer>
           <!-- / Footer -->
+          <!-- / Footer -->
 
           <div class="content-backdrop fade"></div>
         </div>
@@ -293,34 +265,69 @@
   </div>
   <!-- / Layout wrapper -->
 
+  <div class="modal" id="myModal2" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Choose Image</h4>
+        </div>
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:1.5%;margin-left: -10px;"
+            id="viewImage">
+
+          </div>
+          <div>
+            <nav aria-label="Page navigation">
+              <ul class="pagination paginationImage justify-content-end">
+
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" data-dismiss="modal" class="btn">Close</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <script src="../assets/vendor/libs/jquery/jquery.js"></script>
   <script src="../assets/vendor/libs/popper/popper.js"></script>
   <script src="../assets/vendor/js/bootstrap.js"></script>
   <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/af1dffc13d.js" crossorigin="anonymous"></script>
   <script src="../assets/vendor/js/menu.js"></script>
   <!-- endbuild -->
 
-  <!-- Vendors JS -->
-  <script src="../assets/vendor/libs/masonry/masonry.js"></script>
-
+  <!-- Cookie -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
+  </script>
   <!-- Main JS -->
   <script src="../assets/js/main.js"></script>
 
   <!-- Page JS -->
-
+  <script src="../assets/js/pages-account-settings-account.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Place this tag in your head or just before your close body tag. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
   <script>
     $(document).ready(function () {
-      let cookie = $.cookie("Cookie-admin");
+      $('.pass_show').append('<span class="ptxt">Show</span>');
+      let cookie = $.cookie("Cookie-admin")
       let cookieUser = $.cookie("Cookie-user");
+      $(document).on('click', ".logoutAdmin", function (e) {
+        let id = $(this).attr("id");
+        if (cookieUser) {
+          $.removeCookie("Cookie-user");
+          $.cookie("Cookie-user", id);
+        } else {
+          $.cookie("Cookie-user", id);
+        }
+      })
       if (!cookie) {
         $("#bodyAdmin").html("");
         window.location.href = "auth-login-basic.html";
@@ -332,89 +339,13 @@
           method: "GET",
           url: "http://localhost:8080/api/v1/user/getRoleByToken?token=" + cookie,
           success: function (data) {
-            // console.log(data);
-            if (data.role == "ADMIN") {
-              let htmlRole = `<label for="role" class="form-label" >Role</label>
-                          <select id="adminRole" class="form-control">
-                            <option value="USER">User</option>
-                            <option value="ADMIN">Admin</option>
-                          </select>`;
-              $("#role").html(htmlRole);
-
-              $("#admin").html(` <button class="btn btn-primary" id="resetPassword">Reset Password</button>`);
-              $("#user").html(`<form method="POST" onsubmit="return false">
-                    <h5 class="card-header">Change Password</h5>
-                    <div class="card-body">
-                      <div class="mb-3 col-12 mb-0">
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">Current Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="Current Password" id="currentPassword">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">New Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="New Password" id="newpass">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">Comfirm Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="Comfirm Password" id="comfirm">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2" style="text-align: center; padding-bottom: 25px;">
-                      <button type="submit" class="btn btn-success" id="changePass"> Comfirm
-                      </button>
-                      <button type="reset" class="btn btn-outline-secondary">Cancel</button>
-                    </div>
-                  </form>`)
-            } else {
-              $("#user").html(`<form method="POST" onsubmit="return false">
-                    <h5 class="card-header">Change Password</h5>
-                    <div class="card-body">
-                      <div class="mb-3 col-12 mb-0">
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">Current Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="Current Password" id="currentPassword">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">New Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="New Password" id="newpass">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label class="form-label">Comfirm Password</label>
-                            <div class="form-group pass_show">
-                              <input type="password" class="form-control" placeholder="Comfirm Password" id="comfirm">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2" style="text-align: center; padding-bottom: 25px;">
-                      <button type="submit" class="btn btn-success" id="changePass"> Comfirm
-                      </button>
-                      <button type="reset" class="btn btn-outline-secondary">Cancel</button>
-                    </div>
-                  </form>`)
+            if(data.role!="ADMIN"){
+              let roleUser = `
+                <div style="display: flex; justify-content:center; align-items:center; height:100%">
+                  <h1>You do not have permission to access this item!</h1>
+                </div>
+              `;
+              $("#content").html(roleUser);
             }
             let html = `<li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -466,38 +397,9 @@
 
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
+        $.removeCookie("Cookie-user");
         window.location.href = "auth-login-basic.html";
       })
-
-      $(document).on('click', '.pass_show .ptxt', function () {
-        $(this).text($(this).text() == "Show" ? "Hide" : "Show");
-        $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
-      });
-
-      function fetchData() {
-        $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "GET",
-          url: "http://localhost:8080/api/v1/user/findById?id=" + cookieUser,
-          success: function (data) {
-            let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded imageLogo" height="100"
-                          width="100" id="${data.idLogo}" />`
-            $("#my-image").html(html);
-            $("#firstName").val(data.name);
-            $("#email").val(data.email);
-            $("#phoneNumber").val(data.phone);
-            $("#address").val(data.address);
-            $("#birthday").val(data.date);
-            $("#adminRole").val(data.role);
-            $("#gender").val(data.gender);
-          }
-        })
-
-      }
-
-      $('.pass_show').append('<span class="ptxt">Show</span>');
       $(document).on('click', '.pass_show .ptxt', function () {
 
         $(this).text($(this).text() == "Show" ? "Hide" : "Show");
@@ -505,142 +407,59 @@
         $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
 
       });
-      fetchData();
 
-      $(document).on('click', '#changePass', function () {
-        let valueinput2 = $('#newpass').val();
-        let valueinput3 = $('#comfirm').val();
-        if (valueinput2 != valueinput3) {
-          alert("Mật khẩu mới chưa khớp, vui lòng nhập lại!")
-        }
-      })
-
-      $('input[id=files]').change(function (ev) {
-        var form_data = new FormData();
-        form_data.append("file", document.getElementById('files').files[0]);
-        $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
-          url: "http://localhost:8080/api/v1/logo/upload",
-          data: form_data,
-          dataType: 'json',
-          contentType: false,
-          processData: false,
-          method: 'POST',
-          success: function (data) {
-            setTimeout(() => {
-              let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded imageLogo" height="100"
-                            width="100" id="${data.id}" />`
-              $("#my-image").html(html);
-            }, 3000)
-
-          }
-        })
-      });
-
-      //update
-      $(document).on("click", '#submitUser', function () {
-        let idImage = $(".imageLogo").attr("id");
-        let firstName = $("#firstName").val();
-        let phoneNumber = $("#phoneNumber").val();
-        let address = $("#address").val();
-        let birthday = $("#birthday").val();
-        let adminRole = $("#adminRole").val();
-        let gender = $("#gender").val();
+      $(document).on('click', '#createUser', function () {
+        var name = $("#firstName").val();
+        var email = $("#email").val();
+        var phoneNumber = $("#phoneNumber").val();
+        var address = $("#address").val();
+        var birthday = $("#birthday").val();
+        var gender = $("#gender").val();
+        var passwordUser = $("#passwordUser").val();
+        var role = $("#role").val();
         let value = {
-          idLogo: idImage,
-          name: firstName,
-          phoneNumber: phoneNumber,
+          name: name,
+          gender: gender,
+          dateOfBirth: birthday,
           address: address,
-          date: birthday,
-          role: adminRole,
-          gender: gender
-        }
-        console.log(value)
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, save it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + cookie
-              },
-              method: "PUT",
-              url: "http://localhost:8080/api/v1/user/updateUser/" + cookieUser,
-              data: JSON.stringify(value),
-              success: function (data) {
-                console.log(data);
-              }
-            })
-            Swal.fire(
-              'Saved!',
-              'Your file has been Saved.',
-              'success'
-            )
-          }
-        })
-      })
-
-      $(document).on('click', '#resetPassword', function () {
-        let email = $("#email").val();
-        $.ajax({
-          headers: {
-            'Authorization': 'Bearer ' + cookie
-          },
-          method: "GET",
-          url: "http://localhost:8080/api/v1/user/resetPassword/" + email,
-          success: function (data) {
-            console.log(data);
-          }
-        })
-      })
-
-      $(document).on('click', '#changePass', function () {
-        let email = $("#email").val();
-        let currentPassword = $("#currentPassword").val();
-        let confirmPassword = $("#comfirm").val();
-        let value = {
+          telephone: phoneNumber,
           email: email,
-          changePassword: confirmPassword,
-          currentPassword: currentPassword
+          password: passwordUser,
+          role: role
         }
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'success',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, change password it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + cookie
-              },
-              method: "POST",
-              url: "http://localhost:8080/api/v1/user/changePassword",
-              data: JSON.stringify(value),
-              success: function (data) {
-                console.log(data);
+        if (!name || !gender || !birthday || !address || !phoneNumber || !email ||!passwordUser || !role) {
+        alert("Please enter enough information!")
+        } else {  
+          Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+          }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                $.ajax({
+                  headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + cookie
+                  },
+                  method: "POST",
+                  url: "http://localhost:8080/api/v1/user/insertUser",
+                  data: JSON.stringify(value),
+                  success: function (data) {
+                    console.log(data);
+                  }
+                })
+                Swal.fire('Saved!', '', 'success')
+                window.setTimeout(function () {
+                  window.location.reload();
+                }, 2000);
+              } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
               }
             })
-            window.setTimeout(function () {
-              window.location.reload();
-            }, 2000);
           }
-        })
-
       })
     });
   </script>
