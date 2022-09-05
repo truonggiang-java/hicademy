@@ -40,6 +40,18 @@ public class Verification {
 		this.email = email;
 	}
 
+	public Verification(String id, String otp, LocalDateTime exprieDate, String email) {
+		super();
+		this.id = id;
+		this.otp = otp;
+		this.exprieDate = exprieDate;
+		this.email = email;
+	}
+
+	public Verification() {
+		super();
+	}
+
 	
 	
 	

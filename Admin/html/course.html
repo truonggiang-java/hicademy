@@ -637,11 +637,10 @@
               url: "http://localhost:8080/api/v1/course/updateCourse/" + id,
               data: JSON.stringify(value),
               success: function (data) {
+                fetchNotes(1, optionValue, "");
               }
             })
-            window.setTimeout(function () {
-              window.location.reload();
-            }, 300);
+      
 
 
           } else if (result.isDenied) {

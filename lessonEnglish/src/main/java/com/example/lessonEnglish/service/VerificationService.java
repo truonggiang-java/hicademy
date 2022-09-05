@@ -1,6 +1,7 @@
 package com.example.lessonEnglish.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,9 @@ public class VerificationService {
 	
 	public String sendEmailGetOtp(String email) {
 		try {
-			Verification getEmail=verificationRepository.findEmail(email);
-			if(getEmail !=null) {
-				verificationRepository.deleteById(getEmail.getId());
+			Optional<Verification> getEmail=verificationRepository.findEmail(email);
+			if(getEmail.isPresent()) {
+				verificationRepository.deleteById(getEmail.get().getId());
 			}
 			Verification verification= new Verification(email);
 			verificationRepository.save(verification);
@@ -42,9 +43,9 @@ public class VerificationService {
 			Verification verification=verificationRepository.findVerificationByOtpAndEmail(otp,email);
 			LocalDateTime date=LocalDateTime.now();
 			if(!date.isBefore(verification.getExprieDate())) {
-				Verification getEmail=verificationRepository.findEmail(email);
-				if(getEmail !=null) {
-					verificationRepository.deleteById(getEmail.getId());
+				Optional<Verification> getEmail=verificationRepository.findEmail(email);
+				if(getEmail.isPresent()) {
+					verificationRepository.deleteById(getEmail.get().getId());
 				}
 				return "Mã otp thành công";
 				

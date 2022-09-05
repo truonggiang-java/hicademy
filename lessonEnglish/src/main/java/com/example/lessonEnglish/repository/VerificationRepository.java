@@ -1,5 +1,7 @@
 package com.example.lessonEnglish.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,8 +15,8 @@ public interface VerificationRepository extends JpaRepository<Verification, Stri
 	Verification findOtp(@Param("otp") String otp);
 	
 	
-	@Query(value="select * from Verification v where v.email=:email",nativeQuery=true)
-	Verification findEmail(@Param("email") String email);
+	@Query("select v from Verification v where v.email=:email")
+	Optional<Verification> findEmail(@Param("email") String email);
 	
 	@Query(value="select * from Verification v where v.otp=:otp and v.email=:email",nativeQuery=true)
 	Verification findVerificationByOtpAndEmail(@Param("otp") String otp,@Param("email") String email);

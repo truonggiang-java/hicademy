@@ -13,6 +13,7 @@ import com.example.lessonEnglish.service.VerificationService;
 public class VerificationController {
 	@Autowired
 	private VerificationService verificationSerivce;
+	
 	@GetMapping("/sendEmail")
 	public String sendEmailGetOtp(@RequestParam("email") String email) {
 		return verificationSerivce.sendEmailGetOtp(email);

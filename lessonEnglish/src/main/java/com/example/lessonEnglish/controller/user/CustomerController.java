@@ -1,12 +1,15 @@
 package com.example.lessonEnglish.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lessonEnglish.dto.CustomerDto;
+import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.service.CustomerService;
 
 @RestController
@@ -15,8 +18,14 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
+	
 	@PostMapping("/insert")
 	public String insertUser(@RequestBody CustomerDto customerDto) {
 		return customerService.insertCustomer(customerDto);
+	}
+	
+	@PostMapping("/signin")
+	public String signin(@RequestBody RequestDto request) throws Exception {
+		return customerService.signin(request);
 	}
 }

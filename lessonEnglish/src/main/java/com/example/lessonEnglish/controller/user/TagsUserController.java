@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.lessonEnglish.dto.TagsImageDto;
 import com.example.lessonEnglish.service.TagsService;
 
 @RestController
@@ -19,7 +20,7 @@ public class TagsUserController {
 	private TagsService tagsService;
 	
 	@GetMapping("/randomTags")
-	public List<String> randomTags(@RequestParam(name="number",required = false, defaultValue = "1") Integer number){
+	public List<TagsImageDto> randomTags(@RequestParam(name="number",required = false, defaultValue = "1") Integer number){
 		return tagsService.randomTags(number);
 	}
 }
