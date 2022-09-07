@@ -1,6 +1,10 @@
 package com.example.lessonEnglish.service;
 
 import java.text.SimpleDateFormat;
+import java.util.Base64;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,13 +58,15 @@ public class CustomerService {
 		}
 	}
 	
-	public String signin(RequestDto request) {
+	public String signin(RequestDto request, HttpServletRequest httpRequest) {
 		try {
 			Customer customer =customerRepository.findByEmail(request.getEmail()).get();
 			if(customer !=null) {
 				if(encoder.matches(request.getPassword(), customer.getPassword())) {
-					
-					return "Đặng nhập thành công";
+					String encoding = Base64.getEncoder().encodeToString((request.getEmail() + ":" + request.getPassword()).getBytes());
+					HttpSession session = httpRequest.getSession();
+					session.setAttribute("encoding", encoding);
+					return encoding;
 				}else {
 					return "Tài khoản hoặc mật khẩu không đúng";
 				}				

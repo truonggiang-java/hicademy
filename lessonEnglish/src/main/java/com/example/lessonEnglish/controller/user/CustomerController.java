@@ -1,8 +1,8 @@
 package com.example.lessonEnglish.controller.user;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/signin")
-	public String signin(@RequestBody RequestDto request) throws Exception {
-		return customerService.signin(request);
+	public String signin(@RequestBody RequestDto request,HttpServletRequest httpRequest) throws Exception {
+		return customerService.signin(request,httpRequest);
 	}
 }
