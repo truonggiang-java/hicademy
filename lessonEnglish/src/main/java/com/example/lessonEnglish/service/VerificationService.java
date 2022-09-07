@@ -42,7 +42,7 @@ public class VerificationService {
 		try {
 			Verification verification=verificationRepository.findVerificationByOtpAndEmail(otp,email);
 			LocalDateTime date=LocalDateTime.now();
-			if(!date.isBefore(verification.getExprieDate())) {
+			if(date.isBefore(verification.getExprieDate())) {
 				Optional<Verification> getEmail=verificationRepository.findEmail(email);
 				if(getEmail.isPresent()) {
 					verificationRepository.deleteById(getEmail.get().getId());
@@ -53,6 +53,7 @@ public class VerificationService {
 				return "Mã otp hết hạn";
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "Lỗi mã otp";
 			// TODO: handle exception
 		}

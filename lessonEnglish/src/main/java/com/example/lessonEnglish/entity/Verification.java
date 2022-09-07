@@ -39,8 +39,8 @@ public class Verification {
 
 	public Verification(String email) {
 		super();
-		this.otp = RandomStringUtils.randomAlphabetic(4);
-		this.exprieDate = LocalDateTime.now().plusMinutes(1);
+		this.otp = RandomStringUtils.randomNumeric(4);
+		this.exprieDate = LocalDateTime.now().plusMinutes(3);
 		this.email = email;
 	}
 }
