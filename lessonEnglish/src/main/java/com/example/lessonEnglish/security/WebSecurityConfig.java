@@ -92,7 +92,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.and().antMatcher("/api/v2/**")
 					.authorizeRequests().anyRequest().authenticated().and()
 					.httpBasic();
-
 		}
 
 	}

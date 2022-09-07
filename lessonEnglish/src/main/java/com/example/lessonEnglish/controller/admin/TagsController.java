@@ -42,7 +42,7 @@ public class TagsController {
 	@GetMapping(value = "/findAllTags")
 	@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
 	public PageableDlFileEntryDto findAllPage(@RequestParam(name="page",required = false, defaultValue = "1") Integer page,
-			@RequestParam(name="size",required = false, defaultValue = "6") Integer size,
+			@RequestParam(name="size",required = false, defaultValue = "8") Integer size,
 			@RequestParam(name="input",required = false,defaultValue = ".") String input) {
 		return tagsService.findAll(page, size, input);
 	}

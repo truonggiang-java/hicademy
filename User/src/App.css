@@ -33,6 +33,7 @@
   font-family:'cursive'; 
   color: red;
   font-size: 15px;
+  margin-bottom: 0;
 }
 .css-1pwv3lk-MuiStack-root p>:not(style)+:not(style){
   margin-top: 0;

@@ -37,9 +37,9 @@ public class CustomerService {
 			customer.setGender(customerDto.getGender());
 			String fileName = "";
 			if (customerDto.getGender().equals("MALE")) {
-				fileName = "avatar-nam.jpg";
+				fileName = "ava_nam.png";
 			} else if (customerDto.getGender().equals("FEMALE")) {
-				fileName = "avatar-nu.jpg";
+				fileName = "ava_nu.png";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			customer.setDateOfBirth(format.parse(customerDto.getDateOfBirth()));

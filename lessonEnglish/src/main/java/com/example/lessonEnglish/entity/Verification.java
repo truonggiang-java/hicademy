@@ -11,11 +11,15 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="verification")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Verification {
 	@Id
 	@GeneratedValue(generator = "UUID")
@@ -39,20 +43,4 @@ public class Verification {
 		this.exprieDate = LocalDateTime.now().plusMinutes(1);
 		this.email = email;
 	}
-
-	public Verification(String id, String otp, LocalDateTime exprieDate, String email) {
-		super();
-		this.id = id;
-		this.otp = otp;
-		this.exprieDate = exprieDate;
-		this.email = email;
-	}
-
-	public Verification() {
-		super();
-	}
-
-	
-	
-	
 }
