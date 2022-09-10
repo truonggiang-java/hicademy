@@ -5,6 +5,8 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import {Link, useLocation } from 'react-router-dom';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import Avatar from '@mui/material/Avatar';
@@ -28,14 +30,14 @@ export default function Navbar() {
 
     setState({ ...state, [anchor]: open });
   };
-
-  // const check ='start'
-  // function logout({check}) {
-  //   return(
-  //     console.log(check),
-  //     <Link to={check.path}></Link>
-  //   )
-  // }
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   
   const list = (anchor) => (
       <Box
@@ -139,9 +141,26 @@ export default function Navbar() {
                 </React.Fragment>
             ))}
         </div>
-        <Stack direction="row" spacing={2}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </Stack>
+        {!hideTooge.includes(location.pathname) ? (
+          <div>
+             <Stack direction="row" spacing={2}>
+               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" onClick={handleClick}/>
+             </Stack>
+      <Menu
+      elevation={0}
+        id="fade-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+    </div>
+  
+        ) : ''}
+   
         { visibleLogin.includes(location.pathname) ? (
             <div className="navbar-login">
               { location.pathname === '/login' ? '' : (<div>
