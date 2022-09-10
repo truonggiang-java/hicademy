@@ -17,4 +17,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String>{
 	
 	@Query(value="select * from Customer c where upper(c.name) like concat(concat('%',upper(:input)),'%') or upper(c.address) like concat(concat('%',upper(:input)),'%') or upper(c.email) like concat(concat('%',upper(:input)),'%') order by c.update_date desc",nativeQuery = true)
 	List<Customer> findAllCustomer(@Param("input") String input);
+	
+	@Query("select c from Customer c where c.id in :id")
+	List<Customer> findListIdUser(@Param("id") List<String> id);
 }

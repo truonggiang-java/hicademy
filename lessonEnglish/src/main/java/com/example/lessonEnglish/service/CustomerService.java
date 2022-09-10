@@ -19,6 +19,7 @@ import com.example.lessonEnglish.dto.CustomerDto;
 import com.example.lessonEnglish.dto.InformationUserResetPassword;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.request.RequestDto;
+import com.example.lessonEnglish.dto.request.UserRequestDto;
 import com.example.lessonEnglish.entity.Customer;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.entity.Users;
@@ -48,9 +49,9 @@ public class CustomerService {
 			customer.setGender(customerDto.getGender());
 			String fileName = "";
 			if (customerDto.getGender().equals("MALE")) {
-				fileName = "ava_nam.png";
+				fileName = "avatar-nam.jpg";
 			} else if (customerDto.getGender().equals("FEMALE")) {
-				fileName = "ava_nu.png";
+				fileName = "avatar-nu.jpg";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			customer.setDateOfBirth(format.parse(customerDto.getDateOfBirth()));
@@ -68,7 +69,30 @@ public class CustomerService {
 			// TODO: handle exception
 		}
 	}
-	
+	public String updateCustomer(UserRequestDto userRequestDto, String id) {
+		try {
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Customer users = customerRepository.findById(id).get();
+			users.setAddress(userRequestDto.getAddress());
+			if (userRequestDto.getRole() != null) {
+				users.setRole(userRequestDto.getRole());
+			}
+			if (userRequestDto.getIdLogo() != null) {
+				users.setIdLogo(userRequestDto.getIdLogo());
+			}
+			users.setName(userRequestDto.getName());
+			users.setGender(userRequestDto.getGender());
+			users.setTelephone(userRequestDto.getPhoneNumber());
+			users.setDateOfBirth(format.parse(userRequestDto.getDate()));
+			customerRepository.save(users);
+			return "Cập nhật người dùng thành công";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Cập nhật người dùng thất bại";
+			// TODO: handle exception
+		}
+	}
 	public Customer findbyIdCustomer(String id) {
 		return customerRepository.findById(id).get();
 	}
@@ -179,5 +203,11 @@ public class CustomerService {
 			return "Đăng nhập thất bại";
 			// TODO: handle exception
 		}
+	}
+	
+	public String deleteUserByListId(List<String> id) {
+		List<Customer> lesson = customerRepository.findListIdUser(id);
+		customerRepository.deleteAll(lesson);
+		return "Bạn đã xóa người dùng thành công";
 	}
 }
