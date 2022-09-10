@@ -86,8 +86,8 @@ public class UserController {
 	}
 	@GetMapping("/findAll")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public List<UserImageDto> findAllUser() {
-		return userService.findAllUser();
+	public List<UserImageDto> findAllUser(@RequestParam(name="input",required = false,defaultValue = "") String input) {
+		return userService.findAllUser(input);
 	}
 
 	

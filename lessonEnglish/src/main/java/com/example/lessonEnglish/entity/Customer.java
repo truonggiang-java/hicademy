@@ -43,4 +43,6 @@ public class Customer extends BaseEntity{
 	
 	@Column(name="role")
 	private String role;
+	
+	
 }

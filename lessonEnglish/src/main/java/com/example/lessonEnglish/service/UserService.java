@@ -10,14 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.lessonEnglish.constants.Gender;
 import com.example.lessonEnglish.dto.ChangePasswordDto;
 import com.example.lessonEnglish.dto.InformationUserResetPassword;
 import com.example.lessonEnglish.dto.UserDto;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.UserRoleDto;
 import com.example.lessonEnglish.dto.request.UserRequestDto;
-import com.example.lessonEnglish.entity.Lesson;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.entity.Users;
 import com.example.lessonEnglish.jwt.JwtUtlis;
@@ -97,8 +95,8 @@ public class UserService {
 		}
 	}
 
-	public List<UserImageDto> findAllUser() {
-		List<Users> listUsers = userRepository.findAllUser();
+	public List<UserImageDto> findAllUser(String input) {
+		List<Users> listUsers = userRepository.findAllUser(input);
 		List<UserImageDto> listUserImageDto = new ArrayList<>();
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		for (Users users : listUsers) {

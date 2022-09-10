@@ -16,8 +16,8 @@ public interface UserRepository extends JpaRepository<Users, String>{
 	@Query(value="select * from Users u where u.email=:email",nativeQuery = true)
 	Optional<Users> findByEmail(@Param("email") String email);
 	
-	@Query(value="select * from Users u order by u.update_date desc",nativeQuery = true)
-	List<Users> findAllUser();
+	@Query(value="select * from Users u where upper(u.name) like concat(concat('%',upper(:input)),'%') or upper(u.address) like concat(concat('%',upper(:input)),'%') or upper(u.email) like concat(concat('%',upper(:input)),'%') order by u.update_date desc",nativeQuery = true)
+	List<Users> findAllUser(@Param("input") String input);
 	
 	@Query(value="select * from Users u where u.id=:id",nativeQuery = true)
 	Users findByIdUser(@Param("id") String id);
