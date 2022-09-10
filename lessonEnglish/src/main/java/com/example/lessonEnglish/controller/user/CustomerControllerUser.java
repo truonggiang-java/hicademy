@@ -47,7 +47,7 @@ public class CustomerControllerUser {
 		return customerService.changePassword(changePasswordDto);
 	}
 	
-	@PutMapping("/updateUser/{id}")
+	@PutMapping("/updateCustomer/{id}")
 	public String updateUser(@RequestBody UserRequestDto userRequestDto, @PathVariable("id") String id) {
 		return customerService.updateCustomer(userRequestDto, id);
 	}
