@@ -21,7 +21,10 @@ import GameBoard from './FormGame/GameBoard';
 
 function App() {  
   return (
-    <div style={{background:'linear-gradient(#FFFF99, #FA6EFF)'}} className="layout">
+    // <div style={{background:'linear-gradient(#FFFF99, #FA6EFF)'}} className="layout">
+    <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`, 
+      backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:"100%", backgroundSize:'cover'
+      }} className="layout">
       <Navbar />
       <div className="main">
         <Routes>
