@@ -114,6 +114,29 @@ public class CustomerService {
 			return "Reset password fail";
 		}
 	}
+	
+	public UserImageDto findByIdUser(String id) {
+		Customer users = customerRepository.findByIdUser(id);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+		UserImageDto userImageDto = new UserImageDto();
+		userImageDto.setEmail(users.getEmail());
+		userImageDto.setGender(users.getGender());
+		userImageDto.setId(users.getId());
+		userImageDto.setName(users.getName());
+		userImageDto.setRole(users.getRole());
+		userImageDto.setAddress(users.getAddress());
+		userImageDto.setDate(format.format(users.getDateOfBirth()));
+		userImageDto.setPhone(users.getTelephone());
+		userImageDto.setIdLogo(users.getIdLogo());
+		String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/logo/view/")
+				.path(users.getIdLogo()).toUriString();
+		userImageDto.setLink(fileName);
+
+		return userImageDto;
+	}
+	
 	public String changePassword(ChangePasswordDto changePasswordDto) {
 		try {
 			Customer users = customerRepository.findByEmail(changePasswordDto.getEmail()).get();
