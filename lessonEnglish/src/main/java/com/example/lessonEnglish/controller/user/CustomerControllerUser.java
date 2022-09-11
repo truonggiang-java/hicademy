@@ -3,7 +3,7 @@ package com.example.lessonEnglish.controller.user;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,17 +18,19 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.lessonEnglish.dto.ChangePasswordDto;
 import com.example.lessonEnglish.dto.CustomerDto;
 import com.example.lessonEnglish.dto.LogoDto;
+import com.example.lessonEnglish.dto.SigninCustomerDto;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.dto.request.UserRequestDto;
 import com.example.lessonEnglish.entity.Customer;
+import com.example.lessonEnglish.error.CustomError;
 import com.example.lessonEnglish.service.CustomerService;
 import com.example.lessonEnglish.service.LogoService;
 
 @RestController
 @RequestMapping("/api/v2/customer")
 @CrossOrigin(value = "*")
-public class CustomerControllerUser {
+public class CustomerControllerUser extends BaseController{
 	@Autowired
 	private CustomerService customerService;
 	
@@ -46,8 +48,16 @@ public class CustomerControllerUser {
 	}
 	
 	@PostMapping("/signin")
-	public String signin(@RequestBody RequestDto request,HttpServletRequest httpRequest) throws Exception {
-		return customerService.signin(request,httpRequest);
+	public ResponseEntity<?> signin(@RequestBody RequestDto request,HttpServletRequest httpRequest) throws CustomError {
+		try {
+			SigninCustomerDto signinCustomerDto=customerService.signin(request,httpRequest);
+			return response(ok(signinCustomerDto));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return errorHttp(error(e));
+			// TODO: handle exception
+		}
+		
 	}
 	
 	@GetMapping("/findById/{id}")
