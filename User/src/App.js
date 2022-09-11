@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Audio from './containers/audio';
 import Home from './containers/home';
@@ -20,6 +20,7 @@ import ChangePassword from './FormInfo/changePassword';
 import GameBoard from './FormGame/GameBoard';
 
 function App() {  
+  const authorize = localStorage.getItem('Authorization')
   return (
     // <div style={{background:'linear-gradient(#FFFF99, #FA6EFF)'}} className="layout">
     <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`, 
@@ -28,7 +29,11 @@ function App() {
       <Navbar />
       <div className="main">
         <Routes>
-          <Route path='*' element={<NotFound />} />
+          <Route path='*' 
+          element = {
+            (!authorize || authorize == '') &&
+            <Navigate to="/login" replace />
+          } />
           <Route exac path='/' exact element={<Start/>} />
           <Route path='/Footers' element={<Footers/>}/>
           <Route path='/ConfirmEmail' element={<ConfirmEmail/>}/>

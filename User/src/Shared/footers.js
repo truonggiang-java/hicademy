@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 export default function Footers() {
     return (
         <React.Fragment>
-        <div className="footer" style={{background:'#0a4a82', position:'absolute',bottom:'0',left:'0',right:'0'}}>
+        <div className="footer" style={{background: 'linear-gradient(90deg, #0072ff 0%, #00d4ff 100%)', position:'absolute',bottom:'0',left:'0',right:'0'}}>
             <Container maxWidth='xl' >
                 <Grid container style={{textAlign:'center', color:'white', fontFamily:'initial'}}>
                     <Grid item xs={3} style={{margin:'auto'}}>

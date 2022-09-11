@@ -142,7 +142,7 @@ export default function Navbar() {
             ))}
         </div>
         {!hideTooge.includes(location.pathname) ? (
-          <div>
+          <div className="flex items-center">
              <Stack direction="row" spacing={2}>
                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" onClick={handleClick}/>
              </Stack>
