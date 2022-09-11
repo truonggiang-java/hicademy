@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ id, name, flipped, matched, clicked }) => {
+const Card = ({ id, name, flipped, matched, clicked, image }) => {
   return (
     <div
       onClick={() => (flipped ? undefined : clicked(name, id))}
@@ -10,7 +10,7 @@ const Card = ({ id, name, flipped, matched, clicked }) => {
     >
       <div className="back">?</div>
       <div className="front">
-        <img alt={name} src={"images/" + name + ".png"} />
+        <img alt={name} src={image} />
       </div>
     </div>
   );

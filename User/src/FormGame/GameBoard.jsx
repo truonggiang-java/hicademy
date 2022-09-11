@@ -1,24 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import GameOver from "./GameOver";
 import "../FormGame/Styles.scss";
+import axios from '../utils/axios';
 
 const GameBoard = () => {
-  const cards = [
-    "TV",
-    "TV",
-    "VT",
-    "VT",
-    "hbird",
-    "hbird",
-    "name",
-    "name",
-    "seal",
-    "seal",
-    "tracks",
-    "tracks"
-  ];
-
   ///////////// HELPER FUNCTION /////////////
 
   const shuffle = array => {
@@ -36,22 +22,40 @@ const GameBoard = () => {
   };
 
   ///////////// SETUP /////////////
-
+  const [cards, setCard] = useState([])
+  const [flippedCards, setFlippedCards] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
+  const [level, setLevel] = useState(1)
   const [cardList, setCardList] = useState(
-    shuffle(cards).map((name, index) => {
+    shuffle(cards).map((item, index) => {
       return {
         id: index,
-        name: name,
+        name: item.name,
+        image: item.link,
         flipped: false,
         matched: false
       };
     })
   );
-
-  const [flippedCards, setFlippedCards] = useState([]);
-  const [gameOver, setGameOver] = useState(false);
-
   ///////////// GAME LOGIC /////////////
+  const getListCard = async () => {
+    const res = await axios.get(`/api/v2/tags/randomTags?number=${level}`)
+    if (res.status == 200) {
+      // setCard(res.data)
+      setCardList(shuffle(res.data).map((item, index) => {
+        return {
+          id: index,
+          name: item.name,
+          image: item.link,
+          flipped: false,
+          matched: false
+        };
+      }))
+    }
+  }
+  useEffect(() => {
+    getListCard()
+  },[])
 
   const handleClick = (name, index) => {
     let currentCard = {
@@ -108,12 +112,13 @@ const GameBoard = () => {
 
   const restartGame = () => {
     setCardList(
-      shuffle(cards).map((name, index) => {
+      shuffle(cards).map((item, index) => {
         return {
           id: index,
-          name: name,
+          name: item.name,
           flipped: false,
-          matched: false
+          matched: false,
+          image: item.link
         };
       })
     );
@@ -121,7 +126,24 @@ const GameBoard = () => {
     setFlippedCards([]);
     setGameOver(false);
   };
-
+  const nextLevel = async () => {
+    setLevel(level + 1)
+    const res = await axios.get(`/api/v2/tags/randomTags?number=${level + 1}`)
+    if (res.status == 200) {
+      // setCard(res.data)
+      setCardList(shuffle(res.data).map((item, index) => {
+        return {
+          id: index,
+          name: item.name,
+          image: item.link,
+          flipped: false,
+          matched: false
+        };
+      }))
+    }
+    setFlippedCards([]);
+    setGameOver(false);
+  }
   ///////////// DISPLAY /////////////
 
   return (
@@ -135,9 +157,10 @@ const GameBoard = () => {
             flipped={card.flipped}
             matched={card.matched}
             clicked={flippedCards.length === 2 ? () => {} : handleClick}
+            image={card.image}
           />
         ))}
-      {gameOver && <GameOver restartGame={restartGame} />}
+      {gameOver && <GameOver restartGame={restartGame} nextLevel={nextLevel} level={level}/>}
     </div>
   );
 };

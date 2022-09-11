@@ -20,7 +20,9 @@ import ChangePassword from './FormInfo/changePassword';
 import GameBoard from './FormGame/GameBoard';
 
 function App() {  
-  const authorize = localStorage.getItem('Authorization')
+  const authorize = localStorage.getItem("Authorization")
+  // window.location.href = "http://localhost:3000/error-page"        
+  
   return (
     // <div style={{background:'linear-gradient(#FFFF99, #FA6EFF)'}} className="layout">
     <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`, 
@@ -29,27 +31,23 @@ function App() {
       <Navbar />
       <div className="main">
         <Routes>
-          <Route path='*' 
-          element = {
-            (!authorize || authorize == '') &&
-            <Navigate to="/login" replace />
-          } />
           <Route exac path='/' exact element={<Start/>} />
           <Route path='/Footers' element={<Footers/>}/>
+          <Route path='/Navbar' element={<Navbar/>}/>
           <Route path='/ConfirmEmail' element={<ConfirmEmail/>}/>
           <Route path='/GetOTP' element={<GetOTP/>}/>
           <Route path='/VerifyOTP' element={<VerifyOTP/>}/>
-          <Route path='/Navbar' element={<Navbar/>}/>
           <Route path='/ConfirmInfo' element={<ConfirmInfo/>}/>
-          <Route exact path='/Home' element={<Home/>}/>
           <Route path='/Login' element={<LogIn/>}/>
-          <Route exact path='/Selection' element={<Selection/>}/>
-          <Route path='/LessonOne/:name' element={<LessonOne/>}/>
-          <Route path='/Audio' element={<Audio/>}/>
-          <Route path='/Test' element={<Test/>}/>
-          <Route path='/Profile' element={<Profile/>}/>
-          <Route path='/ChangePassword' element={<ChangePassword/>}/>
-          <Route path='/GameBoard' element={<GameBoard/>}/>
+          <Route exact path='/Home' element={authorize ? <Home/> : <Navigate to='/login' replace/>}/>
+          <Route exact path='/Selection' element={authorize ? <Selection/> : <Navigate to='/login' replace/>}/>
+          <Route path='/LessonOne/:name' element={authorize ? <LessonOne/> : <Navigate to='/login' replace/>}/>
+          <Route path='/Audio' element={authorize ? <Audio/> : <Navigate to='/login' replace/>}/>
+          <Route path='/Test' element={authorize ? <Test/> : <Navigate to='/login' replace/>}/>
+          <Route path='/Profile' element={authorize ? <Profile/> : <Navigate to='/login' replace/>}/>
+          <Route path='/ChangePassword' element={authorize ? <ChangePassword/> : <Navigate to='/login' replace/>}/>
+          <Route path='/GameBoard' element={authorize ? <GameBoard/> : <Navigate to='/login' replace/>}/>
+          <Route path='*' element={<Navigate to='/login' replace/>} />
         </Routes>
       </div>
       <Footers />

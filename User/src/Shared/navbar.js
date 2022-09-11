@@ -38,6 +38,12 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onLogout = () => {
+    console.log('logout');
+    localStorage.removeItem('Authorization')
+    window.location.href = "http://localhost:3000/login"        
+  }
   
   const list = (anchor) => (
       <Box
@@ -155,7 +161,7 @@ export default function Navbar() {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={onLogout}>Logout</MenuItem>
       </Menu>
     </div>
   
