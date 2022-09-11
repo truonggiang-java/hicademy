@@ -32,8 +32,9 @@ function LogIn(){
             alert('Please enter full information!')
         }
         const res = await axios.post('/api/v2/customer/signin', {email: formik.values.email, password: formik.values.password})
-        if (res.status == 200) {
-            localStorage.setItem("Authorization", res.data)
+        if (res.data.code == 200) {
+            localStorage.setItem("Authorization", res.data.data.token)
+            localStorage.setItem("user_id", res.data.data.id)
             window.location.href = "http://localhost:3000/home"        
         }
     }

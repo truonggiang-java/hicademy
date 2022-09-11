@@ -7,6 +7,8 @@ import Form from "react-bootstrap/Form";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+
 export default function Profile() {
   const infoUser = {
     email: "Hieule159@gmail.com",
@@ -24,7 +26,6 @@ export default function Profile() {
 
   let [dataUser] = useState(getInfo());
   let [image, setImage] = useState(null);
-  console.log(image);
   const formik = useFormik({
     initialValues: dataUser,
     validationSchema: Yup.object({
@@ -41,6 +42,27 @@ export default function Profile() {
     return <div></div>;
   }
 
+  const onUpload = async (file) => {
+    let newUploadFile = new FormData();
+    newUploadFile.append('file', file[0]);
+    const authorize = localStorage.getItem('Authorization')
+    if (file[0]) {
+      const res = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/api/v2/customer/upload', 
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          "Authorization": `Basic ${authorize}`
+        },
+        data: newUploadFile,
+        dataType: 'json'
+      })
+      setTimeout(() => {
+        setImage(res.data)
+      }, 500);
+    }
+  }
+  console.log(image);
   return (
     <React.Fragment>
       <Form
@@ -182,10 +204,10 @@ export default function Profile() {
               </div>
               <div className="col-span-1">
                 <div className="col-span-1 mt-6">
-                  <img style={{width: '120px', height: '120px'}} src={require('../assets/image/logo.png')} />
+                  <img style={{width: '120px', height: '120px'}} src={image?.link || require('../assets/image/logo.png')} />
                 </div>
                 <div className="col-span-1 mt-6">
-                  <input type="file" />
+                  <input type="file" onChange={(e) => onUpload(e.target.files)}/>
                 </div>
               </div>
             </div>
