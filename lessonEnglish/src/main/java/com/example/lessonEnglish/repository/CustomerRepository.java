@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.lessonEnglish.entity.Customer;
+import com.example.lessonEnglish.entity.Users;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String>{
@@ -20,4 +21,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String>{
 	
 	@Query("select c from Customer c where c.id in :id")
 	List<Customer> findListIdUser(@Param("id") List<String> id);
+	
+	@Query(value="select * from Customer u where u.id=:id",nativeQuery = true)
+	Customer findByIdUser(@Param("id") String id);
 }
