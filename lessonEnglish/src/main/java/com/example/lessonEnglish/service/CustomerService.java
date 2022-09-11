@@ -17,12 +17,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.lessonEnglish.dto.ChangePasswordDto;
 import com.example.lessonEnglish.dto.CustomerDto;
 import com.example.lessonEnglish.dto.InformationUserResetPassword;
+import com.example.lessonEnglish.dto.SigninCustomerDto;
 import com.example.lessonEnglish.dto.UserImageDto;
 import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.dto.request.UserRequestDto;
 import com.example.lessonEnglish.entity.Customer;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.entity.Users;
+import com.example.lessonEnglish.error.CustomError;
 import com.example.lessonEnglish.repository.CustomerRepository;
 import com.example.lessonEnglish.repository.LogoRepository;
 
@@ -206,25 +208,25 @@ public class CustomerService {
 		return listUserImageDto;
 	}
 	
-	public String signin(RequestDto request, HttpServletRequest httpRequest) {
+	public SigninCustomerDto signin(RequestDto request, HttpServletRequest httpRequest) throws CustomError {
 		try {
+			SigninCustomerDto signinCustomerDto=new SigninCustomerDto();
 			Customer customer =customerRepository.findByEmail(request.getEmail()).get();
 			if(customer !=null) {
 				if(encoder.matches(request.getPassword(), customer.getPassword())) {
 					String encoding = Base64.getEncoder().encodeToString((request.getEmail() + ":" + request.getPassword()).getBytes());
-					HttpSession session = httpRequest.getSession();
-					session.setAttribute("encoding", encoding);
-					return encoding;
+					signinCustomerDto.setId(customer.getId());
+					signinCustomerDto.setToken(encoding);
+					return signinCustomerDto;
 				}else {
-					return "Tài khoản hoặc mật khẩu không đúng";
+					throw new CustomError("Sai tài khoản hoặc mật khẩu");
 				}				
 			}else {
-				return "Tài khoản hoặc mật khẩu không đúng";
+				throw new CustomError("Email không tồn tại");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Đăng nhập thất bại";
-			// TODO: handle exception
+			throw new CustomError("Sai tài khoản hoặc mật khẩu");
 		}
 	}
 	
