@@ -81,7 +81,7 @@ function Selection() {
         ],
       };
     
-    const [lessson,setLesson] = useState()
+    const [setLesson] = useState()
     function go(current){
       return(
         setLesson(current.nameLesson)
@@ -120,5 +120,4 @@ function Selection() {
         </React.Fragment>
     )
 }
-
 export default Selection

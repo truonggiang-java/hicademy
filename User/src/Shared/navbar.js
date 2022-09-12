@@ -27,7 +27,7 @@ export default function Navbar() {
   const getUserInfo = async () => {
     const user_id = localStorage.getItem("user_id")
     const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
-    if (res.status == 200) {
+    if (res.status === 200) {
       setUser(res.data)
     }
   }
@@ -48,6 +48,7 @@ export default function Navbar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    window.location.href = "http://localhost:3000/profile"
   };
 
   const onLogout = () => {
@@ -170,7 +171,6 @@ export default function Navbar() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={onLogout}>Logout</MenuItem>
       </Menu>

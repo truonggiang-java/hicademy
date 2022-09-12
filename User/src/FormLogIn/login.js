@@ -1,16 +1,12 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import {Link} from 'react-router-dom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import '../App.css'
-import { useState } from 'react';
 import axios from '../utils/axios';
 
 function LogIn(){
-    const [link, setLink] =useState()
-
     const formik = useFormik({
         initialValues:{
             email: '',
@@ -20,7 +16,7 @@ function LogIn(){
             // name: Yup.string().required('Required').min(4, 'Must be 4 characters or more'),
             email: Yup.string().required('Required').matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please enter a valid'),
             password: Yup.string().required('Required').matches(/^.{6,}$/, 
-            'Password must more than 6 characters and must contain a capital letter and a special character '),
+            'Password must more than 6 characters'),
         }),
         onSubmit: (values) => {
             console.log(values)
@@ -28,11 +24,11 @@ function LogIn(){
     });
 
     const check = async () => {
-        if ((!formik.values.email || formik.values.email == "") || (!formik.values.password || formik.values.password == '')) {
+        if ((!formik.values.email || formik.values.email === "") || (!formik.values.password || formik.values.password === '')) {
             alert('Please enter full information!')
         }
         const res = await axios.post('/api/v2/customer/signin', {email: formik.values.email, password: formik.values.password})
-        if (res.data.code == 200) {
+        if (res.data.code === 200) {
             localStorage.setItem("Authorization", res.data.data.token)
             localStorage.setItem("user_id", res.data.data.id)
             window.location.href = "http://localhost:3000/home"        

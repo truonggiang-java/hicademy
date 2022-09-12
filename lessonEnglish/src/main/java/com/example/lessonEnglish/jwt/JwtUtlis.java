@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtUtlis {
 	
-	private  String secretKey="truonggiang";
+	private  String secretKey="minhhieu";
 	private  Integer expireToken=8640000;
 	
 	public String generateToken(UserServiceImpl userServiceImpl) {
