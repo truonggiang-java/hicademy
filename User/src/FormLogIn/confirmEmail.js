@@ -9,6 +9,7 @@ function ConfirmEmail() {
     const [values, setValues] = React.useState('');
     const history = useNavigate();
     const confirmEmail = async (e) => {
+        alert("Please check gmail!")
         e.preventDefault();
         try {
             const res = await axios.get(`/api/v2/verification/sendEmail?email=${values}`);

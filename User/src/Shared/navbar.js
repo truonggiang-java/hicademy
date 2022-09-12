@@ -11,6 +11,7 @@ import {Link, useLocation } from 'react-router-dom';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import axios from '../utils/axios';
 
 export default function Navbar() {
   const [state, setState] = React.useState({
@@ -22,7 +23,17 @@ export default function Navbar() {
     const hideTooge = ['/','/login','/confirmEmail','/confirmPassword','/verifyOTP','/confirmPass'];
 
     const visibleLogin = ['/','/login','/confirmEmail','/confirmPassword'];
-
+  const [user, setUser] = React.useState(null)
+  const getUserInfo = async () => {
+    const user_id = localStorage.getItem("user_id")
+    const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
+    if (res.status === 200) {
+      setUser(res.data)
+    }
+  }
+  React.useEffect(()=> {
+    getUserInfo()
+  }, [])
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift') ) {
       return;
@@ -37,7 +48,14 @@ export default function Navbar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    window.location.href = "http://localhost:3000/profile"
   };
+
+  const onLogout = () => {
+    console.log('logout');
+    localStorage.removeItem('Authorization')
+    window.location.href = "http://localhost:3000/login"        
+  }
   
   const list = (anchor) => (
       <Box
@@ -142,9 +160,9 @@ export default function Navbar() {
             ))}
         </div>
         {!hideTooge.includes(location.pathname) ? (
-          <div>
+          <div className="flex items-center">
              <Stack direction="row" spacing={2}>
-               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" onClick={handleClick}/>
+               <Avatar alt="Remy Sharp" src={user?.link || ''} onClick={handleClick}/>
              </Stack>
       <Menu
       elevation={0}
@@ -153,9 +171,8 @@ export default function Navbar() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={onLogout}>Logout</MenuItem>
       </Menu>
     </div>
   
