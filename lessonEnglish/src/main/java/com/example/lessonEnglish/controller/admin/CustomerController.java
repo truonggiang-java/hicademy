@@ -36,8 +36,8 @@ public class CustomerController {
 	
 	@GetMapping("/findById/{id}")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public Customer findByIdCustomer(@PathVariable String id) {
-		return customerService.findbyIdCustomer(id);
+	public UserImageDto findByIdCustomer(@PathVariable String id) {
+		return customerService.findByIdUser(id);
 	}
 	
 	@GetMapping("/findAll")

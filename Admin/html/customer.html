@@ -252,18 +252,18 @@
   <script>
     $(document).ready(function () {
       let cookie = $.cookie("Cookie-admin");
-      let cookieCustomer = $.cookie("Cookie-customer");
+      let cookieUser = $.cookie("Cookie-user");
       var typingTimer;                //timer identifier
       var doneTypingInterval = 200;  //time in ms, 5 seconds for example
       var $input = $('#myInput');
       let value = "";
       $(document).on('click', ".profileCustomer", function (e) {
         let id = $(this).attr("id");
-        if (cookieCustomer) {
-          $.removeCookie("Cookie-customer");
-          $.cookie("Cookie-customer", id);
+        if (cookieUser) {
+          $.removeCookie("Cookie-user");
+          $.cookie("Cookie-user", id);
         } else {
-          $.cookie("Cookie-customer", id);
+          $.cookie("Cookie-user", id);
         }
       })
       if (!cookie) {
@@ -336,6 +336,7 @@
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
         $.removeCookie("Cookie-user");
+        $.removeCookie("Cookie-customer");
         window.location.href = "auth-login-basic.html";
       })
       function findAll(value) {
@@ -389,11 +390,11 @@
       }
       $(document).on('click', '.editUser', function (e) {
         let id = $(this).attr("id");
-        let cookieUser = $.cookie("Cookie-user");
+        let cookieUser = $.cookie("Cookie-customer");
         if (cookieUser) {
-          $.removeCookie("Cookie-user");
+          $.removeCookie("Cookie-customer");
         }
-        $.cookie("Cookie-user", id);
+        $.cookie("Cookie-customer", id);
         location.href = "profile-customer.html";
       })
       $(document).on('click', '.messageCheckbox', function () {

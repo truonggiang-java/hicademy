@@ -558,8 +558,9 @@
         }
       })
       $(document).on('click', '#logoutAdmin', function (e) {
-        // console.log("abc");
         $.removeCookie("Cookie-admin");
+        $.removeCookie("Cookie-user");
+        $.removeCookie("Cookie-customer");
         window.location.href = "auth-login-basic.html";
       })
       function selectLessonA() {

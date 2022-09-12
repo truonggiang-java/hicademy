@@ -325,7 +325,7 @@
   <script>
     $(document).ready(function () {
       let cookie = $.cookie("Cookie-admin");
-      let cookieUser = $.cookie("Cookie-user");
+      let cookieCustomer = $.cookie("Cookie-customer");
       if (cookie) {
         $.ajax({
           headers: {
@@ -347,6 +347,8 @@
 
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
+        $.removeCookie("Cookie-user");
+        $.removeCookie("Cookie-customer");
         window.location.href = "auth-login-basic.html";
       })
 
@@ -361,8 +363,9 @@
             'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
-          url: "http://localhost:8080/api/v1/user/findById?id=" + cookieUser,
+          url: "http://localhost:8080/api/v1/customer/findById/" + cookieCustomer,
           success: function (data) {
+            console.log(data);
             let html = `<img src="${data.link}" alt="user-avatar" class="d-block rounded imageLogo" height="100"
                           width="100" id="${data.idLogo}" />`
             $("#my-image").html(html);
@@ -388,13 +391,13 @@
       });
       fetchData();
 
-      $(document).on('click', '#changePass', function () {
-        let valueinput2 = $('#newpass').val();
-        let valueinput3 = $('#comfirm').val();
-        if (valueinput2 != valueinput3) {
-          alert("Mật khẩu mới chưa khớp, vui lòng nhập lại!")
-        }
-      })
+      // $(document).on('click', '#changePass', function () {
+      //   let valueinput2 = $('#newpass').val();
+      //   let valueinput3 = $('#comfirm').val();
+      //   if (valueinput2 != valueinput3) {
+      //     alert("Mật khẩu mới chưa khớp, vui lòng nhập lại!")
+      //   }
+      // })
 
       $('input[id=files]').change(function (ev) {
         var form_data = new FormData();
@@ -455,10 +458,13 @@
                 'Authorization': 'Bearer ' + cookie
               },
               method: "PUT",
-              url: "http://localhost:8080/api/v1/user/updateUser/" + cookieUser,
+              url: "http://localhost:8080/api/v1/customer/updateUser/" + cookieCustomer,
               data: JSON.stringify(value),
               success: function (data) {
                 console.log(data);
+                window.setTimeout(function () {
+                  window.location.reload();
+                }, 1000);
               }
             })
             Swal.fire(
@@ -477,51 +483,11 @@
             'Authorization': 'Bearer ' + cookie
           },
           method: "GET",
-          url: "http://localhost:8080/api/v1/user/resetPassword/" + email,
+          url: "http://localhost:8080/api/v1/customer/resetPassword/" + email,
           success: function (data) {
             console.log(data);
           }
         })
-      })
-
-      $(document).on('click', '#changePass', function () {
-        let email = $("#email").val();
-        let currentPassword = $("#currentPassword").val();
-        let confirmPassword = $("#comfirm").val();
-        let value = {
-          email: email,
-          changePassword: confirmPassword,
-          currentPassword: currentPassword
-        }
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'success',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, change password it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + cookie
-              },
-              method: "POST",
-              url: "http://localhost:8080/api/v1/user/changePassword",
-              data: JSON.stringify(value),
-              success: function (data) {
-                console.log(data);
-              }
-            })
-            window.setTimeout(function () {
-              window.location.reload();
-            }, 2000);
-          }
-        })
-
       })
     });
   </script>

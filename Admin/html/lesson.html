@@ -459,7 +459,8 @@
 
         $(document).on('click', '#logoutAdmin', function (e) {
           $.removeCookie("Cookie-admin");
-          $.removeCookie("Cookie-user");
+        $.removeCookie("Cookie-user");
+        $.removeCookie("Cookie-customer");
           window.location.href = "auth-login-basic.html";
         })
         function fetchNotes(startPage, optionValue, value) {

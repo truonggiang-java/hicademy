@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.lessonEnglish.dto.ChangePasswordDto;
@@ -29,6 +31,7 @@ import com.example.lessonEnglish.repository.CustomerRepository;
 import com.example.lessonEnglish.repository.LogoRepository;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -60,7 +63,11 @@ public class CustomerService {
 			customer.setEmail(customerDto.getEmail());
 			customer.setName(customerDto.getName());
 			customer.setIdLogo(logo.getId());
-			customer.setRole("NORMAL");
+			if(customerDto.getRole() != null && !customerDto.getRole().isEmpty() && !customerDto.getRole().isBlank()) {
+				customer.setRole(customerDto.getRole());
+			}else {
+				customer.setRole("NORMAL");				
+			}
 			customer.setPassword(encoder.encode(customerDto.getPassword()));
 			customer.setTelephone(customerDto.getTelephone());
 			customerRepository.save(customer);

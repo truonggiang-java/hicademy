@@ -207,8 +207,8 @@
                         <div class="mb-3 col-md-6">
                           <label for="role" class="form-label">Role</label>
                           <select name="role" id="role" class="form-control">
-                            <option value="USER">User</option>
-                            <option value="ADMIN">Admin</option>
+                            <option value="VIP">VIP</option>
+                            <option value="NORMAL" selected>NORMAL</option>
                           </select>
                         </div>
                         <div class="mb-3 col-md-6">
@@ -398,6 +398,7 @@
       $(document).on('click', '#logoutAdmin', function (e) {
         $.removeCookie("Cookie-admin");
         $.removeCookie("Cookie-user");
+        $.removeCookie("Cookie-customer");
         window.location.href = "auth-login-basic.html";
       })
       $(document).on('click', '.pass_show .ptxt', function () {
@@ -416,7 +417,7 @@
         var birthday = $("#birthday").val();
         var gender = $("#gender").val();
         var passwordUser = $("#passwordUser").val();
-        var role = $("#role").val();
+        var role = $("#role").val() || "";
         let value = {
           name: name,
           gender: gender,
@@ -445,7 +446,7 @@
                     'Authorization': 'Bearer ' + cookie
                   },
                   method: "POST",
-                  url: "http://localhost:8080/api/v1/user/insertUser",
+                  url: "http://localhost:8080/api/v1/customer/insertCustomer",
                   data: JSON.stringify(value),
                   success: function (data) {
                     console.log(data);
