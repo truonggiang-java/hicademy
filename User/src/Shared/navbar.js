@@ -27,16 +27,16 @@ export default function Navbar() {
   const [user, setUser] = React.useState(null)
   const getUserInfo = async () => {
     const user_id = localStorage.getItem("user_id")
-    
-    try {
-      const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
-      if (res.status === 200) {
-        setUser(res.data)
+    if (user_id && user_id !== '') {
+      try {
+        const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
+        if (res.status === 200) {
+          setUser(res.data)
+        }
+      } catch (err) {
+        console.log('err getUserById');
       }
-    } catch (err) {
-      console.log(1111);
     }
-  
   }
   React.useEffect(()=> {
     getUserInfo()

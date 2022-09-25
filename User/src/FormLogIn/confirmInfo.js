@@ -7,9 +7,10 @@ import '../App.css';
 import '../assets/style/cfInfo.css';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import axios from '../utils/axios';
 
 function ConfirmPass() {
-
+    const email_register = localStorage.getItem("email_register")
     const formik = useFormik({
         initialValues:{
             password: "",
@@ -26,29 +27,28 @@ function ConfirmPass() {
             confirm: Yup.string().required('Required').oneOf([Yup.ref('password'),null],'Password must match'),
             name: Yup.string().required('Required'),
             address: Yup.string().required('Required'),
-            phone: Yup.string().required('Required'),
+            phone: Yup.string().required('Required').matches(/^0([1-9]{1}[0-9]{8,9})$/, 'Please check your phone number'),
             gender: Yup.string().required('Required'),
             birth: Yup.string().required('Required'),
-        }),
-        onSubmit: (values) => {
-            console.log(values)
-        },
-    });
+        })
+    });  
 
-    const [link, setLink] =useState()
-
-    function check(){
-        return(
-            ((formik.values.password) !== "" & (formik.values.confirm) !== "")
-            & (formik.values.name) !== "" & (formik.values.address) !== ""
-            & (formik.values.phone) !== "" & (formik.values.gender) !== ""
-            & (formik.values.birthday) !== "" ? (
-                setLink('/home')
-            ) : ( alert('Please enter full information!')),
-            console.log(link)
-        )
-    }   
-    console.log(formik.values)
+    const submit = async () => {
+        console.log( 'submit',formik.values)
+        const {password, name, address, confirm, phone, gender, birthday} = formik.values
+        if ((!password || password.trim() === '') || (!name || name.trim() === '') || (!address || address.trim() === '') || (!confirm || confirm.trim() === '') || (!phone || phone.trim() === '') || (!gender || gender.trim() === '') || (!birthday || birthday.trim() === '')) {
+            return alert('Please enter full information!')
+        }
+        try {
+            const res = await axios.post(`/api/v2/customer/insert`, {...formik.values, telephone: phone, dateOfBirth: birthday,  email: email_register});
+            if(res) {
+                window.location.href = 'http://localhost:3001/home'
+            }
+        } catch(err) 
+        {
+            console.log('ERR submit form register', err.response.data)
+        }
+    }
     return(
         <React.Fragment>
                 <form onSubmit={formik.handleSubmit}>
@@ -74,7 +74,7 @@ function ConfirmPass() {
                                         id = 'email'
                                         name = 'emal'
                                         required
-                                        value={formik.values.email}> 
+                                        value={email_register}> 
                                     </input>
                                 </div>
                                 <div>
@@ -122,7 +122,8 @@ function ConfirmPass() {
                                 </div>
                                 <div>
                                     <select id= 'gender' name = 'gender' onChange={formik.handleChange} className="inputInfo">
-                                        <option value={'MALE'} selected>Male</option>
+                                        <option value={''}>-Select gender-</option>
+                                        <option value={'MALE'}>Male</option>
                                         <option value={'FEMALE'}>Female</option>
                                     </select>
                                     {formik.errors.gender &&(
@@ -175,22 +176,20 @@ function ConfirmPass() {
                                     )}
                                 </div>
                             </div> 
-                            <Link to={link||""}>
-                                <button 
-                                    style={{
-                                        color:'white',
-                                        backgroundColor:'#1CB0F6',
-                                        border: '1px solid black', 
-                                        width:'350px', 
-                                        height:'42px',
-                                        borderRadius:'27px',
-                                    }}
-                                    type='submit'
-                                    onClick={() => { check()}}
-                                >
-                                    SUBMIT
-                                </button>
-                            </Link>
+                            <button 
+                                style={{
+                                    color:'white',
+                                    backgroundColor:'#1CB0F6',
+                                    border: '1px solid black', 
+                                    width:'350px', 
+                                    height:'42px',
+                                    borderRadius:'27px',
+                                }}
+                                type='submit'
+                                onClick={() => { submit()}}
+                            >
+                                SUBMIT
+                            </button>
                         </Stack>
                     </Container>
                 </form>

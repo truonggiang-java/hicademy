@@ -24,6 +24,7 @@ function LogIn(){
     });
 
     const check = async () => {
+        console.log('login button');
         if ((!formik.values.email || formik.values.email === "") || (!formik.values.password || formik.values.password === '')) {
             alert('Please enter full information!')
         }

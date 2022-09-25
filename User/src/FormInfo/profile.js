@@ -1,33 +1,56 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../assets/style/profile.css";
 import Form from "react-bootstrap/Form";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
+import axios_fetch from '../utils/axios';
 import axios from 'axios';
 
 export default function Profile() {
-  const infoUser = {
-    email: "Hieule159@gmail.com",
-    name: "MinhHieu",
-    password: "Abc123456",
-    gender: "",
-    phone: "",
-    address: "",
-    birthday: "",
-  };
+  const [profile, setProfile] = React.useState({
+    "email" : "",
+    "phone": "",
+    "gender":"",
+    "address":"",
+    "name":"",
+    "birthday":""
+  })
+  const getUserInfo = async () => {
+    const user_id = localStorage.getItem("user_id")
+    if (user_id && user_id !== '') {
+      try {
+        const res = await axios_fetch.get(`/api/v2/customer/findById?id=${user_id}`)
+        if (res.status === 200) {
+          console.log('res', res.data)
+          setProfile(res.data)
+          const {
+            address, date, email, gender,
+            link, name, phone,
+          } = res.data
+          formik.setFieldValue('email', email, false)
+          formik.setFieldValue('name', name, false)
+          formik.setFieldValue('address', address, false)
+          formik.setFieldValue('phone', phone, false)
+          formik.setFieldValue('gender', gender, false)
+          formik.setFieldValue('birthday', date, false)
+          setImage({link: link})
+        }
+      } catch (err) {
+        console.log('err getUserById');
+      }
+    }
+  }
+  useEffect(()=> {
+    getUserInfo()
+  }, [])
 
-  const getInfo = () => {
-    return infoUser;
-  };
-
-  let [dataUser] = useState(getInfo());
   let [image, setImage] = useState(null);
   const formik = useFormik({
-    initialValues: dataUser,
+    initialValues: profile,
     validationSchema: Yup.object({
       name: Yup.string()
         .required("Required")
@@ -38,9 +61,21 @@ export default function Profile() {
     },
   });
 
-  function check() {
-    return <div></div>;
-  }
+  const check = async () => {
+    const {email, name, address, phone, gender, birthday} = formik.values
+    if ((!email || email.trim() === '') || (!name || name.trim() === '') || (!address || address.trim() === '') || (!phone || phone.trim() === '') || (!gender || gender.trim() === '') || (!birthday || birthday.trim() === '')) {
+        return alert('Please enter full information!')
+    }
+    try {
+        const res = await axios_fetch.put(`/api/v2/customer/updateCustomer/${profile.id}`, {...formik.values, phoneNumber: phone, date: birthday, idLogo: image.id, link: image.link});
+        if(res) {
+          alert('Update User Information Success')
+        }
+    } catch(err) 
+    {
+        console.log('ERR submit form register', err.response.data)
+    }
+}
 
   const onUpload = async (file) => {
     let newUploadFile = new FormData();
@@ -62,7 +97,6 @@ export default function Profile() {
       }, 500);
     }
   }
-  console.log(image);
   return (
     <React.Fragment>
       <Form
@@ -113,6 +147,7 @@ export default function Profile() {
                     name="name"
                     required
                     onChange={formik.handleChange}
+                    value={formik.values.name}
                     style={{
                       border: "1px solid black",
                       borderRadius: "20px",
@@ -132,6 +167,7 @@ export default function Profile() {
                     name="address"
                     required
                     onChange={formik.handleChange}
+                    value={formik.values.address}
                     style={{
                       border: "1px solid black",
                       borderRadius: "20px",
@@ -153,6 +189,7 @@ export default function Profile() {
                     name="phone"
                     required
                     onChange={formik.handleChange}
+                    value={formik.values.phone}
                     style={{
                       border: "1px solid black",
                       borderRadius: "20px",
@@ -172,6 +209,7 @@ export default function Profile() {
                     name="gender"
                     required
                     onChange={formik.handleChange}
+                    value={formik.values.gender}
                     style={{
                       border: "1px solid black",
                       borderRadius: "20px",
@@ -191,6 +229,7 @@ export default function Profile() {
                     name="birthday"
                     required
                     onChange={formik.handleChange}
+                    value={formik.values.birthday}
                     style={{
                       border: "1px solid black",
                       borderRadius: "20px",

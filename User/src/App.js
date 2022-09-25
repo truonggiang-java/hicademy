@@ -39,7 +39,7 @@ function App() {
           <Route path='/VerifyOTP' element={<VerifyOTP/>}/>
           <Route path='/ConfirmInfo' element={<ConfirmInfo/>}/>
           <Route path='/Login' element={<LogIn/>}/>
-          <Route path='/ForgotPassword' element={<ForgetPassword/>}/>
+          <Route path='/ForgetPassword' element={<ForgetPassword/>}/>
           <Route exact path='/Home' element={authorize ? <Home/> : <Navigate to='/login' replace/>}/>
           <Route exact path='/Selection' element={authorize ? <Selection/> : <Navigate to='/login' replace/>}/>
           <Route path='/LessonOne/:name' element={authorize ? <LessonOne/> : <Navigate to='/login' replace/>}/>
