@@ -110,19 +110,21 @@ const GameBoard = () => {
 
   ///////////// RESTART - REDO SETUP /////////////
 
-  const restartGame = () => {
-    setCardList(
-      shuffle(cards).map((item, index) => {
+  const restartGame = async () => {
+    setLevel(1);
+    const res = await axios.get(`/api/v2/tags/randomTags?number=1`)
+    if (res.status == 200) {
+      // setCard(res.data)
+      setCardList(shuffle(res.data).map((item, index) => {
         return {
           id: index,
           name: item.name,
+          image: item.link,
           flipped: false,
-          matched: false,
-          image: item.link
+          matched: false
         };
-      })
-    );
-
+      }))
+    }
     setFlippedCards([]);
     setGameOver(false);
   };

@@ -3,7 +3,6 @@ import './App.css';
 import Audio from './containers/audio';
 import Home from './containers/home';
 import LogIn from './FormLogIn/login';
-import NotFound from './containers/notFound';
 import Start from './containers/start';
 import Test from './containers/test';
 import LessonOne from './FormLearn/lessonOne';
@@ -18,6 +17,7 @@ import Selection from './FormLearn/selection';
 import Profile from './FormInfo/profile';
 import ChangePassword from './FormInfo/changePassword';
 import GameBoard from './FormGame/GameBoard';
+import ForgetPassword from './FormLogIn/forgetPassword';
 
 function App() {  
   const authorize = localStorage.getItem("Authorization")
@@ -39,6 +39,7 @@ function App() {
           <Route path='/VerifyOTP' element={<VerifyOTP/>}/>
           <Route path='/ConfirmInfo' element={<ConfirmInfo/>}/>
           <Route path='/Login' element={<LogIn/>}/>
+          <Route path='/ForgotPassword' element={<ForgetPassword/>}/>
           <Route exact path='/Home' element={authorize ? <Home/> : <Navigate to='/login' replace/>}/>
           <Route exact path='/Selection' element={authorize ? <Selection/> : <Navigate to='/login' replace/>}/>
           <Route path='/LessonOne/:name' element={authorize ? <LessonOne/> : <Navigate to='/login' replace/>}/>

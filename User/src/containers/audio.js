@@ -125,7 +125,7 @@ function Audio() {
               <div style={{ borderRadius: "20px", overflow: "hidden" }}>
                 <ReactPlayer
                   controls={true}
-                  url={links || '"https://www.youtube.com/embed/ptk68qC1woI"'}
+                  url={links || '"https://youtu.be/cjj1FULDTA8"'}
                 />
               </div>
             </Grid>
