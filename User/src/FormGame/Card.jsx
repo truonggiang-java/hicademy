@@ -1,4 +1,5 @@
 import React from "react";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 const Card = ({ id, name, flipped, matched, clicked, image }) => {
   return (

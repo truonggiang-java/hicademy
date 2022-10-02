@@ -19,16 +19,23 @@ export default function Navbar() {
   });
 
     const location = useLocation();
+    console.log('location', location);
 
-    const hideTooge = ['/','/login','/confirmEmail','/confirmPassword','/verifyOTP','/confirmPass'];
+    const hideTooge = ['/','/login','/confirmEmail','/confirmPassword','/verifyOTP','/confirmPass','/confirmInfo'];
 
     const visibleLogin = ['/','/login','/confirmEmail','/confirmPassword'];
   const [user, setUser] = React.useState(null)
   const getUserInfo = async () => {
     const user_id = localStorage.getItem("user_id")
-    const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
-    if (res.status === 200) {
-      setUser(res.data)
+    if (user_id && user_id !== '') {
+      try {
+        const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
+        if (res.status === 200) {
+          setUser(res.data)
+        }
+      } catch (err) {
+        console.log('err getUserById');
+      }
     }
   }
   React.useEffect(()=> {
@@ -78,7 +85,9 @@ export default function Navbar() {
                 <Link to="/Home" id='a' style={{width: '100%'}}>
                     <img 
                         src={require('../assets/image/home.png')} alt='Logo'  
-                        style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
+                        style={{marginRight:'10px',display:'inline'}}
+                        width="50"
+                        height="50"
                     />
                     <p style={{ display:'inline'}}>Home</p>
                 </Link>
@@ -172,7 +181,7 @@ export default function Navbar() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={onLogout}>Logout</MenuItem>
+        <MenuItem onClick={onLogout}>Log Out</MenuItem>
       </Menu>
     </div>
   

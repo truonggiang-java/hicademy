@@ -16,10 +16,10 @@ function ChangePass() {
             confirm: '',
         },
         validationSchema: Yup.object({
-            oldpass: Yup.string().required('Required').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 
-            'Password must more than 8 characters and must contain a capital letter and a special character '),
-            password: Yup.string().required('Required').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 
-            'Password must more than 8 characters and must contain a capital letter and a special character '),
+            oldpass: Yup.string().required('Required').matches(/.{6,}$/, 
+            'Password must more than 6 characters'),
+            password: Yup.string().required('Required').matches(/.{6,}$/, 
+            'Password must more than 6 characters'),
             confirm: Yup.string().required('Required').oneOf([Yup.ref('password'),null],'Password must match')
         }),
         onSubmit: (values) => {
