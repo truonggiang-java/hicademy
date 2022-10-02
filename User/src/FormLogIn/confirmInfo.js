@@ -42,7 +42,7 @@ function ConfirmPass() {
         try {
             const res = await axios.post(`/api/v2/customer/insert`, {...formik.values, telephone: phone, dateOfBirth: birthday,  email: email_register});
             if(res) {
-                window.location.href = 'http://localhost:3001/home'
+                window.location.href = 'http://localhost:3000/home'
             }
         } catch(err) 
         {

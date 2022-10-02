@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import com.example.lessonEnglish.dto.ChangePasswordDto;
 import com.example.lessonEnglish.dto.CustomerDto;
 import com.example.lessonEnglish.dto.InformationUserResetPassword;
@@ -44,6 +46,7 @@ public class CustomerService {
 	
 	@Autowired
 	private EmailService emailService;
+	
 	
 	public String insertCustomer(CustomerDto customerDto) {
 		try {
@@ -150,6 +153,7 @@ public class CustomerService {
 		try {
 			Customer users = customerRepository.findByEmail(changePasswordDto.getEmail()).get();
 			if (encoder.matches(changePasswordDto.getCurrentPassword(), users.getPassword())) {
+				System.out.println("abcde");
 				users.setPassword(encoder.encode(changePasswordDto.getChangePassword()));
 				customerRepository.save(users);
 				return "Change password success";
@@ -157,39 +161,41 @@ public class CustomerService {
 				return "Incorrect password";
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "Change password fail";
 			// TODO: handle exception
 		}
 	}
-	public String informationCustomerResetPassword(InformationUserResetPassword informationUserResetPassword) {
+	public ResponseEntity<?> informationCustomerResetPassword(InformationUserResetPassword informationUserResetPassword) {
 		try {
 			String random = RandomStringUtils.randomAlphabetic(6);
+			
 			String body = "<div  style='background-color: #008CBA;\n" + "	border: none;\n" + "  color: white;\n"
 					+ "  padding: 20px 100px;\n" + "  text-align: center;\n" + "  text-decoration: none;\n"
 					+ "  display: inline-block;\n" + "  font-size: 16px;\n" + "  margin: 4px 2px;\n" + "  '>" + random
 					+ "</div>";
-			Customer users = customerRepository.findByEmail(informationUserResetPassword.getEmail()).get();
+			Customer  customer = customerRepository.findByEmail(informationUserResetPassword.getEmail()).get();
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			if (users != null) {
-				String usersDate=format.format(users.getDateOfBirth());
-				if (users.getEmail().equals(informationUserResetPassword.getEmail())
-						&& users.getTelephone().equals(informationUserResetPassword.getTelephone())
-						&& users.getName().equals(informationUserResetPassword.getName())
+			if (customer != null) {
+				String usersDate=format.format(customer.getDateOfBirth());
+				if (customer.getEmail().equals(informationUserResetPassword.getEmail())
+						&& customer.getTelephone().equals(informationUserResetPassword.getTelephone())
+						&& customer.getName().equals(informationUserResetPassword.getName())
 						&& usersDate.equals(informationUserResetPassword.getDateBirthDay())) {
 					
-					users.setPassword(encoder.encode(random));
-					customerRepository.save(users);
+					customer.setPassword(encoder.encode(random));
+					customerRepository.save(customer);
 					emailService.sendEmailAttachment(informationUserResetPassword.getEmail(), body, "Password current");
-					return "Reset password success";
+					return new ResponseEntity<>("Reset password success",HttpStatus.OK);
 				}else {
-					return "Reset password fail";
+					return new ResponseEntity<>("Reset password fail",HttpStatus.BAD_REQUEST);
 				}
 			} else {
-				return "Reset password fail";
+				return new ResponseEntity<>("Reset password fail",HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Reset password fail";
+			return new ResponseEntity<>("Reset password fail",HttpStatus.BAD_REQUEST);
 		}
 	}
 	

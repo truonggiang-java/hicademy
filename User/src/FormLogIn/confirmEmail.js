@@ -23,7 +23,7 @@ function ConfirmEmail() {
                 const res = await axios.get(`/api/v2/verification/sendEmail?email=${values.trim()}`);
                 if(res) {
                     localStorage.setItem("email_register", values)
-                    window.location.href = 'http://localhost:3001/verifyOTP'
+                    window.location.href = 'http://localhost:3000/verifyOTP'
                 }
             } catch(err) 
             {

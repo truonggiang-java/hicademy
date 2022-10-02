@@ -181,7 +181,7 @@ export default function Navbar() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={onLogout}>Logout</MenuItem>
+        <MenuItem onClick={onLogout}>Log Out</MenuItem>
       </Menu>
     </div>
   
