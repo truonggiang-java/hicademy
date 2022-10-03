@@ -69,12 +69,12 @@ public class CustomerControllerUser extends BaseController{
 		return customerService.findbyIdCustomer(id);
 	}
 	
-	@PostMapping("/changePassword")
+	@PostMapping("/changePasswordCustomer")
 	public String changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
 		return customerService.changePassword(changePasswordDto);
 	}
 	
-	@PostMapping("/getmapping")
+	@GetMapping("/getmapping")
 	public String hello() {
 		return "success";
 	}

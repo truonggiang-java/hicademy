@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import '../App.css'
 import { useState } from 'react';
 import * as Yup from 'yup';
+import axios from "../utils/axios";
 
 function ChangePass() {
 
@@ -29,13 +30,28 @@ function ChangePass() {
 
     const [link, setLink] =useState()
 
-    function check(){
-        return(
-            ((formik.values.password) !== "" & (formik.values.confirm) !== "") ? (
-                setLink('/home')
-            ) : ( alert('Please enter full information!')),
-            console.log(link)
-        )
+    const check = async () => {
+        if (((formik.values.password) === "" || (formik.values.confirm) === "") || formik.values.password !== formik.values.confirm) {
+            alert("Please enter full information!");
+        }
+
+        try {
+            const body = {
+                email: formik.values.email,
+                changePassword: formik.values.password,
+                currentPassword: formik.values.oldpass,
+            };
+        
+            const res = await axios.post(
+                "/api/v2/customer/changePassword",
+                body
+            );
+            if (res===200) {
+                alert("Please check your email!");
+            }
+            } catch (err) {
+            alert("Information does not match!");
+            }
     }
 
     return(
