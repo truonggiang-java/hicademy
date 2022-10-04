@@ -18,16 +18,19 @@ import Profile from './FormInfo/profile';
 import ChangePassword from './FormInfo/changePassword';
 import GameBoard from './FormGame/GameBoard';
 import ForgetPassword from './FormLogIn/forgetPassword';
+import Background from './assets/image/background1.jpg';
 
 function App() {  
   const authorize = localStorage.getItem("Authorization")
   // window.location.href = "http://localhost:3000/error-page"        
   
   return (
-    // <div style={{background:'linear-gradient(#FFFF99, #FA6EFF)'}} className="layout">
-    <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`, 
+    <div style={{backgroundImage: `url(${Background})`,
       backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:"100%", backgroundSize:'cover'
-      }} className="layout">
+    }} className="layout">
+    {/* <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`,  
+      backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:"100%", backgroundSize:'cover'
+    }} className="layout"> */}
       <Navbar />
       <div className="main">
         <Routes>

@@ -4,9 +4,10 @@ import Container from '@mui/material/Container';
 // import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import '../App.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import axios from "../utils/axios";
+import axios_fetch from '../utils/axios';
 
 function ChangePass() {
 
@@ -30,24 +31,47 @@ function ChangePass() {
 
     const [link, setLink] =useState()
 
-    const check = async () => {
-        if (((formik.values.password) === "" || (formik.values.confirm) === "") || formik.values.password !== formik.values.confirm) {
-            alert("Please enter full information!");
-        }
+    const [email, setEmail] = React.useState()
+    const getUserInfo =  async () => {
+        const user_id = localStorage.getItem("user_id")
+        try {
+            const res = await axios_fetch.get(`/api/v2/customer/findById?id=${user_id}`)
+            if (res.status === 200) {
+            //   console.log('res', res.data)
+              setEmail(res.data.email)
+              console.log(email)
+            }
+          } catch (err) {
+            console.log('err getUserById');
+          }
+    }
+    const onLogout = () => {
+        console.log('logout');
+        localStorage.removeItem('Authorization')
+        window.location.href = "http://localhost:3000/login"        
+      }
+    
+    useEffect(()=> {
+        getUserInfo()
+      }, [])
 
+    const check = async () => {
         try {
             const body = {
-                email: formik.values.email,
+                email,
                 changePassword: formik.values.password,
                 currentPassword: formik.values.oldpass,
             };
         
             const res = await axios.post(
-                "/api/v2/customer/changePassword",
+                "api/v2/customer/changePasswordCustomer",
                 body
             );
-            if (res===200) {
-                alert("Please check your email!");
+            console.log(res)
+            if (res.data) {
+                alert("Successfully!");
+                localStorage.removeItem('Authorization')
+                window.location.href = "http://localhost:3000/login"     
             }
             } catch (err) {
             alert("Information does not match!");

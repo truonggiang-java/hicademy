@@ -156,7 +156,8 @@ public class CustomerService {
 				System.out.println("abcde");
 				users.setPassword(encoder.encode(changePasswordDto.getChangePassword()));
 				customerRepository.save(users);
-				return "Change password success";
+				String encoding = Base64.getEncoder().encodeToString((changePasswordDto.getEmail() + ":" + changePasswordDto.getChangePassword()).getBytes());
+				return encoding;
 			} else {
 				return "Incorrect password";
 			}

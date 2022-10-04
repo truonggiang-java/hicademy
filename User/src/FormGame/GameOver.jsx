@@ -2,7 +2,7 @@ import React from "react";
 
 const GameOver = ({ restartGame, nextLevel, level }) => {
   return (
-    <div className="w-100 centered flex justify-items-center items-center h-screen" style={{height: '60vh'}}>
+    <div className="w-100 centered h-screen" style={{height: '60vh'}}>
       <div>
       <h1>Congrats!</h1>
       <button className="restart-button" onClick={restartGame}>

@@ -7,8 +7,8 @@ export default function ContentStart() {
             <Grid container >
                 <Grid item xs={6} >
                     <img
-                        src={require('../assets/image/cau_be.png')} alt='Logo'
-                        style={{ width: '100%', minHeight: 'calc(100vh - 100px - 253px)' }}
+                        src={require('../assets/image/background.png')} alt='Logo'
+                        style={{ width: '100%', minHeight: 'calc(100vh - 100px - 253px)', paddingTop:'8vh' }}
                     />
                 </Grid>
                 <Grid item xs={6} style={{ fontFamily: 'cursive', fontWeight: 'bold', fontSize: '40px', textAlign: 'center', marginTop: '150px' }}>

@@ -204,7 +204,7 @@ export default function Navbar() {
                       </button>
                   </Link>
               </div>)}
-              { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword' || location.pathname === '/ForgetPassword' ? '' : (<div
+              { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword'|| location.pathname === '/' || location.pathname === '/ForgetPassword' ? '' : (<div
               >
                   <Link to="/ForgetPassword">
                       <button style={{backgroundColor:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>

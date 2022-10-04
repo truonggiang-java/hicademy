@@ -66,7 +66,7 @@ function ForgetPassword() {
           style={{ height: "calc(100vh - 100px - 193px)" }}
           onSubmit={formik.handleSubmit}
         >
-          <Container maxWidth="sm" style={{ textAlign: "center" }}>
+          <Container maxWidth="sm" style={{ textAlign: "center", display: "flex" }}>
             <Stack
               component=""
               sx={{
@@ -87,9 +87,9 @@ function ForgetPassword() {
               >
                 Information
               </span>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-1">
-                  <div className="w-10/12 mt-6">
+                  <div className="w-full mt-6">
                     <input
                       placeholder="Email"
                       className="input w-full"
@@ -109,7 +109,7 @@ function ForgetPassword() {
                       <p id="errorMsg">{formik.errors.email}</p>
                     )}
                   </div>
-                  <div className="w-10/12 mt-6">
+                  <div className="w-full mt-6">
                     <input
                       className="input w-full"
                       placeholder="Name"
@@ -131,7 +131,7 @@ function ForgetPassword() {
                   </div>
                 </div>
                 <div className="col-span-1">
-                  <div className="w-10/12 mt-6">
+                  <div className="w-full mt-6">
                     <input
                       className="input w-full"
                       placeholder="Phonenumber"
@@ -151,7 +151,7 @@ function ForgetPassword() {
                       <p id="errorMsg">{formik.errors.phone}</p>
                     )}
                   </div>
-                  <div className="w-10/12 mt-6">
+                  <div className="w-full mt-6">
                     <input
                       className="input w-full"
                       placeholder="Birthday"
