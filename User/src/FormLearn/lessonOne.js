@@ -5,10 +5,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../assets/style/selection.css";
-import '../assets/style/lessonOne.css';
 import { useSpeechSynthesis } from "react-speech-kit";
 import {useParams} from "react-router-dom"
 import axios from '../utils/axios';
+import '../assets/style/lessonOne.css';
 
 function LessonOne(props) {
     const { speak, voices } = useSpeechSynthesis(); 

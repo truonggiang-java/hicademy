@@ -32,6 +32,7 @@ img {
 }
 .slick-prev:before, .slick-next:before {
     color: black !important;
+    font-size: 45px;
 }
 
 #infor{
@@ -43,4 +44,11 @@ img {
     font-weight:'bold';
     font-size: 35px;
     display:'inline';
+}
+.slick-list{
+    width: 95%;
+    margin: 0 auto;
+}
+.slick-prev{
+    left: -50px;
 }
