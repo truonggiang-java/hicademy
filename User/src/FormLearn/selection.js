@@ -42,7 +42,6 @@ function Selection() {
     //     },
     //   ];
     const [suggestions, setSuggestions] = useState([]);
-    // const [selection, setSelection] = useState([]);
 
     useEffect(()=> {
       const fetchData = async () => {

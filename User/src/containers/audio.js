@@ -7,12 +7,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListSubheader from "@mui/material/ListSubheader";
 import "../App.css";
 import "../assets/style/audio.css";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";  
 import axios from "../utils/axios";
 
 function Audio() {
-  const params = useParams();
   const [audio, setAudio] = useState([]);
   const [links, setLinks] = useState();
   const [changeAudio, setChangeAudio] = useState();
@@ -47,16 +45,7 @@ function Audio() {
             spacing={2}
             style={{ fontFamily: "initial", justifyItems: "center" }}
           >
-            <Grid
-              item
-              xs={2}
-              style={{
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "50px",
-              }}
-            >
+            <Grid item xs={2} className="grid_1">
               <div className="w-full">
                 <button className="btnaudio" onClick={() => Music()}>
                   {" "}
@@ -70,16 +59,7 @@ function Audio() {
               </div>
             </Grid>
 
-            <Grid
-              item
-              xs={3}
-              style={{
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "50px",
-              }}
-            >
+            <Grid item xs={3} className="grid_1">
               <List
                 sx={{
                   width: "100%",
@@ -112,9 +92,7 @@ function Audio() {
               </List>
             </Grid>
 
-            <Grid
-              item
-              xs={7}
+            <Grid item xs={7}
               style={{
                 textAlign: "center",
                 display: "flex",

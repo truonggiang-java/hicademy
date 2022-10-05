@@ -77,13 +77,12 @@ function LessonOne(props) {
                                     width={400}
                                     />
                                     <div id='infor'>
-                                        <span style={{display:'inline',fontFamily:'initial', fontWeight:'bold', fontSize:'35px'}}> 
+                                        <span className='nameLesson'> 
                                             {current.name} 
                                         </span>
                                         <img 
                                             onClick={() => speak({ text:(current.name), voice: voices[1]})}
-                                            src={require('../assets/image/icon_loa.png')} alt='Logo'  
-                                            style={{width:'50px', display:'inline', marginLeft:'20px', marginBottom:'10px'}}
+                                            src={require('../assets/image/icon_loa.png')} alt='Logo' className='imgLesson'  
                                         />
                                     </div>
                                 </div>

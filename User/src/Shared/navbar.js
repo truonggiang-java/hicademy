@@ -8,10 +8,16 @@ import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Link, useLocation } from 'react-router-dom';
-import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import axios from '../utils/axios';
+import "../assets/style/navbar.css";
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Navbar() {
   const [state, setState] = React.useState({
@@ -76,57 +82,43 @@ export default function Navbar() {
               component="nav"
               aria-labelledby="nested-list-subheader"
               subheader={
-                  <ListSubheader component="div" id="nested-list-subheader" style={{fontSize:'22px'}}>
+                  <ListSubheader component="div" id="nested-list-subheader" style={{fontSize:'22px', fontWeight:'bold'}}>
                     Menu List Items
                   </ListSubheader>
               }
           >
               <ListItemButton>
                 <Link to="/Home" id='a' style={{width: '100%'}}>
-                    <img 
-                        src={require('../assets/image/home.png')} alt='Logo'  
-                        style={{marginRight:'10px',display:'inline'}}
-                        width="50"
-                        height="50"
-                    />
-                    <p style={{ display:'inline'}}>Home</p>
+                  <HomeIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                    <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/GameBoard" id='a' style={{width: '100%'}}>
-                  <img 
-                      src={require('../assets/image/story.png')} alt='Logo'  
-                      style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}>Mini Game</p>
+                  <SportsEsportsIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Lesson</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/Selection" id='a' style={{width: '100%'}}>
-                  <img 
-                      src={require('../assets/image/lesson.png')} alt='Logo'  
-                      style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}>Lesson</p>
+                  <MenuBookIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Lesson</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/Audio" id='a' style={{width: '100%'}}>
-                  <LibraryMusicIcon style={{width: '50px', height:'50px', display:'inline'}}/>
-                  <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
+                    <LibraryMusicIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                    <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/Profile" id='a' style={{width: '100%'}}>
-                  <img 
-                      src={require('../assets/image/profile.png')} alt='Logo'  
-                      style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}> Profile</p>
+                  <PermContactCalendarIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Profile</p>
                 </Link>
               </ListItemButton>
 
@@ -134,11 +126,8 @@ export default function Navbar() {
 
               <ListItemButton>
                 <Link to="/" id='a' style={{width: '100%'}}>
-                  <img 
-                    src={require('../assets/image/logout.png')} alt='Logo'  
-                    style={{width: '50px', height:'50px', marginRight:'10px', display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}> Log Out</p>
+                  <LogoutIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Logout</p>
                 </Link>
               </ListItemButton>
           </List>

@@ -52,3 +52,16 @@ img {
 .slick-prev{
     left: -50px;
 }
+
+.imgLesson{
+    width: 50px;
+    display: inline; 
+    margin-left:'20px'; 
+    margin-bottom:'10px';
+}
+.nameLesson{
+    display: inline;
+    font-family:'initial';
+    font-size: 35px;
+}
+

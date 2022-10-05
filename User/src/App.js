@@ -22,8 +22,6 @@ import Background from './assets/image/background1.jpg';
 
 function App() {  
   const authorize = localStorage.getItem("Authorization")
-  // window.location.href = "http://localhost:3000/error-page"        
-  
   return (
     <div style={{backgroundImage: `url(${Background})`,
       backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:"100%", backgroundSize:'cover'
