@@ -8,7 +8,7 @@ const GameOver = ({ restartGame, nextLevel, level }) => {
       <button className="restart-button" onClick={restartGame}>
         Play Again?
       </button>
-      {level < 3 && <button style={{marginLeft: '5px'}} className="restart-button" onClick={nextLevel}>
+      {level < 3 && <button style={{marginLeft: '10px'}} className="restart-button" onClick={nextLevel}>
         Next Level
       </button>}
       </div>

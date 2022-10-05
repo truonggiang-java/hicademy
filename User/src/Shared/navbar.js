@@ -90,14 +90,14 @@ export default function Navbar() {
               <ListItemButton>
                 <Link to="/Home" id='a' style={{width: '100%'}}>
                   <HomeIcon style={{width: '50px', height:'50px', display:'inline'}}/>
-                    <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
+                    <p style={{ display:'inline',marginLeft:'8px'}}>Home</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/GameBoard" id='a' style={{width: '100%'}}>
                   <SportsEsportsIcon style={{width: '50px', height:'50px', display:'inline'}}/>
-                  <p style={{ display:'inline',marginLeft:'8px'}}>Lesson</p>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Mini Game</p>
                 </Link>
               </ListItemButton>
 

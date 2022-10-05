@@ -67,7 +67,7 @@ function LessonOne(props) {
                         </div>
                     ) : (
                         <Slider {...settings}>
-                        {suggestions.map((current) => (
+                        {suggestions.map((current, index) => (
                             <div key={current.id}>
                                 <div className="card">
                                     <img
@@ -76,7 +76,7 @@ function LessonOne(props) {
                                     height={400}
                                     width={400}
                                     />
-                                    <div id='infor'>
+                                    <div id='infor' data={index}>
                                         <span className='nameLesson'> 
                                             {current.name} 
                                         </span>
