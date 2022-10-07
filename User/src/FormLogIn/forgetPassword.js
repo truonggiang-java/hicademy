@@ -25,7 +25,7 @@ function ForgetPassword() {
       address: Yup.string().required("Required"),
       phone: Yup.string()
         .required("Required")
-        .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/),
+        .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/),
       birthday: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
@@ -70,8 +70,6 @@ function ForgetPassword() {
             <Stack
               component=""
               sx={{
-                width: "350px",
-                margin: "0 auto",
                 width: "768px",
                 margin: "0 auto",
               }}

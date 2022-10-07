@@ -2,28 +2,27 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 // import {Link } from "react-router-dom";
-import {useNavigate } from "react-router-dom";
 import axios from '../utils/axios';
 
 function ConfirmEmail() {
     const [values, setValues] = React.useState('');
-    const history = useNavigate();
 
     const checkEmail = (email) => {
-        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return regex.test(email)
     }
 
     const confirmEmail = async (e) => {
         e.preventDefault();
         if ((!values || values.trim() === '') || !checkEmail(values)) {
-            alert("Please check your gmail!")
+            alert("Email invalidate")
         } else {
             try {
                 const res = await axios.get(`/api/v2/verification/sendEmail?email=${values.trim()}`);
                 if(res) {
                     localStorage.setItem("email_register", values)
                     window.location.href = 'http://localhost:3000/verifyOTP'
+                    alert("Please check your gmail!")
                 }
             } catch(err) 
             {

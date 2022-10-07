@@ -8,7 +8,7 @@ const headers = {
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8080',
-    headers: (!authorize || authorize == '') ? {
+    headers: (!authorize || authorize === '') ? {
         "Content-type": "application/json",
     } : headers
 });

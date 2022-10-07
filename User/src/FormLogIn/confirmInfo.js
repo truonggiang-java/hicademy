@@ -1,11 +1,9 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import '../App.css';
 import '../assets/style/cfInfo.css';
-import { useState } from 'react';
 import * as Yup from 'yup';
 import axios from '../utils/axios';
 
@@ -45,7 +43,7 @@ function ConfirmPass() {
                 window.location.href = 'http://localhost:3000/home'
             }
         } catch(err) 
-        {
+        {   
             console.log('ERR submit form register', err.response.data)
         }
     }

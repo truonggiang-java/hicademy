@@ -2,6 +2,17 @@
 * demo.css
 * File include item demo only specific css only
 ******************************************************************************/
+.text_learn{
+  color: green;
+}
+
+.detail{
+  border-radius: 5px;
+  padding: 5px 13px;
+  background: green;
+  color: white;
+}
+
 .pass_show{position: relative} 
 
 .pass_show .ptxt { 

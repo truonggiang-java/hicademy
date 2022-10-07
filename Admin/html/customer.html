@@ -10,6 +10,7 @@
   <title>Admin Dashboard-User</title>
 
   <meta name="description" content="" />
+  <link rel="stylesheet" href="../assets/css/demo.css">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="../assets/img/avatars/logo.png" />
@@ -224,6 +225,28 @@
     </div>
   </div>
   </div>
+  <!-- Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">List of lessons learned</h4>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <form>
+              <p>lesson 1</p>
+              <p>lesson 2</p>
+              <p>lesson 3</p>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content: center;">
+          <a href="#" data-dismiss="modal" class="btn">Close</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- / Layout wrapper -->
   <!-- Core JS -->
@@ -371,6 +394,8 @@
                           <h5> Gmail: ${data.email} </h5>
                           <h5> Phone: ${data.phone} </h5>
                           <h5> Address: ${data.address} </h5>
+                          <h5 title="${data.role}"> Have learned: <span class="text_learn">8</span> <h5>
+                          <button class="detail" id="detail" data-toggle="modal" href="#myModal">Detail</button>
                         </div>
                         <div style= "display:flex">
                           <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5); accent-color:red;">
