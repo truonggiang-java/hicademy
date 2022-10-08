@@ -96,8 +96,8 @@
           </li>
           <li class="menu-item">
             <a href="mini-lesson.html" class="menu-link">
-                <i class="menu-icon fa-solid fa-bookmark"></i>
-                <div data-i18n="Tables">Mini Lesson</div>
+              <i class="menu-icon fa-solid fa-bookmark"></i>
+              <div data-i18n="Tables">Mini Lesson</div>
             </a>
           </li>
           <li class="menu-item active">
@@ -179,13 +179,12 @@
               <div style="display: flex; justify-content: space-between;">
                 <h5 class="card-header">Add Mini Lesson</h5>
               </div>
-              <form name="video" method="POST" onsubmit="return false" style="padding: 1.5rem;">  
+              <form name="video" method="POST" onsubmit="return false" style="padding: 1.5rem;">
                 <div class="mb-3 col-md-3">
                   <label class="form-label" for="basic-default-company">Select Lesson</label>
                   <br />
                   <select id="paramVideo" class="country" style="height: 35px; width: 100%; border-radius: 4px;">
-                    <option value="Music" selected></option>
-                    <option value="Story">Story</option>
+
                   </select>
                 </div>
                 <div class="mb-3 col-md-12">
@@ -195,13 +194,11 @@
                     id="chooseImage">Chosse</button>
                 </div>
 
-                <div class="mb-3 col-md-12" style="text-align: center;">
-                  <img src="../assets/img/avatars/1.png" alt="">
-                  <img src="../assets/img/avatars/1.png" alt="">
-                  <img src="../assets/img/avatars/1.png" alt="">
+                <div class="mb-3 col-md-12" style="text-align: center;" id="imageChoose">
+                  
                 </div>
                 <div class="mb-3 col-md-12" style="text-align: center;">
-                  <button type="submit" class="btn btn-success" id="submitVideo"
+                  <button type="submit" class="btn btn-success" id="submitMiniLesson"
                     style="display: block;  margin-left: auto;  margin-right: auto;">
                     Submit
                   </button>
@@ -235,35 +232,35 @@
         </div>
       </div>
     </div>
-  <!-- Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Select Image</h4>
-        </div>
-        <div class="modal-body">
-          <div class="card-body">
-            <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:1.5%;margin-left: -10px;"
-              id="viewImage">
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Select Image</h4>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <div style="display: grid; grid-template-columns: 33% 33% 33%;grid-gap:1.5%;margin-left: -10px;"
+                id="viewImage">
 
-            </div>
-            <br>
-            <div>
-              <nav aria-label="Page navigation">
-                <ul class="pagination paginationImage justify-content-end">
+              </div>
+              <br>
+              <div>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination paginationImage justify-content-end">
 
-                </ul>
-              </nav>
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#" data-dismiss="modal" class="btn">Close</a>
+          <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </body>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript"
@@ -272,6 +269,7 @@
   $(document).ready(function () {
     let cookie = $.cookie("Cookie-admin");
     let cookieUser = $.cookie("Cookie-user");
+    let flags = true;
     $(document).on('click', ".logoutAdmin", function (e) {
       let id = $(this).attr("id");
       if (cookieUser) {
@@ -340,11 +338,28 @@
         }
       })
     }
+    function fetchData() {
+      $.ajax({
+        headers: {
+          'Authorization': 'Bearer ' + cookie
+        },
+        method: "GET",
+        url: "http://localhost:8080/api/v1/lesson/findAll",
+        success: function (res) {
+          let html = "";
+          res.forEach(data => {
+            html += `<option value="${data.id}">${data.name}</option>`
+          })
+          $("#paramVideo").html(html);
+        }
+      })
 
+    }
+    fetchData();
     $(document).on('click', '#logoutAdmin', function (e) {
       $.removeCookie("Cookie-admin");
-        $.removeCookie("Cookie-user");
-        $.removeCookie("Cookie-customer");
+      $.removeCookie("Cookie-user");
+      $.removeCookie("Cookie-customer");
       window.location.href = "auth-login-basic.html";
     })
 
@@ -414,6 +429,7 @@
           })
 
           $("#viewImage").html(html)
+          currentImage();
           if ($('ul.paginationImage li').length - 3 != res.page.totalPage) {
             // build pagination list at the first time loading
             $('ul.paginationImage').empty();
@@ -521,30 +537,97 @@
         //$(this).addClass("active");
       }
     });
+    var listId = [];
     $(document).on('click', '#chooseImage', function () {
       findAll(1);
     })
-
-    $(document).on('click', '.viewImage', function (e) {
-      idImage = $(this).attr("id")
-      var nodes = document.getElementsByClassName("viewImage");
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].style.border = "none";
+    function currentImage(){
+      if(listId){
+        listId.forEach(res =>{
+          console.log(res);
+          document.getElementById(res).style.border = "4px solid red";
+        })
       }
-      document.getElementById(idImage).style.border = "4px solid red";
-      $.ajax({
-        headers: {
-          'Authorization': 'Bearer ' + cookie
-        },
-        method: "GET",
-        url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + idImage,
-        success: function (param) {
-          $("#imageAttr").removeAttr("style");
-          let html = `<img src="${param}" alt="" 
-                          style="width: 50%;" id="${idImage}"> `
-          $("#imageLessonAvatar").html(html);
-        }
-      })
+     
+    }
+    $(document).on('click', '.viewImage', function (e) {
+      idImage = $(this).attr("id");
+      if (!listId.includes(idImage)) {
+        listId.push(idImage);
+        document.getElementById(idImage).style.border = "4px solid red";
+        // $.ajax({
+        //   headers: {
+        //     'Authorization': 'Bearer ' + cookie
+        //   },
+        //   method: "GET",
+        //   url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + idImage,
+        //   success: function (param) {
+        //     $("#imageAttr").removeAttr("style");
+        //     let html = `<img src="${param}" alt="" 
+        //                     style="width: 50%;" id="${idImage}"> `
+        //     $("#imageLessonAvatar").html(html);
+        //   }
+        // })
+      } else {
+        listId = listId.filter(function (e) { return e !== idImage })
+        document.getElementById(idImage).style.border = "none";
+      }
+      if (listId) {
+        let html="";
+        $("#imageChoose").html("");
+        listId.forEach(res =>{
+          $.ajax({
+            headers: {
+              'Authorization': 'Bearer ' + cookie
+            },
+            method: "GET",
+            url: "http://localhost:8080/api/v1/dlFileEntry/findById?id=" + res,
+            success: function (param) {
+              var img = $('<img id="${res}">'); //Equivalent: $(document.createElement('img'))
+              img.attr('src', param);
+              img.appendTo('#imageChoose');
+            }
+          })
+        })
+        
+      }
+
+    })
+    $(document).on("click",'#submitMiniLesson',function(){
+      var idLesson=$("#paramVideo").val();
+      let value={
+        idLesson:idLesson,
+        idDlFileEntry:listId.join(",")
+      }
+      Swal.fire({
+          title: 'Do you want to save the changes?',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Save',
+          denyButtonText: `Don't save`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            $.ajax({
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Bearer ' + cookie
+              },
+              method: "POST",
+              url: "http://localhost:8080/api/v1/miniLesson/insertMiniLesson",
+              data: JSON.stringify(value),
+              success: function (data) {
+                
+              }
+            })
+            Swal.fire('Saved!', '', 'success')
+            window.setTimeout(function () {
+                window.location.reload();
+              }, 300);
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        })
     })
   })
 </script>

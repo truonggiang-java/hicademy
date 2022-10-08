@@ -1,7 +1,9 @@
 package com.example.lessonEnglish.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -21,6 +23,8 @@ import com.example.lessonEnglish.entity.Users;
 import com.example.lessonEnglish.jwt.JwtUtlis;
 import com.example.lessonEnglish.repository.LogoRepository;
 import com.example.lessonEnglish.repository.UserRepository;
+import com.example.lessonEnglish.theard.TaskThread;
+import com.example.lessonEnglish.theard.ThreadPoolExecutorUtil;
 
 @Service
 public class UserService {
@@ -39,9 +43,12 @@ public class UserService {
 
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private ThreadPoolExecutorUtil threadPoolExecutorUtil;
 
-	public String insertUser(UserDto userDto) {
-		try {
+	public Users insertUser(UserDto userDto) throws ParseException {
+		
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 			Users users = new Users();
@@ -49,9 +56,9 @@ public class UserService {
 			users.setGender(userDto.getGender());
 			String fileName = "";
 			if (userDto.getGender().equals("MALE")) {
-				fileName = "ava_nam.png";
+				fileName = "avatar-nam.jpg";
 			} else if (userDto.getGender().equals("FEMALE")) {
-				fileName = "ava_nu.png";
+				fileName = "avatar-nam.jpg";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			users.setDateOfBirth(format.parse(userDto.getDateOfBirth()));
@@ -62,12 +69,8 @@ public class UserService {
 			users.setPassword(encoder.encode(userDto.getPassword()));
 			users.setTelephone(userDto.getTelephone());
 			userRepository.save(users);
-			return "Bạn thêm người dùng thành công";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Bạn thêm người dùng thất bại";
-			// TODO: handle exception
-		}
+			return users;
+		
 	}
 
 	public String updateUser(UserRequestDto userRequestDto, String id) {
@@ -222,5 +225,15 @@ public class UserService {
 		List<Users> lesson = userRepository.findListIdUser(id);
 		userRepository.deleteAll(lesson);
 		return "Bạn đã xóa người dùng thành công";
+	}
+	
+	public List<Users> getAllUserAsync(){
+		for(int i=0;i<20;i++) {
+			TaskThread taskThread=new TaskThread(userRepository);
+			threadPoolExecutorUtil.excuteTask(taskThread);
+		}
+		TaskThread taskThread=new TaskThread(userRepository);
+		threadPoolExecutorUtil.excuteTask(taskThread);
+		return taskThread.users;
 	}
 }

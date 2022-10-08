@@ -6,11 +6,11 @@ import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,6 @@ import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.dto.request.UserRequestDto;
 import com.example.lessonEnglish.entity.Customer;
 import com.example.lessonEnglish.entity.Logo;
-import com.example.lessonEnglish.entity.Users;
 import com.example.lessonEnglish.error.CustomError;
 import com.example.lessonEnglish.repository.CustomerRepository;
 import com.example.lessonEnglish.repository.LogoRepository;
@@ -57,9 +56,9 @@ public class CustomerService {
 			customer.setGender(customerDto.getGender());
 			String fileName = "";
 			if (customerDto.getGender().equals("MALE")) {
-				fileName = "ava_nam.png";
+				fileName = "avatar-nam.jpg";
 			} else if (customerDto.getGender().equals("FEMALE")) {
-				fileName = "ava_nu.png";
+				fileName = "avatar-nu.jpg";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			customer.setDateOfBirth(format.parse(customerDto.getDateOfBirth()));

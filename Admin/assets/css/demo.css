@@ -5,7 +5,10 @@
 .text_learn{
   color: green;
 }
-
+#imageChoose img{
+  padding: 5px;
+  width: 250px;
+}
 .detail{
   border-radius: 5px;
   background: green;
