@@ -4,3 +4,10 @@
     font-size: 20px;
     color: #FFFFFF;
 }
+
+.grid_1{
+    text-align: "center" !important;
+    display: "flex" !important;
+    justify-content: "center" !important;
+    padding-top: 50px !important;
+}

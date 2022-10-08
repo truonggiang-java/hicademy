@@ -3,7 +3,6 @@ import './App.css';
 import Audio from './containers/audio';
 import Home from './containers/home';
 import LogIn from './FormLogIn/login';
-import NotFound from './containers/notFound';
 import Start from './containers/start';
 import Test from './containers/test';
 import LessonOne from './FormLearn/lessonOne';
@@ -18,16 +17,19 @@ import Selection from './FormLearn/selection';
 import Profile from './FormInfo/profile';
 import ChangePassword from './FormInfo/changePassword';
 import GameBoard from './FormGame/GameBoard';
+import ForgetPassword from './FormLogIn/forgetPassword';
+import Background from './assets/image/background1.jpg';
+import MiniLesson from './FormLearn/miniLesson.js';
 
 function App() {  
   const authorize = localStorage.getItem("Authorization")
-  // window.location.href = "http://localhost:3000/error-page"        
-  
   return (
-    // <div style={{background:'linear-gradient(#FFFF99, #FA6EFF)'}} className="layout">
-    <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`, 
+    <div style={{backgroundImage: `url(${Background})`,
       backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:"100%", backgroundSize:'cover'
-      }} className="layout">
+    }} className="layout">
+    {/* <div style={{backgroundImage: `url("https://bom.so/dQCwoW")`,  
+      backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:"100%", backgroundSize:'cover'
+    }} className="layout"> */}
       <Navbar />
       <div className="main">
         <Routes>
@@ -39,6 +41,7 @@ function App() {
           <Route path='/VerifyOTP' element={<VerifyOTP/>}/>
           <Route path='/ConfirmInfo' element={<ConfirmInfo/>}/>
           <Route path='/Login' element={<LogIn/>}/>
+          <Route path='/ForgetPassword' element={<ForgetPassword/>}/>
           <Route exact path='/Home' element={authorize ? <Home/> : <Navigate to='/login' replace/>}/>
           <Route exact path='/Selection' element={authorize ? <Selection/> : <Navigate to='/login' replace/>}/>
           <Route path='/LessonOne/:name' element={authorize ? <LessonOne/> : <Navigate to='/login' replace/>}/>
@@ -47,7 +50,9 @@ function App() {
           <Route path='/Profile' element={authorize ? <Profile/> : <Navigate to='/login' replace/>}/>
           <Route path='/ChangePassword' element={authorize ? <ChangePassword/> : <Navigate to='/login' replace/>}/>
           <Route path='/GameBoard' element={authorize ? <GameBoard/> : <Navigate to='/login' replace/>}/>
+          <Route path='/MiniLesson' element={authorize ? <MiniLesson/> : <Navigate to='/login' replace/>}/>
           <Route path='*' element={<Navigate to='/login' replace/>} />
+
         </Routes>
       </div>
       <Footers />

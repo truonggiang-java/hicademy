@@ -4,8 +4,10 @@ import Container from '@mui/material/Container';
 // import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import '../App.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
+import axios from "../utils/axios";
+import axios_fetch from '../utils/axios';
 
 function ChangePass() {
 
@@ -16,10 +18,10 @@ function ChangePass() {
             confirm: '',
         },
         validationSchema: Yup.object({
-            oldpass: Yup.string().required('Required').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 
-            'Password must more than 8 characters and must contain a capital letter and a special character '),
-            password: Yup.string().required('Required').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 
-            'Password must more than 8 characters and must contain a capital letter and a special character '),
+            oldpass: Yup.string().required('Required').matches(/.{6,}$/, 
+            'Password must more than 6 characters'),
+            password: Yup.string().required('Required').matches(/.{6,}$/, 
+            'Password must more than 6 characters'),
             confirm: Yup.string().required('Required').oneOf([Yup.ref('password'),null],'Password must match')
         }),
         onSubmit: (values) => {
@@ -29,13 +31,51 @@ function ChangePass() {
 
     const [link, setLink] =useState()
 
-    function check(){
-        return(
-            ((formik.values.password) !== "" & (formik.values.confirm) !== "") ? (
-                setLink('/home')
-            ) : ( alert('Please enter full information!')),
-            console.log(link)
-        )
+    const [email, setEmail] = React.useState()
+    const getUserInfo =  async () => {
+        const user_id = localStorage.getItem("user_id")
+        try {
+            const res = await axios_fetch.get(`/api/v2/customer/findById?id=${user_id}`)
+            if (res.status === 200) {
+            //   console.log('res', res.data)
+              setEmail(res.data.email)
+              console.log(email)
+            }
+          } catch (err) {
+            console.log('err getUserById');
+          }
+    }
+    const onLogout = () => {
+        console.log('logout');
+        localStorage.removeItem('Authorization')
+        window.location.href = "http://localhost:3000/login"        
+      }
+    
+    useEffect(()=> {
+        getUserInfo()
+      }, [])
+
+    const check = async () => {
+        try {
+            const body = {
+                email,
+                changePassword: formik.values.password,
+                currentPassword: formik.values.oldpass,
+            };
+        
+            const res = await axios.post(
+                "api/v2/customer/changePasswordCustomer",
+                body
+            );
+            console.log(res)
+            if (res.data) {
+                alert("Successfully!");
+                localStorage.removeItem('Authorization')
+                window.location.href = "http://localhost:3000/login"     
+            }
+            } catch (err) {
+            alert("Information does not match!");
+            }
     }
 
     return(

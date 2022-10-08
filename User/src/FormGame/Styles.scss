@@ -12,7 +12,7 @@ body {
     .card {
       width: 20%;
       user-select: none;
-      height: 112px;
+      height: 130px;
       padding: 10px;
       box-sizing: border-box;
       text-align: center;
@@ -20,6 +20,9 @@ body {
       transition: 0.6s;
       transform-style: preserve-3d;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       div {
         backface-visibility: hidden;
         position: absolute;
@@ -45,6 +48,7 @@ body {
         transform: rotateY(180deg);
         line-height: 110px;
         text-emphasis: none;
+        display: flex;
         img {
           vertical-align: middle;
           width: 70%;
@@ -101,4 +105,9 @@ body {
       opacity: 0.3;
     }
   }
-  
+
+.slick-slider {
+  height:  calc(100vh - 270px);
+  display: flex;
+  align-items: center;
+}

@@ -24,14 +24,22 @@ function LogIn(){
     });
 
     const check = async () => {
+        console.log('login button');
         if ((!formik.values.email || formik.values.email === "") || (!formik.values.password || formik.values.password === '')) {
             alert('Please enter full information!')
         }
-        const res = await axios.post('/api/v2/customer/signin', {email: formik.values.email, password: formik.values.password})
-        if (res.data.code === 200) {
-            localStorage.setItem("Authorization", res.data.data.token)
-            localStorage.setItem("user_id", res.data.data.id)
-            window.location.href = "http://localhost:3000/home"        
+       
+        try {
+            const res = await axios.post('/api/v2/customer/signin', {email: formik.values.email, password: formik.values.password})
+            if (res && res.data.code === 200) {
+                localStorage.setItem("Authorization", res.data.data.token)
+                localStorage.setItem("user_id", res.data.data.id)
+                window.location.href = "http://localhost:3000/home" 
+            }       
+            
+        }
+       catch(err) {
+            alert('Password false!');
         }
     }
 

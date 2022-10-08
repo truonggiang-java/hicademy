@@ -8,10 +8,16 @@ import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Link, useLocation } from 'react-router-dom';
-import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import axios from '../utils/axios';
+import "../assets/style/navbar.css";
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Navbar() {
   const [state, setState] = React.useState({
@@ -19,16 +25,23 @@ export default function Navbar() {
   });
 
     const location = useLocation();
+    console.log('location', location);
 
-    const hideTooge = ['/','/login','/confirmEmail','/confirmPassword','/verifyOTP','/confirmPass'];
+    const hideTooge = ['/','/login','/confirmEmail','/confirmPassword','/verifyOTP','/confirmPass','/confirmInfo', '/ForgetPassword'];
 
-    const visibleLogin = ['/','/login','/confirmEmail','/confirmPassword'];
+    const visibleLogin = ['/','/login','/confirmEmail','/confirmPassword', '/ForgetPassword'];
   const [user, setUser] = React.useState(null)
   const getUserInfo = async () => {
     const user_id = localStorage.getItem("user_id")
-    const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
-    if (res.status === 200) {
-      setUser(res.data)
+    if (user_id && user_id !== '') {
+      try {
+        const res = await axios.get(`/api/v2/customer/findById?id=${user_id}`)
+        if (res.status === 200) {
+          setUser(res.data)
+        }
+      } catch (err) {
+        console.log('err getUserById');
+      }
     }
   }
   React.useEffect(()=> {
@@ -69,55 +82,43 @@ export default function Navbar() {
               component="nav"
               aria-labelledby="nested-list-subheader"
               subheader={
-                  <ListSubheader component="div" id="nested-list-subheader" style={{fontSize:'22px'}}>
+                  <ListSubheader component="div" id="nested-list-subheader" style={{fontSize:'22px', fontWeight:'bold'}}>
                     Menu List Items
                   </ListSubheader>
               }
           >
               <ListItemButton>
                 <Link to="/Home" id='a' style={{width: '100%'}}>
-                    <img 
-                        src={require('../assets/image/home.png')} alt='Logo'  
-                        style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                    />
-                    <p style={{ display:'inline'}}>Home</p>
+                  <HomeIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                    <p style={{ display:'inline',marginLeft:'8px'}}>Home</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/GameBoard" id='a' style={{width: '100%'}}>
-                  <img 
-                      src={require('../assets/image/story.png')} alt='Logo'  
-                      style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}>Mini Game</p>
+                  <SportsEsportsIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Mini Game</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/Selection" id='a' style={{width: '100%'}}>
-                  <img 
-                      src={require('../assets/image/lesson.png')} alt='Logo'  
-                      style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}>Lesson</p>
+                  <MenuBookIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Lesson</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/Audio" id='a' style={{width: '100%'}}>
-                  <LibraryMusicIcon style={{width: '50px', height:'50px', display:'inline'}}/>
-                  <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
+                    <LibraryMusicIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                    <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
                 <Link to="/Profile" id='a' style={{width: '100%'}}>
-                  <img 
-                      src={require('../assets/image/profile.png')} alt='Logo'  
-                      style={{width: '50px', height:'50px', marginRight:'10px',display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}> Profile</p>
+                  <PermContactCalendarIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Profile</p>
                 </Link>
               </ListItemButton>
 
@@ -125,11 +126,8 @@ export default function Navbar() {
 
               <ListItemButton>
                 <Link to="/" id='a' style={{width: '100%'}}>
-                  <img 
-                    src={require('../assets/image/logout.png')} alt='Logo'  
-                    style={{width: '50px', height:'50px', marginRight:'10px', display:'inline'}}
-                  />
-                  <p style={{ display:'inline'}}> Log Out</p>
+                  <LogoutIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Logout</p>
                 </Link>
               </ListItemButton>
           </List>
@@ -172,7 +170,7 @@ export default function Navbar() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={onLogout}>Logout</MenuItem>
+        <MenuItem onClick={onLogout}>Log Out</MenuItem>
       </Menu>
     </div>
   
@@ -187,11 +185,19 @@ export default function Navbar() {
                       </button>
                   </Link>
               </div>) }
-              { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword' ? '' : (<div
+              { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword' || location.pathname === '/ForgetPassword' ? '' : (<div
               >
                   <Link to="/confirmEmail">
                       <button style={{backgroundColor:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
                           CREATE ACCOUNT
+                      </button>
+                  </Link>
+              </div>)}
+              { location.pathname === '/confirmEmail' || location.pathname === '/confirmPassword'|| location.pathname === '/' || location.pathname === '/ForgetPassword' ? '' : (<div
+              >
+                  <Link to="/ForgetPassword">
+                      <button style={{backgroundColor:'white',color: 'black',margin:'10px',border: '1px solid black', padding:'15px 32px', borderRadius:'27px'}}>
+                          FORGET PASSWORD
                       </button>
                   </Link>
               </div>)}

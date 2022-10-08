@@ -13,25 +13,25 @@ export default function Footers() {
                         <img id='items'
                             src={require('../assets/image/man.png')} alt='Logo'  
                         />
-                        <span id='text'>Founder: LeMinhHieu</span>
+                        <span className='text-f'>Founder: LeMinhHieu</span>
                     </Grid>
                     <Grid item xs={2} style={{display:'inline-block',margin:'auto',textAlign:'center',alignItems: 'center', justifyItems: 'center', width:'170px'}}>
                         <img id='items'
                             src={require('../assets/image/fbIcon.png')} alt='Logo'  
                         />
-                        <span id='text'>minnhieu</span>
+                        <span className='text-f'>minnhieu</span>
                     </Grid>
                     <Grid item xs={2} style={{display:'inline-block',margin:'auto',textAlign:'center',alignItems: 'center', justifyItems: 'center', width:'170px'}}>
                         <img id='items'
                             src={require('../assets/image/insIcon.png')} alt='Logo'  
                         />
-                        <span id='text'>minnhieu</span>
+                        <span className='text-f'>minnhieu</span>
                     </Grid>
                     <Grid item xs={5} style={{margin:'auto'}}>
                         <img id='items'
                             src={require('../assets/image/map.png')} alt='Logo'  
                         />
-                        <span id='text'>Address: Thuy Phuong, North Tu Liem, Ha Noi</span>
+                        <span className='text-f'>Address: Thuy Phuong, North Tu Liem, Ha Noi</span>
                     </Grid>
                 </Grid>
             </Container>

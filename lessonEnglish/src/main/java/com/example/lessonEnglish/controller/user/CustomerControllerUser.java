@@ -47,15 +47,11 @@ public class CustomerControllerUser extends BaseController{
 	public LogoDto updateFileLogo(@RequestParam("file") MultipartFile file) {
 		return logoService.uploadToProject(file);
 	}
-	
-	public ResponseEntity<?> insertCustomer(@RequestBody @Valid CustomerDto customerDto, Errors ex) {
-		String errorCustomer = ex.getFieldErrors().stream()
-				.map(field -> field.getField() + ": " + field.getDefaultMessage()).collect(Collectors.joining(", "));
-		if (errorCustomer != null && !errorCustomer.isBlank() && !errorCustomer.isEmpty()) {
-			return new ResponseEntity<>(errorCustomer, HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<>(customerService.insertCustomer(customerDto),HttpStatus.OK);
-		}
+
+	@PostMapping("/insert")
+	public String insertUser(@RequestBody CustomerDto customerDto) {
+		return customerService.insertCustomer(customerDto);
+
 	}
 	
 	@PostMapping("/signin")
@@ -81,6 +77,10 @@ public class CustomerControllerUser extends BaseController{
 		return customerService.changePassword(changePasswordDto);
 	}
 	
+	@GetMapping("/getmapping")
+	public String hello() {
+		return "success";
+	}
 	@PutMapping("/updateCustomer/{id}")
 	public String updateUser(@RequestBody UserRequestDto userRequestDto, @PathVariable("id") String id) {
 		return customerService.updateCustomer(userRequestDto, id);

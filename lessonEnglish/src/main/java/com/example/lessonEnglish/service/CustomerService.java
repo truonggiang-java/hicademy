@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import com.example.lessonEnglish.dto.ChangePasswordDto;
 import com.example.lessonEnglish.dto.CustomerDto;
 import com.example.lessonEnglish.dto.InformationUserResetPassword;
@@ -43,6 +45,7 @@ public class CustomerService {
 	
 	@Autowired
 	private EmailService emailService;
+	
 	
 	public String insertCustomer(CustomerDto customerDto) {
 		try {
@@ -149,13 +152,16 @@ public class CustomerService {
 		try {
 			Customer users = customerRepository.findByEmail(changePasswordDto.getEmail()).get();
 			if (encoder.matches(changePasswordDto.getCurrentPassword(), users.getPassword())) {
+				System.out.println("abcde");
 				users.setPassword(encoder.encode(changePasswordDto.getChangePassword()));
 				customerRepository.save(users);
-				return "Change password success";
+				String encoding = Base64.getEncoder().encodeToString((changePasswordDto.getEmail() + ":" + changePasswordDto.getChangePassword()).getBytes());
+				return encoding;
 			} else {
 				return "Incorrect password";
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "Change password fail";
 			// TODO: handle exception
 		}

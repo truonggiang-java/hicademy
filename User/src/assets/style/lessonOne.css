@@ -32,6 +32,7 @@ img {
 }
 .slick-prev:before, .slick-next:before {
     color: black !important;
+    font-size: 45px;
 }
 
 #infor{
@@ -44,3 +45,23 @@ img {
     font-size: 35px;
     display:'inline';
 }
+.slick-list{
+    width: 95%;
+    margin: 0 auto;
+}
+.slick-prev{
+    left: -50px;
+}
+
+.imgLesson{
+    width: 50px;
+    display: inline; 
+    margin-left:'20px'; 
+    margin-bottom:'10px';
+}
+.nameLesson{
+    display: inline;
+    font-family:'initial';
+    font-size: 35px;
+}
+
