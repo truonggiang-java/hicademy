@@ -96,13 +96,6 @@ export default function Navbar() {
               </ListItemButton>
 
               <ListItemButton>
-                <Link to="/GameBoard" className='a'>
-                  <SportsEsportsIcon style={{width: '50px', height:'50px', display:'inline'}}/>
-                  <p style={{ display:'inline',marginLeft:'8px'}}>Mini Game</p>
-                </Link>
-              </ListItemButton>
-
-              <ListItemButton>
                 <Link to="/Selection" className='a'>
                   <MenuBookIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                   <p style={{ display:'inline',marginLeft:'8px'}}>Lesson</p>
@@ -113,6 +106,13 @@ export default function Navbar() {
                 <Link to="/Audio" className='a'>
                     <LibraryMusicIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                     <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
+                </Link>
+              </ListItemButton>
+
+              <ListItemButton>
+                <Link to="/GameBoard" className='a'>
+                  <SportsEsportsIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Mini Game</p>
                 </Link>
               </ListItemButton>
 

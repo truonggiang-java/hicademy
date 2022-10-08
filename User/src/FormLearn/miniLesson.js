@@ -9,17 +9,26 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import {useParams} from "react-router-dom"
 import axios from '../utils/axios';
 import '../assets/style/lessonOne.css';
+import SweetAlert2 from 'react-sweetalert2';
 
 function LessonOne(props) {
     const { speak, voices } = useSpeechSynthesis(); 
     const [suggestions, setSuggestions] = useState([]);
-    const params = useParams()
+    const params = useParams();
+    const [swalProps, setSwalProps] = useState({});
+    function handleClick(){
+            setSwalProps({
+            show: true,
+            title: 'Example',
+            text: 'Hello World',
+        }); 
+        console.log('bbbbb')
+    }
 
     useEffect(() => {
         console.log(params)
         const fetchData = async () => {
-            const response = await axios.get(`/api/v2/course/findLessonByIdCourse?id=${params.name}`);
-            console.log('responsen', response.data);
+            const response = await axios.get(`/api/v2/miniLesson/findByIdLesson/${params.name}`);
             if(response) {
               setSuggestions(response.data);
             }
@@ -33,6 +42,14 @@ function LessonOne(props) {
         arrows: true,
         slidesToShow: 1,
         slidesToScroll: 1,
+        afterChange: (current) => {
+            console.log(current)
+            console.log(suggestions.listDlFileEntryDto.length)
+            if((current+1) === suggestions.listDlFileEntryDto.length){
+                console.log("aaa");
+                handleClick()
+            }
+        },
     
         responsive: [
           {
@@ -50,8 +67,8 @@ function LessonOne(props) {
             },
           },
         ],
-      };
-
+    };
+    
     
     console.log(suggestions)
 
@@ -67,7 +84,7 @@ function LessonOne(props) {
                         </div>
                     ) : (
                         <Slider {...settings}>
-                        {suggestions.map((current, index) => (
+                        {suggestions.listDlFileEntryDto.map((current, index) => (
                             <div key={current.id}>
                                 <div className="card">
                                     <img
@@ -90,6 +107,23 @@ function LessonOne(props) {
                         ))}
                         </Slider>
                     )}
+                    <SweetAlert2 {...swalProps}
+                        didOpen={() => {
+                            // run when swal is opened...
+                        }}
+                        didClose={() => {
+                            // run when swal is closed...
+                        }}
+                        onConfirm={result => {
+                            // run when clieked in confirm and promise is resolved...
+                        }}
+                        onError={error => {
+                            // run when promise rejected...
+                        }}
+                        onResolve={result => {
+                            // run when promise is resolved...
+                        }}
+                    />
                 </div>
             </div>
         </React.Fragment>

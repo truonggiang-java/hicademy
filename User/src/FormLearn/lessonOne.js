@@ -5,14 +5,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "../assets/style/selection.css";
-import { useSpeechSynthesis } from "react-speech-kit";
+// import { useSpeechSynthesis } from "react-speech-kit";
 import {useParams} from "react-router-dom"
 import axios from '../utils/axios';
 import '../assets/style/lessonOne.css';
 import {Link} from 'react-router-dom';
 
 function LessonOne(props) {
-    const { speak, voices } = useSpeechSynthesis(); 
+    // const { speak, voices } = useSpeechSynthesis(); 
     const [suggestions, setSuggestions] = useState([]);
     const params = useParams()
 
@@ -71,7 +71,7 @@ function LessonOne(props) {
                         {suggestions.map((current, index) => (
                             <div key={current.id}>
                                 {/* <Link to={`/MiniLesson/${current.id}`} style={{textDecoration:"none", fontSize:"large"}}> */}
-                                <Link to={`/MiniLesson`} style={{textDecoration:"none", fontSize:"large"}}>
+                                <Link to={`/MiniLesson/${current.id}`} style={{textDecoration:"none", fontSize:"large"}}>
                                     <div className="card">
                                         <img
                                         alt={"lesson here"}
@@ -83,10 +83,6 @@ function LessonOne(props) {
                                             <span className='nameLesson'> 
                                                 Lesson: {current.name} 
                                             </span>
-                                            {/* <img 
-                                                onClick={() => speak({ text:(current.name), voice: voices[1]})}
-                                                src={require('../assets/image/icon_loa.png')} alt='Logo' className='imgLesson'  
-                                            /> */}
                                         </div>
                                     </div>
                                 </Link>
