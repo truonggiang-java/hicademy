@@ -8,9 +8,9 @@
 
 .detail{
   border-radius: 5px;
-  padding: 5px 13px;
   background: green;
   color: white;
+  width: 60%;
 }
 
 .pass_show{position: relative} 

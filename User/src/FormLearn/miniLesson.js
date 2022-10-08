@@ -9,7 +9,6 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import {useParams} from "react-router-dom"
 import axios from '../utils/axios';
 import '../assets/style/lessonOne.css';
-import {Link} from 'react-router-dom';
 
 function LessonOne(props) {
     const { speak, voices } = useSpeechSynthesis(); 
@@ -70,26 +69,23 @@ function LessonOne(props) {
                         <Slider {...settings}>
                         {suggestions.map((current, index) => (
                             <div key={current.id}>
-                                {/* <Link to={`/MiniLesson/${current.id}`} style={{textDecoration:"none", fontSize:"large"}}> */}
-                                <Link to={`/MiniLesson`} style={{textDecoration:"none", fontSize:"large"}}>
-                                    <div className="card">
-                                        <img
-                                        alt={"lesson here"}
-                                        src={`${current.link}`}
-                                        height={400}
-                                        width={400}
+                                <div className="card">
+                                    <img
+                                    alt={"users here"}
+                                    src={`${current.link}`}
+                                    height={400}
+                                    width={400}
+                                    />
+                                    <div id='infor' data={index}>
+                                        <span className='nameLesson'> 
+                                            {current.name} 
+                                        </span>
+                                        <img 
+                                            onClick={() => speak({ text:(current.name), voice: voices[1]})}
+                                            src={require('../assets/image/icon_loa.png')} alt='Logo' className='imgLesson'  
                                         />
-                                        <div id='infor' data={index}>
-                                            <span className='nameLesson'> 
-                                                Lesson: {current.name} 
-                                            </span>
-                                            {/* <img 
-                                                onClick={() => speak({ text:(current.name), voice: voices[1]})}
-                                                src={require('../assets/image/icon_loa.png')} alt='Logo' className='imgLesson'  
-                                            /> */}
-                                        </div>
                                     </div>
-                                </Link>
+                                </div>
                             </div>
                         ))}
                         </Slider>
