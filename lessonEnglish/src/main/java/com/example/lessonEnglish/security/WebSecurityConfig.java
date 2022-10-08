@@ -57,9 +57,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.cors().and().csrf().disable().sessionManagement()
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-					.antMatchers("/api/v1/user/signin").permitAll().antMatchers("/api/v1/dlFileEntry/viewImage/**")
-					.permitAll().antMatchers("/api/v1/logo/view/**").permitAll()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.and()
+					.authorizeRequests()
+					.antMatchers("/api/v1/user/signin").permitAll()
+					.antMatchers("/api/v1/dlFileEntry/viewImage/**").permitAll()
+					.antMatchers("/api/v1/logo/view/**").permitAll()
+					.antMatchers("/api/v1/user/list/async").permitAll()
+					.antMatchers("/ws").permitAll()
 					.antMatchers("/api/v1/user/informationResetPassword").permitAll().and().antMatcher("/api/v1/**")
 					.authorizeRequests().anyRequest().authenticated();
 			http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -88,10 +93,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 					.antMatchers("/api/v2/customer/signin").permitAll()
 					.antMatchers("/api/v2/customer/insert").permitAll()
+					.antMatchers("/api/v2/customer/informationResetPassword").permitAll()
 					.antMatchers("/api/v2/verification/**").permitAll()
+					.antMatchers("/ws").permitAll()
 					.and().antMatcher("/api/v2/**")
 					.authorizeRequests().anyRequest().authenticated().and()
 					.httpBasic();
+		}
+
+	}
+	
+	@Order(3)
+	@Configuration
+	public static class HttpaSecurity extends WebSecurityConfigurerAdapter {
+		
+
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.cors().and().csrf().disable().sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+					.antMatchers("/**").permitAll();;
+					
 		}
 
 	}

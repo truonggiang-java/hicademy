@@ -6,11 +6,11 @@ import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,6 @@ import com.example.lessonEnglish.dto.request.RequestDto;
 import com.example.lessonEnglish.dto.request.UserRequestDto;
 import com.example.lessonEnglish.entity.Customer;
 import com.example.lessonEnglish.entity.Logo;
-import com.example.lessonEnglish.entity.Users;
 import com.example.lessonEnglish.error.CustomError;
 import com.example.lessonEnglish.repository.CustomerRepository;
 import com.example.lessonEnglish.repository.LogoRepository;
@@ -54,9 +53,9 @@ public class CustomerService {
 			customer.setGender(customerDto.getGender());
 			String fileName = "";
 			if (customerDto.getGender().equals("MALE")) {
-				fileName = "ava_nam.png";
+				fileName = "avatar-nam.jpg";
 			} else if (customerDto.getGender().equals("FEMALE")) {
-				fileName = "ava_nu.png";
+				fileName = "avatar-nu.jpg";
 			}
 			Logo logo = logoRepository.findByNameLogo(fileName);
 			customer.setDateOfBirth(format.parse(customerDto.getDateOfBirth()));
@@ -161,35 +160,36 @@ public class CustomerService {
 			// TODO: handle exception
 		}
 	}
-	public String informationCustomerResetPassword(InformationUserResetPassword informationUserResetPassword) {
+	public ResponseEntity<?> informationCustomerResetPassword(InformationUserResetPassword informationUserResetPassword) {
 		try {
 			String random = RandomStringUtils.randomAlphabetic(6);
+			
 			String body = "<div  style='background-color: #008CBA;\n" + "	border: none;\n" + "  color: white;\n"
 					+ "  padding: 20px 100px;\n" + "  text-align: center;\n" + "  text-decoration: none;\n"
 					+ "  display: inline-block;\n" + "  font-size: 16px;\n" + "  margin: 4px 2px;\n" + "  '>" + random
 					+ "</div>";
-			Customer users = customerRepository.findByEmail(informationUserResetPassword.getEmail()).get();
+			Customer  customer = customerRepository.findByEmail(informationUserResetPassword.getEmail()).get();
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			if (users != null) {
-				String usersDate=format.format(users.getDateOfBirth());
-				if (users.getEmail().equals(informationUserResetPassword.getEmail())
-						&& users.getTelephone().equals(informationUserResetPassword.getTelephone())
-						&& users.getName().equals(informationUserResetPassword.getName())
+			if (customer != null) {
+				String usersDate=format.format(customer.getDateOfBirth());
+				if (customer.getEmail().equals(informationUserResetPassword.getEmail())
+						&& customer.getTelephone().equals(informationUserResetPassword.getTelephone())
+						&& customer.getName().equals(informationUserResetPassword.getName())
 						&& usersDate.equals(informationUserResetPassword.getDateBirthDay())) {
 					
-					users.setPassword(encoder.encode(random));
-					customerRepository.save(users);
+					customer.setPassword(encoder.encode(random));
+					customerRepository.save(customer);
 					emailService.sendEmailAttachment(informationUserResetPassword.getEmail(), body, "Password current");
-					return "Reset password success";
+					return new ResponseEntity<>("Reset password success",HttpStatus.OK);
 				}else {
-					return "Reset password fail";
+					return new ResponseEntity<>("Reset password fail",HttpStatus.BAD_REQUEST);
 				}
 			} else {
-				return "Reset password fail";
+				return new ResponseEntity<>("Reset password fail",HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Reset password fail";
+			return new ResponseEntity<>("Reset password fail",HttpStatus.BAD_REQUEST);
 		}
 	}
 	
