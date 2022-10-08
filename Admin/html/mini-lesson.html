@@ -466,9 +466,9 @@
         function fetchNotes(startPage, optionValue, value) {
           let url;
           if (value) {
-            url = "http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue + "&input=" + value;
+            url = "http://localhost:8080/api/v1/miniLesson/findAll?page=" + startPage + "&size=" + optionValue + "&input=" + value;
           } else {
-            url = "http://localhost:8080/api/v1/lesson/findAllPageable?page=" + startPage + "&size=" + optionValue;
+            url = "http://localhost:8080/api/v1/miniLesson/findAll?page=" + startPage + "&size=" + optionValue;
           }
           $.ajax({
             headers: {
@@ -479,35 +479,42 @@
             success: function (res) {
               let html = "";
               let i = 0;
-              res.lessonImage.forEach(data => {
+              res.data.forEach(data => {
                 const color = ["table-default", "table-active", "table-secondary", "table-primary", "table-success", "table-danger", "table-warning", "table-info"];
-                html += `
+                
+                var miniLesson=`
                   <tr class="${color[i]}" id="${data.id}">
                     <td style="width: 2%; padding-left: 15px">
                       <input value="${data.id}" type="checkbox" class="messageCheckbox" style="transform: scale(1.5);accent-color:red;">
                     </td>
                     <td><strong>${data.name}</strong></td>
                     <td>${data.description}</td>
-                    <td>
-                      <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">                  
+                    <td><ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center"> `;
+                
+                var idImage="";
+                data.listDlFileEntryDto.forEach(response =>{
+                  idImage+=`                
                         <li
                           data-bs-toggle="tooltip"
                           data-popup="tooltip-custom"
                           data-bs-placement="top"
                           class="avatar avatar-xs pull-up"
-                          title="${data.description}"
+                          title="${response.description}"
                         >
-                          <img src="${data.link}" alt="image" class="rounded-circle" />
+                          <img src="${response.link}" alt="image" class="rounded-circle" />
                         </li>
-                      </ul>
-                    </td>
+                      `
+                })
+                var edit=
+                   ` </ul></td>
                     <td>
                       <a class="dropdown-item editLesson" class="dropdown-item" data-toggle="modal" href="#myModal" 
                       style="text-decoration:none; width:30%; border-radius: 10px" id="${data.id}"
                         ><i class="bx bx-edit-alt me-1"></i> Edit</a
                       >
                     </td>
-                  </tr>`
+                  </tr>`;
+                  html += miniLesson+idImage+edit;
                 if (i == color.length - 1) {
                   i = 0;
                 } else i++
@@ -524,23 +531,6 @@
           })
         }
 
-        function selectCourseA() {
-          $.ajax({
-            headers: {
-              'Authorization': 'Bearer ' + cookie
-            },
-            method: "GET",
-            url: "http://localhost:8080/api/v1/course/findAllCourse",
-            success: function (res) {
-              let html = "";
-              res.forEach(function (data) {
-                html += `<option value="${data.name}">${data.name}</option>`;
-              })
-              $("#selectCourse").html(html);
-            }
-          })
-        }
-        selectCourseA();
         //edit course
         $(document).on("click", ".editLesson", function () {
           var $mSelect = $('#selectCourse').selectize({ placeholder: "Select a value" });
@@ -903,7 +893,7 @@
                     'Authorization': 'Bearer ' + cookie
                   },
                   method: "DELETE",
-                  url: "http://localhost:8080/api/v1/lesson/delete",
+                  url: "http://localhost:8080/api/v1/miniLesson/deleteMiniLesson",
                   data: JSON.stringify(value),
                   success: function (data) {
                     document.getElementById("delete").style.display = "none";
