@@ -3,6 +3,7 @@
     font-weight: 700;
     font-size: 20px;
     color: #FFFFFF;
+    padding: 5px 43px;
 }
 
 .grid_1{
@@ -10,4 +11,9 @@
     display: "flex" !important;
     justify-content: "center" !important;
     padding-top: 50px !important;
+}
+
+.audio1{
+    display: flex;
+    justify-content: space-around;
 }

@@ -45,7 +45,7 @@ function Audio() {
             spacing={2}
             style={{ fontFamily: "initial", justifyItems: "center" }}
           >
-            <Grid item xs={2} className="grid_1">
+            {/* <Grid item xs={2} className="grid_1">
               <div className="w-full">
                 <button className="btnaudio" onClick={() => Music()}>
                   {" "}
@@ -57,17 +57,32 @@ function Audio() {
                   Story{" "}
                 </button>
               </div>
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={3} className="grid_1">
+            <Grid item xs={4} className="grid_1">
+              <div className="w-full">
+                <div className="grid grid-cols-2 audio1">
+                  <div className="col-span-1">
+                    <button className="btnaudio" onClick={() => Music()}>
+                      {" "}
+                      Music{" "}
+                    </button>
+                  </div>
+                  <div className="col-span-1">
+                    <button className="btnaudio" onClick={() => Story()}>
+                      {" "}
+                      Story{" "}
+                    </button>
+                  </div>
+                </div>
+              </div>
               <List
                 sx={{
                   width: "100%",
-                  maxWidth: 360,
                   bgcolor: "background.paper",
                   borderRadius: "20px",
                   overflow: "auto",
-                  maxHeight: 360,
+                  maxHeight: 300,
                 }}
                 component="nav"
                 aria-labelledby="nested-list-subheader"
@@ -92,7 +107,7 @@ function Audio() {
               </List>
             </Grid>
 
-            <Grid item xs={7}
+            <Grid item xs={8}
               style={{
                 textAlign: "center",
                 display: "flex",

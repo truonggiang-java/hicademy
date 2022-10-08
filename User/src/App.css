@@ -19,8 +19,9 @@ body {
   border-radius: 15px;
 }
 
-#a{
+.a{
   text-decoration: none;
+  width: '100%';
 }
 
 #homecontent{

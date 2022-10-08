@@ -1,0 +1,53 @@
+.profile{
+    background: #e5e4e4;
+    border-radius: 20px;
+    min-height: 300px;
+}
+.feedback{
+    background: #e5e4e4;
+    border-radius: 20px;
+    min-height: 300px;
+    min-width: 100%;
+}
+.tieude{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+}
+.avatar{
+    max-width: 150px !important;
+}
+.fix{
+    padding-left: 15px;
+}
+.mh{
+    padding-bottom: 17px;
+}
+.mh1{
+    padding-top: 5px;
+    padding-left: 15px;
+}
+.mh2{
+    color: green;
+    font-weight: 600;
+}
+.star{
+    border-radius: 70% !important;
+    width: 27px;
+    margin-left: 6px;
+}
+
+.mh3{
+    display: block;
+    margin: 0px 15px;
+    border-radius: 5px;
+    padding: 2px 8px;
+}
+.mh4{
+    display: block;
+    width: 95%;
+    margin: 15px 15px;
+    min-height: 200px;
+    border-radius: 5px;
+    padding: 5px 8px;
+}

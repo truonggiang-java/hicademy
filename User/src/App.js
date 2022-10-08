@@ -20,6 +20,7 @@ import GameBoard from './FormGame/GameBoard';
 import ForgetPassword from './FormLogIn/forgetPassword';
 import Background from './assets/image/background1.jpg';
 import MiniLesson from './FormLearn/miniLesson.js';
+import Parents from './containers/parents';
 
 function App() {  
   const authorize = localStorage.getItem("Authorization")
@@ -51,8 +52,8 @@ function App() {
           <Route path='/ChangePassword' element={authorize ? <ChangePassword/> : <Navigate to='/login' replace/>}/>
           <Route path='/GameBoard' element={authorize ? <GameBoard/> : <Navigate to='/login' replace/>}/>
           <Route path='/MiniLesson' element={authorize ? <MiniLesson/> : <Navigate to='/login' replace/>}/>
+          <Route path='/Parents' element={authorize ? <Parents/> : <Navigate to='/login' replace/>}/>
           <Route path='*' element={<Navigate to='/login' replace/>} />
-
         </Routes>
       </div>
       <Footers />

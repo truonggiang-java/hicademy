@@ -18,6 +18,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import LogoutIcon from '@mui/icons-material/Logout';
+import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 
 export default function Navbar() {
   const [state, setState] = React.useState({
@@ -88,48 +89,56 @@ export default function Navbar() {
               }
           >
               <ListItemButton>
-                <Link to="/Home" id='a' style={{width: '100%'}}>
+                <Link to="/Home" className='a'>
                   <HomeIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                     <p style={{ display:'inline',marginLeft:'8px'}}>Home</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
-                <Link to="/GameBoard" id='a' style={{width: '100%'}}>
+                <Link to="/GameBoard" className='a'>
                   <SportsEsportsIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                   <p style={{ display:'inline',marginLeft:'8px'}}>Mini Game</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
-                <Link to="/Selection" id='a' style={{width: '100%'}}>
+                <Link to="/Selection" className='a'>
                   <MenuBookIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                   <p style={{ display:'inline',marginLeft:'8px'}}>Lesson</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
-                <Link to="/Audio" id='a' style={{width: '100%'}}>
+                <Link to="/Audio" className='a'>
                     <LibraryMusicIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                     <p style={{ display:'inline',marginLeft:'8px'}}>Audio</p>
                 </Link>
               </ListItemButton>
 
               <ListItemButton>
-                <Link to="/Profile" id='a' style={{width: '100%'}}>
+                <Link to="/Profile" className='a'>
                   <PermContactCalendarIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                   <p style={{ display:'inline',marginLeft:'8px'}}>Profile</p>
+                </Link>
+              </ListItemButton>
+
+              <ListItemButton>
+                <Link to="/Parents" className='a'>
+                  <EscalatorWarningIcon style={{width: '50px', height:'50px', display:'inline'}}/>
+                  <p style={{ display:'inline',marginLeft:'8px'}}>Parents</p>
                 </Link>
               </ListItemButton>
 
               <Divider />
 
               <ListItemButton>
-                <Link to="/" id='a' style={{width: '100%'}}>
+                <Link to="/" className='a'>
                   <LogoutIcon style={{width: '50px', height:'50px', display:'inline'}}/>
                   <p style={{ display:'inline',marginLeft:'8px'}}>Logout</p>
                 </Link>
               </ListItemButton>
+
           </List>
         </Box>
   );
