@@ -17,16 +17,22 @@ function LessonOne(props) {
     const params = useParams();
     const [swalProps, setSwalProps] = useState({});
     function handleClick(){
+        setTimeout(() => {
             setSwalProps({
-            show: true,
-            title: 'Example',
-            text: 'Hello World',
-        }); 
-        console.log('bbbbb')
+                show: true,
+                title: 'Congratulations 🎉🎉🎉',
+                text: 'You have completed the lesson!',
+                backdrop: `
+                    rgba(0,0,123,0.4)
+                    url("../assets/image/chucmung.gif")
+                    left top
+                    no-repeat
+                `,
+            }); 
+          }, 4000);
     }
 
     useEffect(() => {
-        console.log(params)
         const fetchData = async () => {
             const response = await axios.get(`/api/v2/miniLesson/findByIdLesson/${params.name}`);
             if(response) {
@@ -43,13 +49,15 @@ function LessonOne(props) {
         slidesToShow: 1,
         slidesToScroll: 1,
         afterChange: (current) => {
-            console.log(current)
-            console.log(suggestions.listDlFileEntryDto.length)
+            // console.log(current)
+            // console.log(suggestions.listDlFileEntryDto.length)
             if((current+1) === suggestions.listDlFileEntryDto.length){
-                console.log("aaa");
+                // console.log("aaa");
                 handleClick()
             }
+            speak({ text:(suggestions.name), voice: voices[1]})
         },
+
     
         responsive: [
           {
@@ -70,7 +78,7 @@ function LessonOne(props) {
     };
     
     
-    console.log(suggestions)
+    // console.log(suggestions)
 
     return(
         <React.Fragment>
@@ -95,10 +103,10 @@ function LessonOne(props) {
                                     />
                                     <div id='infor' data={index}>
                                         <span className='nameLesson'> 
-                                            {current.name} 
+                                            {suggestions.name} 
                                         </span>
                                         <img 
-                                            onClick={() => speak({ text:(current.name), voice: voices[1]})}
+                                            onClick={() => speak({ text:(suggestions.name), voice: voices[1]})}
                                             src={require('../assets/image/icon_loa.png')} alt='Logo' className='imgLesson'  
                                         />
                                     </div>

@@ -29,8 +29,6 @@ function ChangePass() {
         },
     });
 
-    const [link, setLink] =useState()
-
     const [email, setEmail] = React.useState()
     const getUserInfo =  async () => {
         const user_id = localStorage.getItem("user_id")
