@@ -2,8 +2,42 @@ import React from 'react';
 import Grid from "@mui/material/Grid";
 import Container from '@mui/material/Container';
 import "../assets/style/parents.css";
+import axios from "../utils/axios";
+import {useState} from 'react';
+import { Alert } from 'bootstrap';
 
-export default function parents() {
+function Parents() {
+  const [name, setName] = useState('');
+  const [feedBack, setFeedBack] = useState('');
+  
+  const handleChangeName = event => {
+    setName(event.target.value);
+  };
+  const handleChangeFb = event => {
+    setFeedBack(event.target.value);
+  };
+
+  const fb = async () => {
+    try {
+        const body = {
+          name: name,
+          description: feedBack,
+          idUser: localStorage.getItem('user_id'),
+        };
+    
+        const res = await axios.post(
+            "/api/v2/feedBack/insertFeedBack",
+            body
+        );
+        console.log(res)
+        if (res.data) {
+          console.log("Gui feedback thanh cong!");   
+        }
+        } catch (err) {
+          Alert("Send feedback successfully")
+        }
+  }
+
   return (
     <React.Fragment>
       <div style={{ minHeight: "calc(100vh - 250px)" }}>
@@ -44,10 +78,34 @@ export default function parents() {
             >
               <div className="feedback">
                 <div className='tieude'>Feedback</div>
-                <div className=''>
-                    <input placeholder='Parents Name' className='mh3'></input>
-                    <textarea placeholder='Content to reflect' className='mh4'></textarea>
-                </div>
+                <form>
+                  <div className=''>
+                      <div className="grid grid-cols-2">
+                        <input placeholder='Parents Name' className='mh3' 
+                          id="name"
+                          name="name"
+                          type="text"
+                          onChange={handleChangeName}
+                          value={name}
+                          required
+                        >
+                          </input>
+                        <div className="col-span-1">
+                          <button className='btnfb' onClick={() => {fb()}} type='submit'>
+                            Send Feedback
+                          </button>
+                        </div>
+                      </div>
+                      <textarea placeholder='Content to reflect' className='mh4'
+                        id="feedBack"
+                        name="feedBack"
+                        type="text"
+                        onChange={handleChangeFb}
+                        value={feedBack}
+                      >
+                      </textarea>
+                  </div>
+                </form>
               </div>
             </Grid>
           </Grid>
@@ -56,3 +114,5 @@ export default function parents() {
     </React.Fragment>
   )
 }
+
+export default Parents

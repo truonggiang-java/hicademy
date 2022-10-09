@@ -18,4 +18,5 @@ public class UserImageDto {
 	private String link;
 	private String phone;
 	private String address;
+	private String point;
 }

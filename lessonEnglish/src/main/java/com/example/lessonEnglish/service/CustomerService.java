@@ -28,6 +28,7 @@ import com.example.lessonEnglish.dto.request.UserRequestDto;
 import com.example.lessonEnglish.entity.Customer;
 import com.example.lessonEnglish.entity.Logo;
 import com.example.lessonEnglish.error.CustomError;
+import com.example.lessonEnglish.projections.CustomerProjection;
 import com.example.lessonEnglish.repository.CustomerRepository;
 import com.example.lessonEnglish.repository.LogoRepository;
 
@@ -200,21 +201,26 @@ public class CustomerService {
 	}
 	
 	public List<UserImageDto> findAllUser(String input) {
-		List<Customer> listUsers = customerRepository.findAllCustomer(input);
+		List<CustomerProjection> listUsers = customerRepository.findAllCustomer(input);
 		List<UserImageDto> listUserImageDto = new ArrayList<>();
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		for (Customer users : listUsers) {
+		for (CustomerProjection users : listUsers) {
 			UserImageDto userImageDto = new UserImageDto();
 			userImageDto.setEmail(users.getEmail());
 			userImageDto.setGender(users.getGender());
 			userImageDto.setId(users.getId());
 			userImageDto.setName(users.getName());
 			userImageDto.setRole(users.getRole());
-			userImageDto.setDate(format.format(users.getDateOfBirth()));
+			userImageDto.setDate(format.format(users.getBirthday()));
 			userImageDto.setPhone(users.getTelephone());
 			userImageDto.setAddress(users.getAddress());
+			if(users.getSum() !=null){
+				userImageDto.setPoint(users.getSum());
+			}else{
+				userImageDto.setPoint("0");
+			}
 			String fileName = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/logo/view/")
-					.path(users.getIdLogo()).toUriString();
+					.path(users.getLogo()).toUriString();
 			userImageDto.setLink(fileName);
 			listUserImageDto.add(userImageDto);
 		}

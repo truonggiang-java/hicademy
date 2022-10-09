@@ -16,7 +16,28 @@ function LessonOne(props) {
     const [suggestions, setSuggestions] = useState([]);
     const params = useParams();
     const [swalProps, setSwalProps] = useState({});
+    const check = async () => {
+        try {
+            const body = {
+                idUser: localStorage.getItem('user_id'),
+                idLesson: suggestions.id,
+                point: 3,
+            };
+            const res = await axios.post(
+                "/api/v2/learn/insertLearn",
+                body
+            );
+            console.log(res)
+            if (res.data) {
+                console.log("Cong diem thanh cong!"); 
+            }
+            } catch (err) {
+            console.log("Loi cong diem!");
+            }
+    }
+
     function handleClick(){
+        check();
         setTimeout(() => {
             setSwalProps({
                 show: true,
@@ -28,8 +49,8 @@ function LessonOne(props) {
                     left top
                     no-repeat
                 `,
-            }); 
-          }, 4000);
+            });
+        }, 4000);
     }
 
     useEffect(() => {

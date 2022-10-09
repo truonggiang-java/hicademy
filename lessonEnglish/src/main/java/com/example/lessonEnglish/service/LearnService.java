@@ -14,12 +14,18 @@ public class LearnService {
 	
 	public String insertLearn(LearnDto learnDto) {
 		try {
-			Learn learn=new Learn();
-			learn.setId_lesson(learnDto.getIdLesson());
-			learn.setIdUser(learnDto.getIdUser());
-			learn.setPoint(learnDto.getPoint());
-			learnRepository.save(learn);
-			return "thêm mới thành công";
+			Learn learnUser=learnRepository.findAllLessonById(learnDto.getIdUser(), learnDto.getIdLesson());
+			if(learnUser!=null){
+				return "bài học này đã được tính điểm";
+			}else{
+
+				Learn learn=new Learn();
+				learn.setId_lesson(learnDto.getIdLesson());
+				learn.setIdUser(learnDto.getIdUser());
+				learn.setPoint(learnDto.getPoint());
+				learnRepository.save(learn);
+				return "thêm mới thành công";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception

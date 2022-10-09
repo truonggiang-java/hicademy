@@ -51,3 +51,10 @@
     border-radius: 5px;
     padding: 5px 8px;
 }
+
+.btnfb{
+    background: green;
+    padding: 3px 7px;
+    border-radius: 7px;
+    color: white;
+}
