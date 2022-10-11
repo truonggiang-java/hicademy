@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from "@mui/material/Grid";
 import Container from '@mui/material/Container';
 import "../assets/style/parents.css";
 import axios from "../utils/axios";
 import {useState} from 'react';
 import { Alert } from 'bootstrap';
+import axios_fetch from '../utils/axios';
+import List from "@mui/material/List";
 
 function Parents() {
   const [name, setName] = useState('');
@@ -16,6 +18,50 @@ function Parents() {
   const handleChangeFb = event => {
     setFeedBack(event.target.value);
   };
+  const [profile, setProfile] = React.useState({
+    "nameU":"",
+  })
+  const [profile_1, setProfile_1] = React.useState({
+    "name":"",
+    "point":"",
+    "lesson":[]
+  })
+
+  const getUserInfo_1 = async () => {
+    const user_id = localStorage.getItem("user_id")
+    if (user_id && user_id !== '') {
+      try {
+        const res_2 = await axios_fetch.get(`/api/v2/learn/findById/${user_id}`)
+        if (res_2.status === 200) {
+          console.log('res_2', res_2)
+          setProfile_1(res_2)
+        }
+      } catch (err) {
+        console.log('err getUserById');
+      }
+    }
+  }
+
+  const getUserInfo = async () => {
+    const user_id = localStorage.getItem("user_id")
+    if (user_id && user_id !== '') {
+      try {
+        const res_1 = await axios_fetch.get(`/api/v2/customer/findById?id=${user_id}`)
+        if (res_1.status === 200) {
+          // console.log('res', res_1.data)
+          setProfile(res_1.data)
+          
+        }
+      } catch (err) {
+        console.log('err getUserById');
+      }
+    }
+  }
+  useEffect(()=> {
+    getUserInfo();
+    getUserInfo_1();
+    console.log("profile_1",profile_1)
+  }, [])
 
   const fb = async () => {
     try {
@@ -29,7 +75,7 @@ function Parents() {
             "/api/v2/feedBack/insertFeedBack",
             body
         );
-        console.log(res)
+        // console.log(res)
         if (res.data) {
           console.log("Gui feedback thanh cong!");   
         }
@@ -53,14 +99,23 @@ function Parents() {
 
                 <div className="grid grid-cols-2 fix">
                     <div className="col-span-1">
-                        <h5 className='mh'>Name: <span className='mh2'>Hiếu</span></h5>
-                        <h5 className='mh' style={{display:"flex"}}>Star: 99 <img src={require('../assets/image/star.png')} className="star"/></h5>
+                        <h5 className='mh'>Name: <span className='mh2'>{profile.name}</span></h5>
+                        <h5 className='mh' style={{display:"flex"}}>Start: {profile.point}<img src={require('../assets/image/star.png')} className="star"/></h5>
                     </div>
                     <div className="col-span-1">
-                        <img src={require('../assets/image/animal.png')} className="avatar"/>
+                        <img src={profile?.link||require('../assets/image/animal.png')} className="avatar"/>
                     </div>
                 </div>
-                <div><h5 className='mh1'>Lessons learned:</h5></div> 
+                <div>
+                  <h5 className='mh1'>Lessons learned:</h5>
+                    {/* {res_2.lesson.map((current) => (
+                      <List key={current.id}>
+                        <div>
+                          {current.name}
+                        </div>
+                      </List>
+                    ))} */}
+                </div>
               </div>
             </Grid>
 

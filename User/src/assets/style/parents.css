@@ -1,12 +1,12 @@
 .profile{
     background: #e5e4e4;
     border-radius: 20px;
-    min-height: 300px;
+    min-height: 350px;
 }
 .feedback{
     background: #e5e4e4;
     border-radius: 20px;
-    min-height: 300px;
+    min-height: 350px;
     min-width: 100%;
 }
 .tieude{
@@ -21,7 +21,7 @@
     padding-left: 15px;
 }
 .mh{
-    padding-bottom: 17px;
+    padding-bottom: 42px;
 }
 .mh1{
     padding-top: 5px;
@@ -47,7 +47,7 @@
     display: block;
     width: 95%;
     margin: 15px 15px;
-    min-height: 200px;
+    min-height: 250px;
     border-radius: 5px;
     padding: 5px 8px;
 }

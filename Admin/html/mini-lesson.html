@@ -308,7 +308,7 @@
                     </div>
                     <br />
                     <div style="display: grid; grid-template-columns: 50% 50%">
-                      <div id="imageLessonAvatar">
+                      <div class="mb-3 col-md-12" style="text-align: center; display: flex;"  id="imageLessonAvatar">
 
                       </div>
                     </div>
@@ -531,7 +531,7 @@
           })
         }
 
-        //edit course
+        //edit minilesson
         $(document).on("click", ".editLesson", function () {
           var $mSelect = $('#selectCourse').selectize({ placeholder: "Select a value" });
           id = $(this).attr("id");
@@ -553,6 +553,7 @@
             }
           })
         })
+
         //update
         $(document).on("click", "#submitUpdateCourse", function () {
           let select = $('#selectCourse').val();
